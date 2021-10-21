@@ -1,17 +1,183 @@
-# TSDX React w/ Storybook User Guide
+React Image Annotation(TypeScript)
+=========================
 
-Congrats! You just saved yourself hours of work by bootstrapping this project with TSDX. Let’s get you oriented with what’s here and how to use it.
+This is a fork of https://github.com/Secretmapper/react-image-annotation 
 
-> This TSDX setup is meant for developing React component libraries (not apps!) that can be published to NPM. If you’re looking to build a React-based app, you should use `create-react-app`, `razzle`, `nextjs`, `gatsby`, or `react-static`.
+We wanted a typescript version and some more features as we decided to fork the repository and update it
 
-> If you’re new to TypeScript and React, checkout [this handy cheatsheet](https://github.com/sw-yx/react-typescript-cheatsheet/)
+
+![Annotation demo](demo.gif)
+
+## Installation
+
+```
+npm install --save react-image-annotation-ts
+# or
+yarn add react-image-annotation-ts
+```
+
+## Usage
+
+```js
+export default class Simple extends Component {
+  state = {
+    annotations: [],
+    annotation: {}
+  }
+
+  onChange = (annotation) => {
+    this.setState({ annotation })
+  }
+
+  onSubmit = (annotation) => {
+    const { geometry, data } = annotation
+
+    this.setState({
+      annotation: {},
+      annotations: this.state.annotations.concat({
+        geometry,
+        data: {
+          ...data,
+          id: Math.random()
+        }
+      })
+    })
+  }
+
+  render () {
+    return (
+      <Root>
+        <Annotation
+          src={img}
+          alt='Two pebbles anthropomorphized holding hands'
+
+          annotations={this.state.annotations}
+
+          type={this.state.type}
+          value={this.state.annotation}
+          onChange={this.onChange}
+          onSubmit={this.onSubmit}
+        />
+      </Root>
+    )
+  }
+}
+```
+
+
+### Props
+
+Prop | Description | Default
+---- | ----------- | -------
+`src` | Image src attribute |
+`alt` | Image alt attribute |
+`annotations` | Array of annotations |
+`value` | Annotation object currently being created. See [annotation object](#annotation-object)  |
+`onChange` | `onChange` handler for annotation object |
+`onSubmit` | `onSubmit` handler for annotation object |
+`type` | Selector type. See [custom shapes](#using-custom-shapes) | `RECTANGLE`
+`allowTouch` | Set to `true` to allow the target to handle touch events. This disables one-finger scrolling | `false`
+`selectors` | An array of selectors. See [adding custom selector logic](#adding-custom-selector-logic) | `[RectangleSelector, PointSelector, OvalSelector]`
+`activeAnnotations` | Array of annotations that will be passed as 'active' (active highlight and shows content) |
+`activeAnnotationComparator` | Method to compare annotation and `activeAnnotation` item (from `props.activeAnnotations`). Return `true` if it's the annotations are equal | `(a, b) => a === b`
+`disableAnnotation` | Set to `true` to disable creating of annotations (note that no callback methods will be called if this is `true`) | `false`
+`disableSelector` | Set to `true` to not render `Selector` | `false`
+`disableEditor` | Set to `true` to not render `Editor` | `false`
+`disableOverlay` | Set to `true` to not render `Overlay` | `false`
+`renderSelector` | Function that renders `Selector` Component | See [custom components](#using-custom-components)
+`renderEditor` | Function that renders `Editor` Component | See [custom components](#using-custom-components)
+`renderHighlight` | Function that renders `Highlight` Component | See [custom components](#using-custom-components)
+`renderContent` | Function that renders `Content` | See [custom components](#using-custom-components)
+`renderOverlay` | Function that renders `Overlay` | See [custom components](#using-custom-components)
+`onMouseUp` | `onMouseUp` handler on annotation target |
+`onMouseDown` | `onMouseDown` handler on annotation target |
+`onMouseMove` | `onMouseMove` handler on annotation target |
+`onClick` | `onClick` handler on annotation target |
+
+#### Annotation object
+
+An Annotation object is an object that conforms to the object shape
+
+```js
+({
+  selection: T.object, // temporary object for selector logic
+  geometry: T.shape({ // geometry data for annotation
+    type: T.string.isRequired // type is used to resolve Highlighter/Selector renderer
+  }),
+  // auxiliary data object for application.
+  // Content data can be stored here (text, image, primary key, etc.)
+  data: T.object
+})
+```
+
+## Using custom components
+
+`Annotation` supports `renderProp`s for almost every internal component.
+
+This allows you to customize everything about the the look of the annotation interface, and you can even use canvas elements for performance or more complex interaction models.
+
+- `renderSelector` - used for selecting annotation area (during annotation creation)
+- `renderEditor` - appears after annotation area has been selected (during annotation creation)
+- `renderHighlight` - used to render current annotations in the annotation interface. It is passed an object that contains the property `active`, which is true if the mouse is hovering over the higlight
+- `renderComponent` - auxiliary component that appears when mouse is hovering over the highlight. It is passed an object that contains the annotation being hovered over. `{ annotation }`
+- `renderOverlay` - Component overlay for Annotation (i.e. 'Click and Drag to Annotate')
+
+You can view the default renderProps [here](src/components/defaultProps.js)
+
+**Note**: You cannot use `:hover` selectors in css for components returned by `renderSelector` and `renderHighlight`. This is due to the fact that `Annotation` places DOM layers on top of these components, preventing triggering of `:hover`
+
+## Using custom shapes
+
+`Annotation` supports three shapes by default, `RECTANGLE`, `POINT` and `OVAL`.
+
+You can switch the shape selector by passing the appropriate `type` as a property. Default shape `TYPE`s are accessible on their appropriate selectors:
+
+```js
+import {
+  PointSelector,
+  RectangleSelector,
+  OvalSelector
+} from 'react-image-annotation/lib/selectors'
+
+<Annotation
+  type={PointSelector.TYPE}
+/>
+```
+
+### Adding custom selector logic
+
+#### This is an Advanced Topic
+
+The Annotation API allows support for custom shapes that use custom logic such as polygon or freehand selection. This is done by defining your own selection logic and passing it as a selector in the `selectors` property.
+
+Selectors are objects that must have the following properties:
+
+- `TYPE` - string that uniquely identifies this selector (i.e. `RECTANGLE`)
+- `intersects` - method that returns true if the mouse point intersects with the annotation geometry
+- `area` - method that calculates and returns the area of the annotation geometry
+- `methods` - object that can contain various listener handlers (`onMouseUp`, `onMouseDown`, `onMouseMove`, `onClick`). These listener handlers are called when triggered in the annotation area. These handlers must be reducer-like methods - returning a new annotation object depending on the change of the method
+
+You can view a defined `RectangleSelector` [here](src/hocs/RectangleSelector.js)
+
+### Connecting selector logic to Redux/MobX
+
+First see [Selectors](#adding-custom-selector-logic)
+
+You can use `Selector` methods to connect these method logic to your stores. This is due to the fact that selector methods function as reducers, returning new state depending on the event.
+
+***Note that it is not necessary to connect the selector logic with redux/mobx. Connecting the annotation and annotations state is more than enough for most use cases.***
+
+## License
+
+MIT
+
+
+# Contributing
+We use TSDX to build this project.
+
 
 ## Commands
-
-TSDX scaffolds your new library inside `/src`, and also sets up a [Parcel-based](https://parceljs.org) playground for it inside `/example`.
-
-The recommended workflow is to run TSDX in one terminal:
-
+Build the project
 ```bash
 npm start # or yarn start
 ```
@@ -42,8 +208,6 @@ npm i # or yarn to install dependencies
 npm start # or yarn start
 ```
 
-The default example imports and live reloads whatever is in `/dist`, so if you are seeing an out of date component, make sure TSDX is running in watch mode like we recommend above. **No symlinking required**, we use [Parcel's aliasing](https://parceljs.org/module_resolution.html#aliases).
-
 To do a one-off build, use `npm run build` or `yarn build`.
 
 To run tests, use `npm test` or `yarn test`.
@@ -59,123 +223,3 @@ Jest tests are set up to run with `npm test` or `yarn test`.
 ### Bundle analysis
 
 Calculates the real cost of your library using [size-limit](https://github.com/ai/size-limit) with `npm run size` and visulize it with `npm run analyze`.
-
-#### Setup Files
-
-This is the folder structure we set up for you:
-
-```txt
-/example
-  index.html
-  index.tsx       # test your component here in a demo app
-  package.json
-  tsconfig.json
-/src
-  index.tsx       # EDIT THIS
-/test
-  blah.test.tsx   # EDIT THIS
-/stories
-  Thing.stories.tsx # EDIT THIS
-/.storybook
-  main.js
-  preview.js
-.gitignore
-package.json
-README.md         # EDIT THIS
-tsconfig.json
-```
-
-#### React Testing Library
-
-We do not set up `react-testing-library` for you yet, we welcome contributions and documentation on this.
-
-### Rollup
-
-TSDX uses [Rollup](https://rollupjs.org) as a bundler and generates multiple rollup configs for various module formats and build settings. See [Optimizations](#optimizations) for details.
-
-### TypeScript
-
-`tsconfig.json` is set up to interpret `dom` and `esnext` types, as well as `react` for `jsx`. Adjust according to your needs.
-
-## Continuous Integration
-
-### GitHub Actions
-
-Two actions are added by default:
-
-- `main` which installs deps w/ cache, lints, tests, and builds on all pushes against a Node and OS matrix
-- `size` which comments cost comparison of your library on every pull request using [size-limit](https://github.com/ai/size-limit)
-
-## Optimizations
-
-Please see the main `tsdx` [optimizations docs](https://github.com/palmerhq/tsdx#optimizations). In particular, know that you can take advantage of development-only optimizations:
-
-```js
-// ./types/index.d.ts
-declare var __DEV__: boolean;
-
-// inside your code...
-if (__DEV__) {
-  console.log('foo');
-}
-```
-
-You can also choose to install and use [invariant](https://github.com/palmerhq/tsdx#invariant) and [warning](https://github.com/palmerhq/tsdx#warning) functions.
-
-## Module Formats
-
-CJS, ESModules, and UMD module formats are supported.
-
-The appropriate paths are configured in `package.json` and `dist/index.js` accordingly. Please report if any issues are found.
-
-## Deploying the Example Playground
-
-The Playground is just a simple [Parcel](https://parceljs.org) app, you can deploy it anywhere you would normally deploy that. Here are some guidelines for **manually** deploying with the Netlify CLI (`npm i -g netlify-cli`):
-
-```bash
-cd example # if not already in the example folder
-npm run build # builds to dist
-netlify deploy # deploy the dist folder
-```
-
-Alternatively, if you already have a git repo connected, you can set up continuous deployment with Netlify:
-
-```bash
-netlify init
-# build command: yarn build && cd example && yarn && yarn build
-# directory to deploy: example/dist
-# pick yes for netlify.toml
-```
-
-## Named Exports
-
-Per Palmer Group guidelines, [always use named exports.](https://github.com/palmerhq/typescript#exports) Code split inside your React app instead of your React library.
-
-## Including Styles
-
-There are many ways to ship styles, including with CSS-in-JS. TSDX has no opinion on this, configure how you like.
-
-For vanilla CSS, you can include it at the root directory and add it to the `files` section in your `package.json`, so that it can be imported separately by your users and run through their bundler's loader.
-
-## Publishing to NPM
-
-We recommend using [np](https://github.com/sindresorhus/np).
-
-## Usage with Lerna
-
-When creating a new package with TSDX within a project set up with Lerna, you might encounter a `Cannot resolve dependency` error when trying to run the `example` project. To fix that you will need to make changes to the `package.json` file _inside the `example` directory_.
-
-The problem is that due to the nature of how dependencies are installed in Lerna projects, the aliases in the example project's `package.json` might not point to the right place, as those dependencies might have been installed in the root of your Lerna project.
-
-Change the `alias` to point to where those packages are actually installed. This depends on the directory structure of your Lerna project, so the actual path might be different from the diff below.
-
-```diff
-   "alias": {
--    "react": "../node_modules/react",
--    "react-dom": "../node_modules/react-dom"
-+    "react": "../../../node_modules/react",
-+    "react-dom": "../../../node_modules/react-dom"
-   },
-```
-
-An alternative to fixing this problem would be to remove aliases altogether and define the dependencies referenced as aliases as dev dependencies instead. [However, that might cause other problems.](https://github.com/palmerhq/tsdx/issues/64)
