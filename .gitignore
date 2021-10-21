@@ -6,3 +6,4 @@ dist
 *.iml
 *.envrc
 .idea
+example/.parcel-cache
