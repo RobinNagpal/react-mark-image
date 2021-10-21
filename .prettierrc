@@ -1,0 +1,10 @@
+{
+  "trailingComma": "all",
+  "endOfLine": "auto",
+  "overrides": [
+    {
+      "files": "*.json",
+      "options": { "printWidth": 500 }
+    }
+  ]
+}
