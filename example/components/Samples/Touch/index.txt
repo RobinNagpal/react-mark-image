@@ -1,0 +1,36 @@
+class Touch extends Component {
+  state = { allowTouch: true }
+
+  toggleAllowTouch = () => {
+    this.setState((prevState) => (
+      {allowTouch: !prevState.allowTouch}
+    ))
+  }
+
+  render () {
+    return (
+      <div>
+        <div>
+          <Button onClick={this.toggleAllowTouch}>
+            {this.state.allowTouch
+              ? "Stop allowing touch"
+              : "Start allowing touch"
+            }
+          </Button>
+        </div>
+        <Annotation
+          src={img}
+          alt='Two pebbles anthropomorphized holding hands'
+          annotations={this.state.annotations}
+          
+          allowTouch={this.state.allowTouch}
+
+          type={this.state.type}
+          value={this.state.annotation}
+          onChange={this.onChange}
+          onSubmit={this.onSubmit}
+        />
+      </div>
+    )
+  }
+}
