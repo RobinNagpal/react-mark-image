@@ -5,7 +5,7 @@ This is a fork of https://github.com/Secretmapper/react-image-annotation
 
 Since the original project was inactive, only option was to fork and update the code.
 
-![Annotation demo](demo.gif)
+![Annotation demo](https://raw.githubusercontent.com/RobinNagpal/react-image-annotation-ts/HEAD/demo.gif)
 
 ## Installation
 
@@ -222,3 +222,27 @@ Jest tests are set up to run with `npm test` or `yarn test`.
 ### Bundle analysis
 
 Calculates the real cost of your library using [size-limit](https://github.com/ai/size-limit) with `npm run size` and visulize it with `npm run analyze`.
+
+
+## Deploying the Example Playground
+
+The Playground is just a simple [Parcel](https://parceljs.org) app, you can deploy it anywhere you would normally deploy that. Here are some guidelines for **manually** deploying with the Netlify CLI (`npm i -g netlify-cli`):
+
+```bash
+cd example # if not already in the example folder
+npm run build # builds to dist
+netlify deploy # deploy the dist folder
+```
+
+Alternatively, if you already have a git repo connected, you can set up continuous deployment with Netlify:
+
+```bash
+netlify init
+# build command: yarn build && cd example && yarn && yarn build
+# directory to deploy: example/dist
+# pick yes for netlify.toml
+
+## Publishing to NPM
+
+We recommend using [np](https://github.com/sindresorhus/np).
+
