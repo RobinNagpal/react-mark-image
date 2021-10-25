@@ -35,7 +35,7 @@ const Items = styled.div`
 
 const Target = Items;
 
-type AnnotationPropsOptional = {
+export type AnnotationPropsOptional = {
   [K in keyof AnnotationProps]?: AnnotationProps[K]; // so that it retains the types
 };
 
