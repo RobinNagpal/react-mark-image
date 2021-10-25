@@ -1,7 +1,8 @@
 import { ArgTypes } from '@storybook/addons/dist/ts3.9/types';
 import { Meta, Story } from '@storybook/react';
+import { EditorMode, IAnnotation } from './../types/index';
 import React, { useState } from 'react';
-import { IAnnotation } from 'src/types';
+
 import Annotation, { AnnotationPropsOptional } from './Annotation';
 
 const defaultImageUrl =
@@ -59,12 +60,13 @@ const Template: Story<AnnotationPropsOptional> = (args) => {
   );
 };
 
-// By passing using the Args format for exported stories, you can control the props for a component for reuse in a test
-// https://storybook.js.org/docs/react/workflows/unit-testing
-
-const defaultProps: AnnotationPropsOptional = {
+export const Default = Template.bind({});
+Default.args = {
   src: defaultImageUrl,
 };
-export const Default = Template.bind(defaultProps);
 
-Default.args = {};
+export const HighlightOnlyAnnotations = Template.bind({});
+HighlightOnlyAnnotations.args = {
+  src: defaultImageUrl,
+  editorMode: EditorMode.HighlightOnly,
+};
