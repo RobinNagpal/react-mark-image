@@ -1,14 +1,14 @@
 import { ArgTypes } from '@storybook/addons/dist/ts3.9/types';
-import { Meta, Story } from '@storybook/react';
-import { EditorMode, IAnnotation } from './../types/index';
+import { Story } from '@storybook/react';
 import React, { useState } from 'react';
+import { IAnnotation } from './../../types/index';
 
-import Annotation, { AnnotationPropsOptional } from './Annotation';
+import Annotation, { AnnotationPropsOptional } from './../Annotation';
 
 const defaultImageUrl =
   'https://raw.githubusercontent.com/RobinNagpal/react-image-annotation-ts/HEAD/example/img.jpeg';
 
-const argTypes: ArgTypes = {
+export const argTypes: ArgTypes = {
   src: {
     defaultValue: defaultImageUrl,
     control: {
@@ -17,18 +17,7 @@ const argTypes: ArgTypes = {
   },
 };
 
-const meta: Meta = {
-  title: 'Annotation',
-  component: Annotation,
-  argTypes,
-  parameters: {
-    controls: { expanded: true },
-  },
-};
-
-export default meta;
-
-const Template: Story<AnnotationPropsOptional> = (args) => {
+export const Template: Story<AnnotationPropsOptional> = (args) => {
   const [annotations, setAnnotations] = useState<any[]>([]);
   const [annotation, setAnnotation] = useState<any>({});
 
@@ -58,15 +47,4 @@ const Template: Story<AnnotationPropsOptional> = (args) => {
       {...args}
     />
   );
-};
-
-export const Default = Template.bind({});
-Default.args = {
-  src: defaultImageUrl,
-};
-
-export const HighlightOnlyAnnotations = Template.bind({});
-HighlightOnlyAnnotations.args = {
-  src: defaultImageUrl,
-  editorMode: EditorMode.HighlightOnly,
 };

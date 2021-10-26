@@ -25,15 +25,13 @@ const Container = styled.div<{ allowTouch?: boolean }>`
   touch-action: ${({ allowTouch }) => (allowTouch ? 'pinch-zoom' : 'auto')};
 `;
 
-const Items = styled.div`
+const ItemsDiv = styled.div`
   position: absolute;
   top: 0;
   left: 0;
   bottom: 0;
   right: 0;
 `;
-
-const Target = Items;
 
 export type AnnotationPropsOptional = {
   [K in keyof AnnotationProps]?: AnnotationProps[K]; // so that it retains the types
@@ -264,7 +262,7 @@ const Annotation: ComponentType<AnnotationPropsOptional> = compose(
             draggable={false}
             setInnerRef={this.setInnerRef}
           />
-          <Items>
+          <ItemsDiv>
             {props.annotations.map((annotation) =>
               renderHighlight({
                 key: annotation.data.id,
@@ -281,8 +279,8 @@ const Annotation: ComponentType<AnnotationPropsOptional> = compose(
               renderSelector({
                 annotation: props.value,
               })}
-          </Items>
-          <Target
+          </ItemsDiv>
+          <ItemsDiv
             onClick={this.onClick}
             onMouseUp={this.onMouseUp}
             onMouseDown={this.onMouseDown}
@@ -297,6 +295,7 @@ const Annotation: ComponentType<AnnotationPropsOptional> = compose(
           {props.annotations.map(
             (annotation) =>
               this.shouldAnnotationBeActive(annotation, topAnnotationAtMouse) &&
+              this.props.editorMode !== EditorMode.HighlightOnly &&
               renderContent({
                 key: annotation.data.id,
                 annotation: annotation,
