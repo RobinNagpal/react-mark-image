@@ -1,5 +1,10 @@
 import { Meta, Story } from '@storybook/react';
-import { EditorMode, OvalSelector } from './../../index';
+import {
+  EditorMode,
+  OvalSelector,
+  PointSelector,
+  RectangleSelector,
+} from './../../index';
 
 import Annotation, { AnnotationPropsOptional } from './../Annotation';
 import { argTypes, Template } from './AnnotationStoryTemplate';
@@ -25,4 +30,18 @@ Oval.args = {
   src: defaultImageUrl,
   editorMode: EditorMode.HighlightOnly,
   type: OvalSelector.TYPE,
+};
+
+export const Rectangle = StoryTemplate.bind({});
+Rectangle.args = {
+  src: defaultImageUrl,
+  editorMode: EditorMode.HighlightOnly,
+  type: RectangleSelector.TYPE,
+};
+
+export const Point = StoryTemplate.bind({});
+Point.args = {
+  src: defaultImageUrl,
+  editorMode: EditorMode.HighlightOnly,
+  type: PointSelector.TYPE,
 };

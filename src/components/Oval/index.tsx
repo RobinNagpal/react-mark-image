@@ -3,7 +3,6 @@ import styled from 'styled-components';
 import { IAnnotation } from '../../types/index';
 
 const Container = styled.div`
-  border: dashed 2px black;
   border-radius: 100%;
   box-shadow: 0 0 1px 1px white inset;
   box-sizing: border-box;
@@ -29,7 +28,11 @@ function Oval(props: OvalProps) {
         top: `${geometry.y}%`,
         height: `${geometry.height}%`,
         width: `${geometry.width}%`,
-        boxShadow: props.active ? '0 0 2px 2px yellow inset' : '',
+        border: props.active ? 'solid 1px black' : 'dashed 2px black',
+        boxShadow: props.active ? '0 0 1px 1px black inset' : '',
+        backgroundColor: props.active
+          ? 'rgba(128, 128, 128, 0.3)'
+          : 'rgba(128, 128, 128, 0.05)',
         ...props.style,
       }}
     />

@@ -39,12 +39,14 @@ export const Template: Story<AnnotationPropsOptional> = (args) => {
   };
 
   return (
-    <Annotation
-      value={annotation}
-      annotations={annotations}
-      onChange={setAnnotation}
-      onSubmit={onSubmit}
-      {...args}
-    />
+    <div style={{ width: '800px' }}>
+      <Annotation
+        value={annotation}
+        annotations={annotations}
+        onChange={setAnnotation}
+        onSubmit={onSubmit}
+        {...args}
+      />
+    </div>
   );
 };

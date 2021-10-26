@@ -131,3 +131,14 @@ export interface AnnotationProps {
 
   value?: IAnnotation;
 }
+
+export interface Theme {
+  annotation: {
+    backgroundColor: string;
+    active: {
+      border: string;
+      boxShadow: string;
+      backgroundColor: string;
+    };
+  };
+}
