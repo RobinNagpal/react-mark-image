@@ -18,7 +18,7 @@ export const argTypes: ArgTypes = {
 };
 
 export const Template: Story<AnnotationPropsOptional> = (args) => {
-  const [annotations, setAnnotations] = useState<any[]>([]);
+  const [annotations, setAnnotations] = useState<any[]>(args.annotations || []);
   const [annotation, setAnnotation] = useState<any>({});
 
   const onSubmit = (annotation: IAnnotation) => {
@@ -26,7 +26,7 @@ export const Template: Story<AnnotationPropsOptional> = (args) => {
 
     setAnnotation({});
 
-    setAnnotations([
+    const annotationsArray = [
       ...annotations,
       {
         geometry,
@@ -35,7 +35,8 @@ export const Template: Story<AnnotationPropsOptional> = (args) => {
           id: Math.random(),
         },
       },
-    ]);
+    ];
+    setAnnotations(annotationsArray);
   };
 
   return (

@@ -1,10 +1,6 @@
 React Image Annotation(TypeScript)
 =========================
 
-This is a fork of https://github.com/Secretmapper/react-image-annotation 
-
-Since the original project was inactive, only option was to fork and update the code.
-
 ![Annotation demo](https://raw.githubusercontent.com/RobinNagpal/react-image-annotation-ts/HEAD/demo.gif)
 
 ## Installation

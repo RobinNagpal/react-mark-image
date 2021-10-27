@@ -212,26 +212,10 @@ const Annotation: ComponentType<AnnotationPropsOptional> = compose(
       }
     };
 
-    shouldAnnotationBeActive = (
-      annotation: IAnnotation,
-      top: IAnnotation | undefined
-    ) => {
-      if (this.props.activeAnnotations) {
-        const isActive = !!this.props.activeAnnotations.find((active) =>
-          this.props.activeAnnotationComparator(annotation, active)
-        );
-
-        return isActive || top === annotation;
-      } else {
-        return top === annotation;
-      }
-    };
-
     render() {
       const { props } = this;
       const {
         renderHighlight,
-        renderContent,
         renderSelector,
         renderEditor,
         renderOverlay,
@@ -241,11 +225,6 @@ const Annotation: ComponentType<AnnotationPropsOptional> = compose(
         alt,
         src,
       } = props;
-
-      const topAnnotationAtMouse = this.getTopAnnotationAt(
-        this.props.relativeMousePos.x,
-        this.props.relativeMousePos.y
-      );
 
       return (
         <Container
@@ -267,10 +246,7 @@ const Annotation: ComponentType<AnnotationPropsOptional> = compose(
               renderHighlight({
                 key: annotation.data.id,
                 annotation,
-                active: this.shouldAnnotationBeActive(
-                  annotation,
-                  topAnnotationAtMouse
-                ),
+                renderContent: props.renderContent,
               })
             )}
             {!props.disableSelector &&
@@ -278,6 +254,7 @@ const Annotation: ComponentType<AnnotationPropsOptional> = compose(
               props.value.geometry &&
               renderSelector({
                 annotation: props.value,
+                renderContent: props.renderContent,
               })}
           </ItemsDiv>
           <ItemsDiv
@@ -292,15 +269,6 @@ const Annotation: ComponentType<AnnotationPropsOptional> = compose(
               type: props.type,
               annotation: props.value!,
             })}
-          {props.annotations.map(
-            (annotation) =>
-              this.shouldAnnotationBeActive(annotation, topAnnotationAtMouse) &&
-              this.props.editorMode !== EditorMode.HighlightOnly &&
-              renderContent({
-                key: annotation.data.id,
-                annotation: annotation,
-              })
-          )}
           {!props.disableEditor &&
             props.value &&
             props.value.selection &&

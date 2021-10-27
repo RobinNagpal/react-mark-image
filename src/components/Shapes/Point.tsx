@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
 import { IAnnotation } from '../../types/index';
 
@@ -14,23 +14,27 @@ const Container = styled.div`
   position: absolute;
   transform: translate3d(-50%, -50%, 0);
   width: 16px;
+  z-index: 1;
+  cursor: pointer;
 `;
 interface PointProps {
   annotation: IAnnotation;
-  active?: boolean;
 }
 
 function Point(props: PointProps) {
   const { geometry } = props.annotation;
   if (!geometry) return null;
+  const [mouseHovered, setMouseHovered] = useState<boolean>(false);
 
   return (
     <Container
       style={{
         top: `${geometry.y}%`,
         left: `${geometry.x}%`,
-        border: props.active ? 'solid 3px grey' : 'solid 3px white',
+        border: mouseHovered ? 'solid 3px grey' : 'solid 3px white',
       }}
+      onMouseEnter={() => setMouseHovered(true)}
+      onMouseLeave={() => setMouseHovered(false)}
     />
   );
 }
