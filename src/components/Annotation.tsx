@@ -25,15 +25,13 @@ const Container = styled.div<{ allowTouch?: boolean }>`
   touch-action: ${({ allowTouch }) => (allowTouch ? 'pinch-zoom' : 'auto')};
 `;
 
-const Items = styled.div`
+const ItemsDiv = styled.div`
   position: absolute;
   top: 0;
   left: 0;
   bottom: 0;
   right: 0;
 `;
-
-const Target = Items;
 
 export type AnnotationPropsOptional = {
   [K in keyof AnnotationProps]?: AnnotationProps[K]; // so that it retains the types
@@ -214,26 +212,10 @@ const Annotation: ComponentType<AnnotationPropsOptional> = compose(
       }
     };
 
-    shouldAnnotationBeActive = (
-      annotation: IAnnotation,
-      top: IAnnotation | undefined
-    ) => {
-      if (this.props.activeAnnotations) {
-        const isActive = !!this.props.activeAnnotations.find((active) =>
-          this.props.activeAnnotationComparator(annotation, active)
-        );
-
-        return isActive || top === annotation;
-      } else {
-        return top === annotation;
-      }
-    };
-
     render() {
       const { props } = this;
       const {
         renderHighlight,
-        renderContent,
         renderSelector,
         renderEditor,
         renderOverlay,
@@ -243,11 +225,6 @@ const Annotation: ComponentType<AnnotationPropsOptional> = compose(
         alt,
         src,
       } = props;
-
-      const topAnnotationAtMouse = this.getTopAnnotationAt(
-        this.props.relativeMousePos.x,
-        this.props.relativeMousePos.y
-      );
 
       return (
         <Container
@@ -264,15 +241,12 @@ const Annotation: ComponentType<AnnotationPropsOptional> = compose(
             draggable={false}
             setInnerRef={this.setInnerRef}
           />
-          <Items>
+          <ItemsDiv>
             {props.annotations.map((annotation) =>
               renderHighlight({
                 key: annotation.data.id,
                 annotation,
-                active: this.shouldAnnotationBeActive(
-                  annotation,
-                  topAnnotationAtMouse
-                ),
+                renderContent: props.renderContent,
               })
             )}
             {!props.disableSelector &&
@@ -280,9 +254,10 @@ const Annotation: ComponentType<AnnotationPropsOptional> = compose(
               props.value.geometry &&
               renderSelector({
                 annotation: props.value,
+                renderContent: props.renderContent,
               })}
-          </Items>
-          <Target
+          </ItemsDiv>
+          <ItemsDiv
             onClick={this.onClick}
             onMouseUp={this.onMouseUp}
             onMouseDown={this.onMouseDown}
@@ -294,14 +269,6 @@ const Annotation: ComponentType<AnnotationPropsOptional> = compose(
               type: props.type,
               annotation: props.value!,
             })}
-          {props.annotations.map(
-            (annotation) =>
-              this.shouldAnnotationBeActive(annotation, topAnnotationAtMouse) &&
-              renderContent({
-                key: annotation.data.id,
-                annotation: annotation,
-              })
-          )}
           {!props.disableEditor &&
             props.value &&
             props.value.selection &&

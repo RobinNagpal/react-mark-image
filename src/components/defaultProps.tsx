@@ -1,27 +1,25 @@
 import React, { ReactElement } from 'react';
 
-import Point from './Point';
-import Editor from './Editor';
-import FancyRectangle from './FancyRectangle';
-import Rectangle from './Rectangle';
-import Oval from './Oval';
-import Content from './Content';
-import Overlay from './Overlay';
-
 import { OvalSelector, PointSelector, RectangleSelector } from '../selectors';
 import {
   AnnotationProps,
+  ContentProps,
   EditorMode,
-  IAnnotation,
-  RenderContentProps,
   RenderEditorProps,
   RenderHighlightProps,
   RenderOverlayProps,
   RenderSelectorProps,
 } from '../types/index';
+import Content from './Content';
+import Editor from './Editor';
+import FancyRectangle from './FancyRectangle';
+import Overlay from './Overlay';
+import Oval from './Shapes/Oval';
+
+import Point from './Shapes/Point';
+import Rectangle from './Shapes/Rectangle';
 
 const defaultProps: AnnotationProps = {
-  activeAnnotationComparator: (a: IAnnotation, b: IAnnotation) => a === b,
   annotations: [],
 
   disableAnnotation: false,
@@ -36,14 +34,14 @@ const defaultProps: AnnotationProps = {
   onChange: () => {},
   onSubmit: () => {},
 
-  renderSelector: ({ annotation }: RenderSelectorProps) => {
+  renderSelector: ({ annotation, renderContent }: RenderSelectorProps) => {
     switch (annotation.geometry.type) {
       case RectangleSelector.TYPE:
         return <FancyRectangle annotation={annotation} />;
       case PointSelector.TYPE:
         return <Point annotation={annotation} />;
       case OvalSelector.TYPE:
-        return <Oval annotation={annotation} />;
+        return <Oval annotation={annotation} renderContent={renderContent} />;
       default:
         return null;
     }
@@ -54,20 +52,26 @@ const defaultProps: AnnotationProps = {
   renderHighlight: ({
     key,
     annotation,
-    active,
+    renderContent,
   }: RenderHighlightProps): ReactElement | null => {
     switch (annotation.geometry.type) {
       case RectangleSelector.TYPE:
-        return <Rectangle key={key} annotation={annotation} active={active} />;
+        return <Rectangle key={key} annotation={annotation} />;
       case PointSelector.TYPE:
-        return <Point key={key} annotation={annotation} active={active} />;
+        return <Point key={key} annotation={annotation} />;
       case OvalSelector.TYPE:
-        return <Oval key={key} annotation={annotation} active={active} />;
+        return (
+          <Oval
+            key={key}
+            annotation={annotation}
+            renderContent={renderContent}
+          />
+        );
       default:
         return null;
     }
   },
-  renderContent: ({ key, annotation }: RenderContentProps) => (
+  renderContent: ({ key, annotation }: ContentProps) => (
     <Content key={key} annotation={annotation} />
   ),
   renderOverlay: ({ type }: RenderOverlayProps): ReactElement => {

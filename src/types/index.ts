@@ -1,4 +1,4 @@
-import { ReactElement, MouseEvent } from 'react';
+import { ReactElement, MouseEvent, MouseEventHandler } from 'react';
 
 export interface IPoint {
   x: number;
@@ -49,7 +49,7 @@ export interface IAnnotation {
   };
   geometry: IGeometry;
   data: {
-    text: string;
+    text?: string;
     id?: number;
   };
 }
@@ -60,9 +60,12 @@ export interface RenderEditorProps {
   onSubmit: (e: MouseEvent<HTMLDivElement>) => void;
 }
 
-export interface RenderContentProps {
+export interface ShapeProps {
   key?: number;
   annotation: IAnnotation;
+  isMouseOver: boolean;
+  onMouseEnter: MouseEventHandler<HTMLDivElement>;
+  onMouseLeave: MouseEventHandler<HTMLDivElement>;
 }
 
 export interface RenderOverlayProps {
@@ -72,12 +75,18 @@ export interface RenderOverlayProps {
 
 export interface RenderHighlightProps {
   key?: number;
-  active?: boolean;
+  annotation: IAnnotation;
+  renderContent?: (props: ContentProps) => ReactElement | null;
+}
+
+export interface ContentProps {
+  key?: number;
   annotation: IAnnotation;
 }
 
 export interface RenderSelectorProps {
   annotation: IAnnotation;
+  renderContent?: (props: ContentProps) => ReactElement | null;
 }
 
 export enum EditorMode {
@@ -90,9 +99,14 @@ export enum SelectionMode {
   Editing = 'EDITING',
 }
 
+export type WrappedShapeProps = Omit<
+  ShapeProps,
+  'isMouseOver' | 'onMouseEnter' | 'onMouseLeave'
+> & {
+  renderContent?: (props: ContentProps) => ReactElement | null;
+};
+
 export interface AnnotationProps {
-  activeAnnotationComparator: (a1: IAnnotation, a2: IAnnotation) => boolean;
-  activeAnnotations?: IAnnotation[];
   alt?: string;
   allowTouch?: boolean;
   annotations: IAnnotation[];
@@ -117,11 +131,11 @@ export interface AnnotationProps {
   onChange: (e: IAnnotation) => void;
   onSubmit: (e: IAnnotation) => void;
 
-  renderContent: (props: RenderContentProps) => ReactElement | null;
+  renderContent: (props: ContentProps) => ReactElement | null;
   renderEditor: (props: RenderEditorProps) => ReactElement | null;
-  renderHighlight: (props: RenderHighlightProps) => ReactElement | null;
+  renderHighlight: (props: WrappedShapeProps) => ReactElement | null;
   renderOverlay: (props: RenderOverlayProps) => ReactElement | null;
-  renderSelector: (props: RenderSelectorProps) => ReactElement | null;
+  renderSelector: (props: WrappedShapeProps) => ReactElement | null;
 
   selectors: ISelector[];
   src: string;
@@ -130,4 +144,15 @@ export interface AnnotationProps {
   type: string;
 
   value?: IAnnotation;
+}
+
+export interface Theme {
+  annotation: {
+    backgroundColor: string;
+    active: {
+      border: string;
+      boxShadow: string;
+      backgroundColor: string;
+    };
+  };
 }

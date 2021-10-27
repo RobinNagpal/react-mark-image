@@ -59,9 +59,4 @@ function FancyRectangle(props: FancyRectangleProps) {
   );
 }
 
-FancyRectangle.defaultProps = {
-  className: '',
-  style: {},
-};
-
 export default FancyRectangle;
