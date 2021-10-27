@@ -15,7 +15,6 @@ import Editor from './Editor';
 import FancyRectangle from './FancyRectangle';
 import Overlay from './Overlay';
 import Oval from './Shapes/Oval';
-
 import Point from './Shapes/Point';
 import Rectangle from './Shapes/Rectangle';
 
@@ -39,7 +38,7 @@ const defaultProps: AnnotationProps = {
       case RectangleSelector.TYPE:
         return <FancyRectangle annotation={annotation} />;
       case PointSelector.TYPE:
-        return <Point annotation={annotation} />;
+        return <Point annotation={annotation} renderContent={renderContent} />;
       case OvalSelector.TYPE:
         return <Oval annotation={annotation} renderContent={renderContent} />;
       default:
@@ -56,9 +55,21 @@ const defaultProps: AnnotationProps = {
   }: RenderHighlightProps): ReactElement | null => {
     switch (annotation.geometry.type) {
       case RectangleSelector.TYPE:
-        return <Rectangle key={key} annotation={annotation} />;
+        return (
+          <Rectangle
+            key={key}
+            annotation={annotation}
+            renderContent={renderContent}
+          />
+        );
       case PointSelector.TYPE:
-        return <Point key={key} annotation={annotation} />;
+        return (
+          <Point
+            key={key}
+            annotation={annotation}
+            renderContent={renderContent}
+          />
+        );
       case OvalSelector.TYPE:
         return (
           <Oval

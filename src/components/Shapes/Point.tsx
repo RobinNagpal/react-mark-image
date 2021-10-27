@@ -1,6 +1,7 @@
-import React, { useState } from 'react';
+import React from 'react';
 import styled from 'styled-components';
-import { IAnnotation } from '../../types/index';
+import { ShapeProps } from '../../types/index';
+import { withShapeWrapper } from './withShapeWrapper';
 
 const Container = styled.div`
   border-radius: 50%;
@@ -17,26 +18,27 @@ const Container = styled.div`
   z-index: 1;
   cursor: pointer;
 `;
-interface PointProps {
-  annotation: IAnnotation;
-}
 
-function Point(props: PointProps) {
-  const { geometry } = props.annotation;
+function Point(props: ShapeProps) {
+  const {
+    annotation: { geometry },
+    isMouseOver,
+    onMouseEnter,
+    onMouseLeave,
+  } = props;
   if (!geometry) return null;
-  const [mouseHovered, setMouseHovered] = useState<boolean>(false);
 
   return (
     <Container
       style={{
         top: `${geometry.y}%`,
         left: `${geometry.x}%`,
-        border: mouseHovered ? 'solid 3px grey' : 'solid 3px white',
+        border: isMouseOver ? 'solid 3px grey' : 'solid 3px white',
       }}
-      onMouseEnter={() => setMouseHovered(true)}
-      onMouseLeave={() => setMouseHovered(false)}
+      onMouseEnter={onMouseEnter}
+      onMouseLeave={onMouseLeave}
     />
   );
 }
 
-export default Point;
+export default withShapeWrapper(Point);
