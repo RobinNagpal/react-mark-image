@@ -107,8 +107,8 @@ export interface RenderOverlayProps {
 }
 
 export interface RenderToolbarProps {
-  selectorType: string;
-  setSelectorType: (selector: string) => void;
+  selectedSelectorType: string;
+  setSelectedSelectorType: (selector: string) => void;
 }
 
 export interface AnnotationProps {

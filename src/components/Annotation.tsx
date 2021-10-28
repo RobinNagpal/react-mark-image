@@ -41,15 +41,15 @@ export type AnnotationPropsOptional = {
   [K in keyof AnnotationProps]?: AnnotationProps[K]; // so that it retains the types
 };
 
-const Annotation: ComponentType<AnnotationPropsOptional> = compose(
-  withRelativeMousePos()
-)(function Annotation(options: AnnotationProps & WithRelativeMousePosProps) {
+function Annotation(options: AnnotationProps & WithRelativeMousePosProps) {
   const props: AnnotationProps = {
     ...defaultProps,
     ...options,
   };
 
-  const [selectorType, setSelectorType] = useState<string>(props.shapes[0]);
+  const [selectedSelectorType, setSelectedSelectorType] = useState<string>(
+    props.shapes[0]
+  );
   const targetRef = React.createRef<any>();
 
   const addTargetTouchEventListeners = () => {
@@ -135,14 +135,14 @@ const Annotation: ComponentType<AnnotationPropsOptional> = compose(
     if (!!options[methodName]) {
       (options[methodName] as any)(e);
     } else {
-      const selector = getSelectorByType(selectorType);
+      const selector = getSelectorByType(selectedSelectorType);
       if (selector && (selector.methods[methodName] as any)) {
         const value = (selector.methods[methodName] as any)(props.value, e);
 
         if (typeof value === 'undefined') {
           if (process.env.NODE_ENV !== 'production') {
             console.error(`
-              ${methodName} of selector type ${selectorType} returned undefined.
+              ${methodName} of selector type ${selectedSelectorType} returned undefined.
               Make sure to explicitly return the previous state
             `);
           }
@@ -175,7 +175,10 @@ const Annotation: ComponentType<AnnotationPropsOptional> = compose(
 
   return (
     <>
-      <ToolBar selectorType={selectorType} setSelectorType={setSelectorType} />
+      <ToolBar
+        selectedSelectorType={selectedSelectorType}
+        setSelectedSelectorType={setSelectedSelectorType}
+      />
       <Container
         style={props.style}
         onMouseLeave={onTargetMouseLeave}
@@ -216,7 +219,7 @@ const Annotation: ComponentType<AnnotationPropsOptional> = compose(
         {!props.disableOverlay &&
           renderOverlay({
             annotations: props.annotations,
-            selectorType: selectorType,
+            selectorType: selectedSelectorType,
           })}
         {!props.disableEditor &&
           props.value &&
@@ -231,6 +234,10 @@ const Annotation: ComponentType<AnnotationPropsOptional> = compose(
       </Container>
     </>
   );
-});
+}
 
-export default Annotation;
+const WrappedAnnotation: ComponentType<AnnotationPropsOptional> = compose(
+  withRelativeMousePos()
+)(Annotation);
+
+export default WrappedAnnotation;

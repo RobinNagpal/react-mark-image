@@ -1,5 +1,11 @@
 import { getCoordPercentage } from '../utils/offsetCoordinates';
-import { IAnnotation, IGeometry, IPoint, SelectionMode } from '../types/index';
+import {
+  IAnnotation,
+  IGeometry,
+  IPoint,
+  ISelector,
+  SelectionMode,
+} from '../types/index';
 import { MouseEvent, TouchEvent } from 'react';
 
 const square = (n: number) => Math.pow(n, 2);
@@ -113,9 +119,11 @@ function pointerMove(annotation: IAnnotation, e: TouchEvent | MouseEvent) {
   return annotation;
 }
 
-export default {
+const OvalSelector: ISelector = {
   TYPE,
   intersects,
   area,
   methods,
 };
+
+export default OvalSelector;

@@ -1,4 +1,7 @@
 import React, { ReactElement } from 'react';
+import RectangleSelector from './../../hocs/RectangleSelector';
+import PointSelector from './../../hocs/PointSelector';
+import OvalSelector from './../../hocs/OvalSelector';
 import styled from 'styled-components';
 import { RenderToolbarProps } from './../../types';
 import CircleSvg from './icons/circle.svg';
@@ -36,13 +39,16 @@ const TrashIcon = styled(StyledIcon)`
 `;
 
 // https://www.w3schools.com/howto/howto_css_icon_bar.asp#
-export default function ToolBar(props: RenderToolbarProps): ReactElement {
-  console.log(props);
+export default function ToolBar({
+  setSelectedSelectorType,
+}: RenderToolbarProps): ReactElement {
   return (
     <OptionsBarDiv>
-      <CircleIcon />
-      <PointIcon />
-      <SquareIcon />
+      <CircleIcon
+        onClick={() => setSelectedSelectorType(RectangleSelector.TYPE)}
+      />
+      <PointIcon onClick={() => setSelectedSelectorType(PointSelector.TYPE)} />
+      <SquareIcon onClick={() => setSelectedSelectorType(OvalSelector.TYPE)} />
       <TrashIcon />
     </OptionsBarDiv>
   );

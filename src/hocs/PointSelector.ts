@@ -1,4 +1,10 @@
-import { IAnnotation, IContainer, IGeometry, IPoint } from '../types/index';
+import {
+  IAnnotation,
+  IContainer,
+  IGeometry,
+  IPoint,
+  ISelector,
+} from '../types/index';
 import { getCoordPercentage } from '../utils/offsetCoordinates';
 const MARGIN = 6;
 
@@ -53,9 +59,11 @@ export const methods = {
   },
 };
 
-export default {
+const PointSelector: ISelector = {
   TYPE,
   intersects,
   area,
   methods,
 };
+
+export default PointSelector;

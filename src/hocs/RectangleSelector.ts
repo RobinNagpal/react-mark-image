@@ -1,5 +1,5 @@
 import { MouseEvent, TouchEvent } from 'react';
-import { IAnnotation, IGeometry, IPoint } from '../types/index';
+import { IAnnotation, IGeometry, IPoint, ISelector } from '../types/index';
 import { getCoordPercentage } from '../utils/offsetCoordinates';
 
 export const TYPE = 'RECTANGLE';
@@ -99,9 +99,11 @@ function pointerMove(annotation: IAnnotation, e: TouchEvent | MouseEvent) {
   return annotation;
 }
 
-export default {
+const RectangleSelector: ISelector = {
   TYPE,
   intersects,
   area,
   methods,
 };
+
+export default RectangleSelector;
