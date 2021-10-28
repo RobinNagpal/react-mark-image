@@ -104,6 +104,7 @@ export interface ShapeProps {
 
 export interface RenderHighlightProps {
   key?: number;
+  isInSelectionMode: boolean;
   annotation: IAnnotation;
   renderContent?: (props: ContentProps) => ReactElement | null;
 }
@@ -114,6 +115,7 @@ export interface ContentProps {
 }
 
 export interface RenderSelectorProps {
+  isInSelectionMode: boolean;
   annotation: IAnnotation;
   renderContent?: (props: ContentProps) => ReactElement | null;
 }
@@ -134,6 +136,7 @@ export type WrappedShapeProps = Omit<
   ShapeProps,
   'isMouseOver' | 'onMouseEnter' | 'onMouseLeave'
 > & {
+  isInSelectionMode: boolean;
   renderContent?: (props: ContentProps) => ReactElement | null;
 };
 

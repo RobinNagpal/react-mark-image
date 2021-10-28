@@ -32,14 +32,14 @@ const defaultProps: AnnotationProps = {
 
   onAnnotationsUpdate: () => {},
 
-  renderSelector: ({ annotation, renderContent }: RenderSelectorProps) => {
-    switch (annotation.geometry.type) {
+  renderSelector: (props: RenderSelectorProps) => {
+    switch (props.annotation.geometry.type) {
       case RectangleSelector.TYPE:
-        return <FancyRectangle annotation={annotation} />;
+        return <FancyRectangle {...props} />;
       case PointSelector.TYPE:
-        return <Point annotation={annotation} renderContent={renderContent} />;
+        return <Point {...props} />;
       case OvalSelector.TYPE:
-        return <Oval annotation={annotation} renderContent={renderContent} />;
+        return <Oval {...props} />;
       default:
         return null;
     }
@@ -47,36 +47,15 @@ const defaultProps: AnnotationProps = {
   renderEditor: ({ annotation, onSubmit }: RenderEditorProps) => (
     <Editor annotation={annotation} onSubmit={onSubmit} />
   ),
-  renderHighlight: ({
-    key,
-    annotation,
-    renderContent,
-  }: RenderHighlightProps): ReactElement | null => {
+  renderHighlight: (props: RenderHighlightProps): ReactElement | null => {
+    const { annotation } = props;
     switch (annotation.geometry.type) {
       case RectangleSelector.TYPE:
-        return (
-          <Rectangle
-            key={key}
-            annotation={annotation}
-            renderContent={renderContent}
-          />
-        );
+        return <Rectangle {...props} />;
       case PointSelector.TYPE:
-        return (
-          <Point
-            key={key}
-            annotation={annotation}
-            renderContent={renderContent}
-          />
-        );
+        return <Point {...props} />;
       case OvalSelector.TYPE:
-        return (
-          <Oval
-            key={key}
-            annotation={annotation}
-            renderContent={renderContent}
-          />
-        );
+        return <Oval {...props} />;
       default:
         return null;
     }

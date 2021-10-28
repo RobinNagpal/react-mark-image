@@ -192,7 +192,6 @@ function Annotation(options: AnnotationProps & WithRelativeMousePosProps) {
     src,
   } = props;
 
-  console.log(activeAnnotation);
   return (
     <>
       <ToolBar
@@ -219,6 +218,7 @@ function Annotation(options: AnnotationProps & WithRelativeMousePosProps) {
               key: annotation.data.id,
               annotation,
               renderContent: props.renderContent,
+              isInSelectionMode: !!activeAnnotation,
             })
           )}
           {!props.disableSelector &&
@@ -226,6 +226,7 @@ function Annotation(options: AnnotationProps & WithRelativeMousePosProps) {
             renderSelector({
               annotation: activeAnnotation,
               renderContent: props.renderContent,
+              isInSelectionMode: !!activeAnnotation,
             })}
         </ItemsDiv>
         <ItemsDiv
