@@ -19,7 +19,9 @@ const getMouseRelativeCoordinates = (e: MouseEvent) => {
 
 const clamp = (a: number, b: number, i: number) => Math.max(a, Math.min(b, i));
 
-const getTouchRelativeCoordinates = (e: TouchEvent) => {
+const getTouchRelativeCoordinates = (
+  e: TouchEvent
+): { x: number; y: number } => {
   const touch = e.targetTouches[0];
 
   const boundingRect = e.currentTarget.getBoundingClientRect();
@@ -35,17 +37,14 @@ const getTouchRelativeCoordinates = (e: TouchEvent) => {
 };
 
 const getCoordPercentage = (
-  e: MouseEvent | TouchEvent,
-): { x: number | null; y?: number | null } => {
+  e: MouseEvent | TouchEvent
+): { x: number; y: number } | undefined => {
   if (isTouchEvent(e)) {
     if (isValidTouchEvent(e)) {
       isTouchMoveEvent(e) && e.preventDefault();
       return getTouchRelativeCoordinates(e as TouchEvent);
-    } else {
-      return {
-        x: null,
-      };
     }
+    return;
   } else {
     return getMouseRelativeCoordinates(e as MouseEvent);
   }

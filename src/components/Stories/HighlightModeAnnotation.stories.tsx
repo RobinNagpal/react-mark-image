@@ -26,22 +26,23 @@ export default meta;
 const StoryTemplate: Story<AnnotationPropsOptional> = Template;
 
 export const Oval = StoryTemplate.bind({});
+
 Oval.args = {
   src: defaultImageUrl,
   editorMode: EditorMode.HighlightOnly,
-  type: OvalSelector.TYPE,
+  shapes: [OvalSelector.TYPE],
 };
 
 export const Rectangle = StoryTemplate.bind({});
 Rectangle.args = {
   src: defaultImageUrl,
   editorMode: EditorMode.HighlightOnly,
-  type: RectangleSelector.TYPE,
+  shapes: [RectangleSelector.TYPE],
 };
 
 export const Point = StoryTemplate.bind({});
 Point.args = {
   src: defaultImageUrl,
   editorMode: EditorMode.HighlightOnly,
-  type: PointSelector.TYPE,
+  shapes: [PointSelector.TYPE],
 };

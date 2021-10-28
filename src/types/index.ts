@@ -1,4 +1,4 @@
-import { ReactElement, MouseEvent, MouseEventHandler } from 'react';
+import { ReactElement, MouseEvent, MouseEventHandler, TouchEvent } from 'react';
 
 export interface IPoint {
   x: number;
@@ -18,6 +18,50 @@ export interface IGeometry {
   width: number;
 }
 
+export interface ISelectorMethods {
+  onMouseDown?: (
+    annotation: IAnnotation | undefined,
+    e: MouseEvent,
+    editorMode: EditorMode
+  ) => IAnnotation | undefined;
+
+  onMouseUp?: (
+    annotation: IAnnotation | undefined,
+    e: MouseEvent,
+    editorMode: EditorMode
+  ) => IAnnotation | undefined;
+
+  onMouseMove?: (
+    annotation: IAnnotation | undefined,
+    e: MouseEvent,
+    editorMode: EditorMode
+  ) => IAnnotation | undefined;
+
+  onTouchStart?: (
+    annotation: IAnnotation | undefined,
+    e: TouchEvent,
+    editorMode: EditorMode
+  ) => IAnnotation | undefined;
+
+  onTouchEnd?: (
+    annotation: IAnnotation | undefined,
+    e: TouchEvent,
+    editorMode: EditorMode
+  ) => IAnnotation | undefined;
+
+  onTouchMove?: (
+    annotation: IAnnotation | undefined,
+    e: TouchEvent,
+    editorMode: EditorMode
+  ) => IAnnotation | undefined;
+
+  onClick?: (
+    annotation: IAnnotation | undefined,
+    e: any,
+    editorMode: EditorMode
+  ) => IAnnotation | undefined;
+}
+
 export interface ISelector {
   TYPE: string;
   intersects: (
@@ -29,23 +73,15 @@ export interface ISelector {
     geometry: IGeometry,
     container: { width: number; height: number }
   ) => number;
-  methods: {
-    onMouseUp?: (annotation: IAnnotation, e: any) => IAnnotation | {};
-    onMouseDown?: (annotation: IAnnotation, e: any) => IAnnotation | {};
-    onMouseMove?: (annotation: IAnnotation, e: any) => IAnnotation | {};
-    onTouchStart?: (annotation: IAnnotation, e: any) => IAnnotation | {};
-    onTouchEnd?: (annotation: IAnnotation, e: any) => IAnnotation | {};
-    onTouchMove?: (annotation: IAnnotation, e: any) => IAnnotation | {};
-    onClick?: (annotation: IAnnotation, e: any) => IAnnotation | {};
-  };
+  methods: ISelectorMethods;
 }
 
 export interface IAnnotation {
   selection?: {
     mode: string;
     showEditor: boolean;
-    anchorX?: number;
-    anchorY?: number;
+    anchorX: number | null;
+    anchorY?: number | null;
   };
   geometry: IGeometry;
   data: {
@@ -56,8 +92,7 @@ export interface IAnnotation {
 
 export interface RenderEditorProps {
   annotation: IAnnotation;
-  onChange: (a: IAnnotation) => void;
-  onSubmit: (e: MouseEvent<HTMLDivElement>) => void;
+  onSubmit: (e: IAnnotation) => void;
 }
 
 export interface ShapeProps {
@@ -92,6 +127,7 @@ export enum EditorMode {
 export enum SelectionMode {
   Selecting = 'SELECTING',
   Editing = 'EDITING',
+  Final = 'FINAL',
 }
 
 export type WrappedShapeProps = Omit<
@@ -128,14 +164,6 @@ export interface AnnotationProps {
 
   innerRef: (el: HTMLImageElement) => object;
 
-  onMouseUp?: (e: MouseEvent) => void;
-  onMouseDown?: (e: MouseEvent) => void;
-  onMouseMove?: (e: MouseEvent) => void;
-  onClick?: (e: MouseEvent) => void;
-
-  onChange: (e: IAnnotation) => void;
-  onSubmit: (e: IAnnotation) => void;
-
   renderContent: (props: ContentProps) => ReactElement | null;
   renderEditor: (props: RenderEditorProps) => ReactElement | null;
   renderHighlight: (props: WrappedShapeProps) => ReactElement | null;
@@ -145,11 +173,9 @@ export interface AnnotationProps {
   selectors: ISelector[];
 
   shapes: string[];
-
+  onAnnotationsUpdate: (annotations: IAnnotation[]) => void;
   src: string;
   style?: object;
-
-  value?: IAnnotation;
 }
 
 export interface Theme {

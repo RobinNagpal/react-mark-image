@@ -1,11 +1,6 @@
 {
   "trailingComma": "all",
   "endOfLine": "auto",
-  "printWidth": 120,
-  "overrides": [
-    {
-      "files": "*.json",
-      "options": { "printWidth": 500 }
-    }
-  ]
+  "printWidth": 160,
+  "tabWidth": 2
 }

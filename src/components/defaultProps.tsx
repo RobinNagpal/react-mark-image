@@ -30,8 +30,7 @@ const defaultProps: AnnotationProps = {
 
   innerRef: (_el: HTMLImageElement) => ({}),
 
-  onChange: () => {},
-  onSubmit: () => {},
+  onAnnotationsUpdate: () => {},
 
   renderSelector: ({ annotation, renderContent }: RenderSelectorProps) => {
     switch (annotation.geometry.type) {
@@ -45,8 +44,8 @@ const defaultProps: AnnotationProps = {
         return null;
     }
   },
-  renderEditor: ({ annotation, onChange, onSubmit }: RenderEditorProps) => (
-    <Editor annotation={annotation} onChange={onChange} onSubmit={onSubmit} />
+  renderEditor: ({ annotation, onSubmit }: RenderEditorProps) => (
+    <Editor annotation={annotation} onSubmit={onSubmit} />
   ),
   renderHighlight: ({
     key,

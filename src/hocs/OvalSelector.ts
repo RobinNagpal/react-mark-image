@@ -1,12 +1,15 @@
-import { getCoordPercentage } from '../utils/offsetCoordinates';
+import { MouseEvent, TouchEvent } from 'react';
 import {
+  EditorMode,
   IAnnotation,
   IGeometry,
   IPoint,
   ISelector,
+  ISelectorMethods,
   SelectionMode,
 } from '../types/index';
-import { MouseEvent, TouchEvent } from 'react';
+import { getCoordPercentage } from '../utils/offsetCoordinates';
+import { newAnnotation } from './SelectorUtils';
 
 const square = (n: number) => Math.pow(n, 2);
 
@@ -30,51 +33,78 @@ export function area(geometry: IGeometry) {
   return Math.PI * rx * ry;
 }
 
-export const methods = {
-  onTouchStart(annotation: IAnnotation, e: TouchEvent) {
+export const methods: ISelectorMethods = {
+  onMouseDown(
+    annotation: IAnnotation | undefined,
+    e: MouseEvent,
+    _editorMode: EditorMode
+  ): IAnnotation | undefined {
     return pointerDown(annotation, e);
   },
-  onTouchEnd(annotation: IAnnotation, e: TouchEvent) {
-    return pointerUp(annotation, e);
+
+  onMouseUp(
+    annotation: IAnnotation | undefined,
+    e: MouseEvent,
+    editorMode: EditorMode
+  ): IAnnotation | undefined {
+    return pointerUp(annotation, e, editorMode);
   },
-  onTouchMove(annotation: IAnnotation, e: TouchEvent) {
+
+  onMouseMove(
+    annotation: IAnnotation | undefined,
+    e: MouseEvent,
+    _editorMode: EditorMode
+  ): IAnnotation | undefined {
     return pointerMove(annotation, e);
   },
-  onMouseDown(annotation: IAnnotation, e: MouseEvent) {
+
+  onTouchStart(
+    annotation: IAnnotation | undefined,
+    e: TouchEvent,
+    _editorMode: EditorMode
+  ): IAnnotation | undefined {
     return pointerDown(annotation, e);
   },
-  onMouseUp(annotation: IAnnotation, e: MouseEvent) {
-    return pointerUp(annotation, e);
+
+  onTouchEnd(
+    annotation: IAnnotation | undefined,
+    e: TouchEvent,
+    editorMode: EditorMode
+  ): IAnnotation | undefined {
+    return pointerUp(annotation, e, editorMode);
   },
-  onMouseMove(annotation: IAnnotation, e: MouseEvent) {
+
+  onTouchMove(
+    annotation: IAnnotation | undefined,
+    e: TouchEvent,
+    _editorMode: EditorMode
+  ): IAnnotation | undefined {
     return pointerMove(annotation, e);
   },
 };
 
-function pointerDown(annotation: IAnnotation, e: TouchEvent | MouseEvent) {
-  if (!annotation.selection) {
-    const { x: anchorX, y: anchorY } = getCoordPercentage(e);
-
-    return {
-      ...annotation,
-      selection: {
-        ...(annotation.selection ?? {}),
-        mode: SelectionMode.Selecting,
-        anchorX,
-        anchorY,
-      },
-    };
-  } else {
-    return {};
+function pointerDown(
+  annotation: IAnnotation | undefined,
+  e: TouchEvent | MouseEvent
+): IAnnotation | undefined {
+  const selection = annotation?.selection;
+  if (!selection) {
+    return newAnnotation(TYPE, e);
   }
+
+  return;
 }
 
-function pointerUp(annotation: IAnnotation, _e: TouchEvent | MouseEvent) {
-  if (annotation.selection) {
+function pointerUp(
+  annotation: IAnnotation | undefined,
+  _e: TouchEvent | MouseEvent,
+  editorMode: EditorMode
+): IAnnotation | undefined {
+  if (annotation?.selection) {
     const { geometry } = annotation;
 
     if (!geometry) {
-      return {};
+      return;
     }
 
     switch (annotation.selection.mode) {
@@ -84,7 +114,10 @@ function pointerUp(annotation: IAnnotation, _e: TouchEvent | MouseEvent) {
           selection: {
             ...annotation.selection,
             showEditor: true,
-            mode: SelectionMode.Editing,
+            mode:
+              editorMode === EditorMode.HighlightOnly
+                ? SelectionMode.Final
+                : SelectionMode.Editing,
           },
         };
       default:
@@ -94,23 +127,26 @@ function pointerUp(annotation: IAnnotation, _e: TouchEvent | MouseEvent) {
   return annotation;
 }
 
-function pointerMove(annotation: IAnnotation, e: TouchEvent | MouseEvent) {
-  if (
-    annotation.selection &&
-    annotation.selection.mode === SelectionMode.Selecting
-  ) {
+function pointerMove(
+  annotation: IAnnotation | undefined,
+  e: TouchEvent | MouseEvent
+): IAnnotation | undefined {
+  if (annotation?.selection?.mode === SelectionMode.Selecting) {
     const { anchorX, anchorY } = annotation.selection;
-    const { x: newX, y: newY } = getCoordPercentage(e);
+    const { x: newX, y: newY } = getCoordPercentage(e)!;
     const width = newX! - anchorX!;
     const height = newY! - anchorY!;
 
+    const x = width > 0 ? anchorX : newX;
+    const y = height > 0 ? anchorY : newY!;
     return {
       ...annotation,
       geometry: {
         ...annotation.geometry,
         type: TYPE,
-        x: width > 0 ? anchorX : newX,
-        y: height > 0 ? anchorY : newY,
+        // Fix types so that these defaults are not needed
+        x: x ?? 0,
+        y: y ?? 0,
         width: Math.abs(width),
         height: Math.abs(height),
       },

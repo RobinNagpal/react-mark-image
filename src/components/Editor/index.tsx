@@ -1,4 +1,4 @@
-import React, { ChangeEvent, MouseEvent } from 'react';
+import React, { ChangeEvent, useState } from 'react';
 import styled, { keyframes } from 'styled-components';
 import TextEditor from '../TextEditor';
 import { IAnnotation } from '../../types/index';
@@ -30,15 +30,14 @@ const Container = styled.div`
 interface EditorProps {
   annotation: IAnnotation;
   className?: string;
-  onChange: (e: IAnnotation) => void;
-  onSubmit: (e: MouseEvent<HTMLDivElement>) => void;
+  onSubmit: (e: IAnnotation) => void;
   style?: object;
 }
 
 function Editor(props: EditorProps) {
   const { geometry } = props.annotation;
   if (!geometry) return null;
-
+  const [text, setText] = useState('');
   return (
     <Container
       className={props.className}
@@ -51,16 +50,18 @@ function Editor(props: EditorProps) {
     >
       <TextEditor
         onChange={(e: ChangeEvent<HTMLTextAreaElement>) =>
-          props.onChange({
+          setText(e.target.value)
+        }
+        onSubmit={() => {
+          props.onSubmit({
             ...props.annotation,
             data: {
               ...props.annotation.data,
-              text: e.target.value,
+              text,
             },
-          })
-        }
-        onSubmit={props.onSubmit}
-        value={props.annotation.data && props.annotation.data.text}
+          });
+        }}
+        value={text}
       />
     </Container>
   );

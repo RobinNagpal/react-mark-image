@@ -6,7 +6,12 @@ import React, {
   useState,
 } from 'react';
 import styled from 'styled-components';
-import { AnnotationProps, EditorMode, ISelector } from '../types/index';
+import {
+  AnnotationProps,
+  IAnnotation,
+  ISelector,
+  SelectionMode,
+} from '../types/index';
 import compose from '../utils/compose';
 import withRelativeMousePos, {
   WithRelativeMousePosProps,
@@ -50,6 +55,17 @@ function Annotation(options: AnnotationProps & WithRelativeMousePosProps) {
   const [selectedSelectorType, setSelectedSelectorType] = useState<string>(
     props.shapes[0]
   );
+
+  const [activeAnnotation, setActiveAnnotation] = useState<
+    IAnnotation | undefined
+  >();
+
+  const [annotations, setAnnotations] = useState<IAnnotation[]>(
+    options.annotations
+  );
+
+  const [showEditor, setShowEditor] = useState<boolean>(false);
+
   const targetRef = React.createRef<any>();
 
   const addTargetTouchEventListeners = () => {
@@ -112,8 +128,12 @@ function Annotation(options: AnnotationProps & WithRelativeMousePosProps) {
   const onTouchEnd = (e: TouchEvent) => callSelectorMethod('onTouchEnd', e);
   const onTouchMove = (e: TouchEvent) => callSelectorMethod('onTouchMove', e);
   const onClick = (e: MouseEvent) => callSelectorMethod('onClick', e);
-  const onSubmit = () => {
-    props.onSubmit(props.value!);
+
+  const onAnnotationFinal = (annotation: IAnnotation) => {
+    const newAnnotationArray = [...annotations, annotation];
+    setAnnotations(newAnnotationArray);
+    options.onAnnotationsUpdate(newAnnotationArray);
+    setActiveAnnotation(undefined);
   };
 
   const callSelectorMethod = (
@@ -127,7 +147,7 @@ function Annotation(options: AnnotationProps & WithRelativeMousePosProps) {
       | 'onClick',
     e: MouseEvent | TouchEvent
   ) => {
-    const { disableAnnotation, editorMode, onChange, onSubmit } = props;
+    const { disableAnnotation, editorMode } = props;
     if (disableAnnotation) {
       return;
     }
@@ -136,26 +156,20 @@ function Annotation(options: AnnotationProps & WithRelativeMousePosProps) {
       (options[methodName] as any)(e);
     } else {
       const selector = getSelectorByType(selectedSelectorType);
-      if (selector && (selector.methods[methodName] as any)) {
-        const value = (selector.methods[methodName] as any)(props.value, e);
+      const selectorMethod = selector.methods[methodName];
+      if (selectorMethod) {
+        const value: IAnnotation | undefined = selectorMethod(
+          activeAnnotation,
+          e,
+          editorMode
+        );
 
-        if (typeof value === 'undefined') {
-          if (process.env.NODE_ENV !== 'production') {
-            console.error(`
-              ${methodName} of selector type ${selectedSelectorType} returned undefined.
-              Make sure to explicitly return the previous state
-            `);
-          }
-        } else {
-          if (
-            editorMode === EditorMode.HighlightOnly &&
-            value.selection?.showEditor
-          ) {
-            value.selection.showEditor = false;
-            onSubmit(value);
-          } else {
-            onChange(value);
-          }
+        setActiveAnnotation(value);
+
+        if (value?.selection?.mode === SelectionMode.Editing) {
+          setShowEditor(true);
+        } else if (value?.selection?.mode === SelectionMode.Final) {
+          onAnnotationFinal(value);
         }
       }
     }
@@ -173,6 +187,7 @@ function Annotation(options: AnnotationProps & WithRelativeMousePosProps) {
     src,
   } = props;
 
+  console.log(activeAnnotation);
   return (
     <>
       <ToolBar
@@ -202,10 +217,9 @@ function Annotation(options: AnnotationProps & WithRelativeMousePosProps) {
             })
           )}
           {!props.disableSelector &&
-            props.value &&
-            props.value.geometry &&
+            activeAnnotation?.geometry &&
             renderSelector({
-              annotation: props.value,
+              annotation: activeAnnotation,
               renderContent: props.renderContent,
             })}
         </ItemsDiv>
@@ -221,14 +235,11 @@ function Annotation(options: AnnotationProps & WithRelativeMousePosProps) {
             annotations: props.annotations,
             selectorType: selectedSelectorType,
           })}
-        {!props.disableEditor &&
-          props.value &&
-          props.value.selection &&
-          props.value.selection.showEditor &&
+        {showEditor &&
+          activeAnnotation &&
           renderEditor({
-            annotation: props.value,
-            onChange: props.onChange,
-            onSubmit: onSubmit,
+            annotation: activeAnnotation,
+            onSubmit: onAnnotationFinal,
           })}
         <div>{props.children}</div>
       </Container>

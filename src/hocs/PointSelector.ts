@@ -5,7 +5,8 @@ import {
   IPoint,
   ISelector,
 } from '../types/index';
-import { getCoordPercentage } from '../utils/offsetCoordinates';
+import { newAnnotation } from './SelectorUtils';
+
 const MARGIN = 6;
 
 const marginToPercentage = (container: IContainer) => ({
@@ -37,25 +38,14 @@ export function area(_geometry: IGeometry, container: IContainer) {
 }
 
 export const methods = {
-  onClick(annotation: IAnnotation, e: any) {
-    if (!annotation.geometry) {
-      return {
-        ...annotation,
-        selection: {
-          ...annotation.selection,
-          showEditor: true,
-          mode: 'EDITING',
-        },
-        geometry: {
-          ...getCoordPercentage(e),
-          width: 0,
-          height: 0,
-          type: TYPE,
-        },
-      };
-    } else {
-      return {};
+  onClick(
+    annotation: IAnnotation | undefined,
+    e: any
+  ): IAnnotation | undefined {
+    if (!annotation?.geometry) {
+      return newAnnotation(TYPE, e);
     }
+    return;
   },
 };
 
