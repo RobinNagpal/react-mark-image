@@ -124,6 +124,7 @@ export enum EditorMode {
 }
 
 export enum SelectionMode {
+  New = 'NEW',
   Selecting = 'SELECTING',
   Editing = 'EDITING',
   Final = 'FINAL',

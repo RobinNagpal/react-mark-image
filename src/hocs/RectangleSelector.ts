@@ -6,10 +6,8 @@ import {
   IPoint,
   ISelector,
   ISelectorMethods,
-  SelectionMode,
 } from '../types/index';
-import { getCoordPercentage } from '../utils/offsetCoordinates';
-import { newAnnotation } from './SelectorUtils';
+import { pointerDown, pointerMove, pointerUp } from './SelectorUtils';
 
 export const TYPE = 'RECTANGLE';
 
@@ -32,7 +30,7 @@ export const methods: ISelectorMethods = {
     e: MouseEvent,
     _editorMode: EditorMode
   ): IAnnotation | undefined {
-    return pointerDown(annotation, e);
+    return pointerDown(annotation, e, TYPE);
   },
 
   onMouseUp(
@@ -56,7 +54,7 @@ export const methods: ISelectorMethods = {
     e: TouchEvent,
     _editorMode: EditorMode
   ): IAnnotation | undefined {
-    return pointerDown(annotation, e);
+    return pointerDown(annotation, e, TYPE);
   },
 
   onTouchEnd(
@@ -75,74 +73,6 @@ export const methods: ISelectorMethods = {
     return pointerMove(annotation, e);
   },
 };
-
-function pointerDown(
-  annotation: IAnnotation | undefined,
-  e: TouchEvent | MouseEvent
-): IAnnotation | undefined {
-  const selection = annotation?.selection;
-  if (!selection) {
-    return newAnnotation(TYPE, e);
-  }
-  return;
-}
-
-function pointerUp(
-  annotation: IAnnotation | undefined,
-  _e: TouchEvent | MouseEvent,
-  editorMode: EditorMode
-): IAnnotation | undefined {
-  if (annotation?.selection) {
-    const { geometry } = annotation;
-    if (!geometry) {
-      return;
-    }
-    switch (annotation.selection.mode) {
-      case SelectionMode.Selecting:
-        return {
-          ...annotation,
-          selection: {
-            ...annotation.selection,
-            mode:
-              editorMode === EditorMode.HighlightOnly
-                ? SelectionMode.Final
-                : SelectionMode.Editing,
-          },
-        };
-      default:
-        break;
-    }
-  }
-  return annotation;
-}
-
-function pointerMove(
-  annotation: IAnnotation | undefined,
-  e: TouchEvent | MouseEvent
-): IAnnotation | undefined {
-  if (annotation?.selection?.mode === 'SELECTING') {
-    const { anchorX, anchorY } = annotation.selection;
-    const { x: newX, y: newY } = getCoordPercentage(e)!;
-    const width = newX! - anchorX!;
-    const height = newY! - anchorY!;
-
-    const x = width > 0 ? anchorX : newX;
-    const y = height > 0 ? anchorY : newY;
-    return {
-      ...annotation,
-      geometry: {
-        ...annotation.geometry,
-        type: TYPE,
-        // Fix types so that these defaults are not needed
-        x: x ?? 0,
-        y: y ?? 0,
-        width: Math.abs(width),
-        height: Math.abs(height),
-      },
-    };
-  }
-  return annotation;
-}
 
 const RectangleSelector: ISelector = {
   TYPE,

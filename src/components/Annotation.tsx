@@ -165,11 +165,16 @@ function Annotation(options: AnnotationProps & WithRelativeMousePosProps) {
         );
 
         setActiveAnnotation(value);
-
-        if (value?.selection?.mode === SelectionMode.Editing) {
-          setShowEditor(true);
-        } else if (value?.selection?.mode === SelectionMode.Final) {
-          onAnnotationFinal(value);
+        switch (value?.selection?.mode) {
+          case SelectionMode.Final:
+            onAnnotationFinal(value);
+            break;
+          case SelectionMode.Editing:
+            setShowEditor(true);
+            break;
+          default:
+            setActiveAnnotation(value);
+            break;
         }
       }
     }
