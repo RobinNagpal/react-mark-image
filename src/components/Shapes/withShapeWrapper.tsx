@@ -20,6 +20,7 @@ export const withShapeWrapper = (
           onMouseEnter={() => setMouseHovered(true)}
           onMouseLeave={() => setMouseHovered(false)}
         />
+
         {reactElement}
       </>
     );

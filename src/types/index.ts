@@ -134,7 +134,7 @@ export interface AnnotationProps {
   renderContent: (props: ContentProps) => ReactElement | null;
   renderEditor: (props: RenderEditorProps) => ReactElement | null;
   renderHighlight: (props: WrappedShapeProps) => ReactElement | null;
-  renderOverlay: (props: RenderOverlayProps) => ReactElement | null;
+  renderOverlay: (props: AnnotationProps) => ReactElement | null;
   renderSelector: (props: WrappedShapeProps) => ReactElement | null;
 
   selectors: ISelector[];
@@ -155,4 +155,12 @@ export interface Theme {
       backgroundColor: string;
     };
   };
+}
+
+export interface OptionBar {
+  categories: string[];
+}
+export interface OptionBarButton {
+  category: string;
+  renderButton: (props: AnnotationProps) => ReactElement;
 }

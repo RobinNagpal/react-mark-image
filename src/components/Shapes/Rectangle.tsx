@@ -4,7 +4,7 @@ import { ShapeProps } from '../../types/index';
 import { withShapeWrapper } from './withShapeWrapper';
 
 const Container = styled.div`
-  box-shadow: 0px 0px 1px 1px white inset;
+  box-shadow: 0 0 1px 1px white inset;
   box-sizing: border-box;
   transition: box-shadow 0.21s ease-in-out;
   z-index: 1;

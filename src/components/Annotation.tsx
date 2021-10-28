@@ -1,4 +1,5 @@
 import React, { Component, ComponentType, MouseEvent, TouchEvent } from 'react';
+import ToolBar from './ToolBar/ToolBar';
 import styled from 'styled-components';
 import compose from '../utils/compose';
 import withRelativeMousePos, {
@@ -227,59 +228,58 @@ const Annotation: ComponentType<AnnotationPropsOptional> = compose(
       } = props;
 
       return (
-        <Container
-          style={props.style}
-          onMouseLeave={this.onTargetMouseLeave}
-          onTouchCancel={this.onTargetTouchLeave}
-          allowTouch={allowTouch}
-        >
-          <ImageElement
-            className={className}
-            style={style}
-            alt={alt}
-            src={src}
-            draggable={false}
-            setInnerRef={this.setInnerRef}
-          />
-          <ItemsDiv>
-            {props.annotations.map((annotation) =>
-              renderHighlight({
-                key: annotation.data.id,
-                annotation,
-                renderContent: props.renderContent,
-              })
-            )}
-            {!props.disableSelector &&
+        <>
+          <ToolBar {...this.props} />
+          <Container
+            style={props.style}
+            onMouseLeave={this.onTargetMouseLeave}
+            onTouchCancel={this.onTargetTouchLeave}
+            allowTouch={allowTouch}
+          >
+            <ImageElement
+              className={className}
+              style={style}
+              alt={alt}
+              src={src}
+              draggable={false}
+              setInnerRef={this.setInnerRef}
+            />
+            <ItemsDiv>
+              {props.annotations.map((annotation) =>
+                renderHighlight({
+                  key: annotation.data.id,
+                  annotation,
+                  renderContent: props.renderContent,
+                })
+              )}
+              {!props.disableSelector &&
+                props.value &&
+                props.value.geometry &&
+                renderSelector({
+                  annotation: props.value,
+                  renderContent: props.renderContent,
+                })}
+            </ItemsDiv>
+            <ItemsDiv
+              onClick={this.onClick}
+              onMouseUp={this.onMouseUp}
+              onMouseDown={this.onMouseDown}
+              onMouseMove={this.onTargetMouseMove}
+              ref={this.targetRef}
+            />
+            {!props.disableOverlay && renderOverlay(props)}
+            {!props.disableEditor &&
               props.value &&
-              props.value.geometry &&
-              renderSelector({
+              props.value.selection &&
+              props.value.selection.showEditor &&
+              renderEditor({
                 annotation: props.value,
-                renderContent: props.renderContent,
+                onChange: props.onChange,
+                onSubmit: this.onSubmit,
               })}
-          </ItemsDiv>
-          <ItemsDiv
-            onClick={this.onClick}
-            onMouseUp={this.onMouseUp}
-            onMouseDown={this.onMouseDown}
-            onMouseMove={this.onTargetMouseMove}
-            ref={this.targetRef}
-          />
-          {!props.disableOverlay &&
-            renderOverlay({
-              type: props.type,
-              annotation: props.value!,
-            })}
-          {!props.disableEditor &&
-            props.value &&
-            props.value.selection &&
-            props.value.selection.showEditor &&
-            renderEditor({
-              annotation: props.value,
-              onChange: props.onChange,
-              onSubmit: this.onSubmit,
-            })}
-          <div>{props.children}</div>
-        </Container>
+            <div>{props.children}</div>
+          </Container>
+        </>
       );
     }
   }
