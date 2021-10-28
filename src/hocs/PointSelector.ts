@@ -1,11 +1,15 @@
+import { MouseEvent, TouchEvent } from 'react';
 import {
+  EditorMode,
   IAnnotation,
   IContainer,
   IGeometry,
   IPoint,
   ISelector,
+  ISelectorMethods,
+  SelectionMode,
 } from '../types/index';
-import { newAnnotation } from './SelectorUtils';
+import { getCoordPercentage } from '../utils/offsetCoordinates';
 
 const MARGIN = 6;
 
@@ -37,13 +41,28 @@ export function area(_geometry: IGeometry, container: IContainer) {
   return marginX * marginY;
 }
 
-export const methods = {
+export const methods: ISelectorMethods = {
   onClick(
     annotation: IAnnotation | undefined,
-    e: any
+    e: TouchEvent | MouseEvent,
+    _editorMode: EditorMode
   ): IAnnotation | undefined {
     if (!annotation?.geometry) {
-      return newAnnotation(TYPE, e);
+      return {
+        ...annotation,
+        selection: {
+          mode: SelectionMode.Final,
+        },
+        geometry: {
+          ...getCoordPercentage(e)!,
+          width: 0,
+          height: 0,
+          type: TYPE,
+        },
+        data: {
+          id: Math.random(),
+        },
+      };
     }
     return;
   },

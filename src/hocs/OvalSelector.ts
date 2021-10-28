@@ -113,7 +113,6 @@ function pointerUp(
           ...annotation,
           selection: {
             ...annotation.selection,
-            showEditor: true,
             mode:
               editorMode === EditorMode.HighlightOnly
                 ? SelectionMode.Final

@@ -1,8 +1,11 @@
 import { MouseEvent, TouchEvent } from 'react';
-import { SelectionMode } from '../types';
+import { IAnnotation, SelectionMode } from '../types';
 import { getCoordPercentage } from '../utils/offsetCoordinates';
 
-export function newAnnotation(type: string, e: TouchEvent | MouseEvent) {
+export function newAnnotation(
+  type: string,
+  e: TouchEvent | MouseEvent
+): IAnnotation {
   const { x: anchorX, y: anchorY } = getCoordPercentage(e)!;
 
   return {
@@ -15,7 +18,6 @@ export function newAnnotation(type: string, e: TouchEvent | MouseEvent) {
     },
     selection: {
       mode: SelectionMode.Selecting,
-      showEditor: false,
       anchorX,
       anchorY,
     },

@@ -10,7 +10,9 @@ export const withShapeWrapper = (
     const { renderContent } = props;
     const [mouseHovered, setMouseHovered] = useState<boolean>(false);
     const reactElement =
-      mouseHovered && renderContent ? renderContent(props) : null;
+      mouseHovered && renderContent && props.annotation.data.text
+        ? renderContent(props)
+        : null;
 
     return (
       <>

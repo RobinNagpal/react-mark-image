@@ -79,8 +79,7 @@ export interface ISelector {
 export interface IAnnotation {
   selection?: {
     mode: string;
-    showEditor: boolean;
-    anchorX: number | null;
+    anchorX?: number | null;
     anchorY?: number | null;
   };
   geometry: IGeometry;

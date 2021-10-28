@@ -23,6 +23,8 @@ const StyledIcon = styled.a`
   background-repeat: no-repeat;
   background-position: center;
   cursor: pointer;
+  background-color: ${({ isSelected }: { isSelected: boolean }) =>
+    isSelected ? '#ccc' : '#efefef'};
 `;
 
 const CircleIcon = styled(StyledIcon)`
@@ -40,16 +42,24 @@ const TrashIcon = styled(StyledIcon)`
 
 // https://www.w3schools.com/howto/howto_css_icon_bar.asp#
 export default function ToolBar({
+  selectedSelectorType,
   setSelectedSelectorType,
 }: RenderToolbarProps): ReactElement {
   return (
     <OptionsBarDiv>
-      <CircleIcon
+      <SquareIcon
+        isSelected={selectedSelectorType === RectangleSelector.TYPE}
         onClick={() => setSelectedSelectorType(RectangleSelector.TYPE)}
       />
-      <PointIcon onClick={() => setSelectedSelectorType(PointSelector.TYPE)} />
-      <SquareIcon onClick={() => setSelectedSelectorType(OvalSelector.TYPE)} />
-      <TrashIcon />
+      <CircleIcon
+        isSelected={selectedSelectorType === OvalSelector.TYPE}
+        onClick={() => setSelectedSelectorType(OvalSelector.TYPE)}
+      />
+      <PointIcon
+        isSelected={selectedSelectorType === PointSelector.TYPE}
+        onClick={() => setSelectedSelectorType(PointSelector.TYPE)}
+      />
+      <TrashIcon isSelected={false} />
     </OptionsBarDiv>
   );
 }
