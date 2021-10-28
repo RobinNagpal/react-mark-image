@@ -7,6 +7,7 @@ import {
   EditorMode,
   RenderEditorProps,
   RenderHighlightProps,
+  RenderOverlayProps,
   RenderSelectorProps,
 } from '../types/index';
 import Content from './Content';
@@ -84,9 +85,12 @@ const defaultProps: AnnotationProps = {
   renderContent: ({ key, annotation }: ContentProps) => (
     <Content key={key} annotation={annotation} />
   ),
-  renderOverlay: ({ annotations, type }: AnnotationProps): ReactElement => {
+  renderOverlay: ({
+    annotations,
+    selectorType,
+  }: RenderOverlayProps): ReactElement => {
     if (annotations.length === 0) {
-      switch (type) {
+      switch (selectorType) {
         case PointSelector.TYPE:
           return <Overlay>Click to Annotate</Overlay>;
         default:
@@ -98,8 +102,9 @@ const defaultProps: AnnotationProps = {
   },
 
   selectors: [RectangleSelector, PointSelector, OvalSelector],
-  src: '',
 
-  type: RectangleSelector.TYPE,
+  shapes: [RectangleSelector.TYPE, OvalSelector.TYPE, PointSelector.TYPE],
+
+  src: '',
 };
 export default defaultProps;

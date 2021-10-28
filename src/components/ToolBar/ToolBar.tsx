@@ -1,6 +1,6 @@
 import React, { ReactElement } from 'react';
 import styled from 'styled-components';
-import { AnnotationProps } from './../../types';
+import { RenderToolbarProps } from './../../types';
 import CircleSvg from './icons/circle.svg';
 import PointSvg from './icons/point.svg';
 import SquareSvg from './icons/square.svg';
@@ -36,7 +36,7 @@ const TrashIcon = styled(StyledIcon)`
 `;
 
 // https://www.w3schools.com/howto/howto_css_icon_bar.asp#
-export default function ToolBar(props: AnnotationProps): ReactElement {
+export default function ToolBar(props: RenderToolbarProps): ReactElement {
   console.log(props);
   return (
     <OptionsBarDiv>

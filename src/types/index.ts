@@ -68,11 +68,6 @@ export interface ShapeProps {
   onMouseLeave: MouseEventHandler<HTMLDivElement>;
 }
 
-export interface RenderOverlayProps {
-  type?: string;
-  annotation: IAnnotation;
-}
-
 export interface RenderHighlightProps {
   key?: number;
   annotation: IAnnotation;
@@ -106,6 +101,16 @@ export type WrappedShapeProps = Omit<
   renderContent?: (props: ContentProps) => ReactElement | null;
 };
 
+export interface RenderOverlayProps {
+  annotations: IAnnotation[];
+  selectorType: string;
+}
+
+export interface RenderToolbarProps {
+  selectorType: string;
+  setSelectorType: (selector: string) => void;
+}
+
 export interface AnnotationProps {
   alt?: string;
   allowTouch?: boolean;
@@ -134,14 +139,15 @@ export interface AnnotationProps {
   renderContent: (props: ContentProps) => ReactElement | null;
   renderEditor: (props: RenderEditorProps) => ReactElement | null;
   renderHighlight: (props: WrappedShapeProps) => ReactElement | null;
-  renderOverlay: (props: AnnotationProps) => ReactElement | null;
+  renderOverlay: (props: RenderOverlayProps) => ReactElement | null;
   renderSelector: (props: WrappedShapeProps) => ReactElement | null;
 
   selectors: ISelector[];
+
+  shapes: string[];
+
   src: string;
   style?: object;
-
-  type: string;
 
   value?: IAnnotation;
 }
