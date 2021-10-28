@@ -19,6 +19,7 @@ export const withShapeWrapper = (
         <DecoratedShape
           {...props}
           isMouseOver={mouseHovered}
+          isInSelectionMode={isInSelectionMode}
           onMouseEnter={() => {
             if (!isInSelectionMode) setMouseHovered(true);
           }}

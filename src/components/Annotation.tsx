@@ -56,9 +56,8 @@ function Annotation(options: AnnotationProps & WithRelativeMousePosProps) {
     props.shapes[0]
   );
 
-  const [activeAnnotation, setActiveAnnotation] = useState<
-    IAnnotation | undefined
-  >();
+  // This annotation is set when adding a new annotation. The state is cleared after annotation is added
+  const [tmpAnnotation, setTmpAnnotation] = useState<IAnnotation | undefined>();
 
   const [annotations, setAnnotations] = useState<IAnnotation[]>(
     options.annotations
@@ -133,7 +132,7 @@ function Annotation(options: AnnotationProps & WithRelativeMousePosProps) {
     const newAnnotationArray = [...annotations, annotation];
     setAnnotations(newAnnotationArray);
     options.onAnnotationsUpdate(newAnnotationArray);
-    setActiveAnnotation(undefined);
+    setTmpAnnotation(undefined);
   };
 
   const callSelectorMethod = (
@@ -159,12 +158,12 @@ function Annotation(options: AnnotationProps & WithRelativeMousePosProps) {
       const selectorMethod = selector.methods[methodName];
       if (selectorMethod) {
         const value: IAnnotation | undefined = selectorMethod(
-          activeAnnotation,
+          tmpAnnotation,
           e,
           editorMode
         );
 
-        setActiveAnnotation(value);
+        setTmpAnnotation(value);
         switch (value?.selection?.mode) {
           case SelectionMode.Final:
             onAnnotationFinal(value);
@@ -173,7 +172,7 @@ function Annotation(options: AnnotationProps & WithRelativeMousePosProps) {
             setShowEditor(true);
             break;
           default:
-            setActiveAnnotation(value);
+            setTmpAnnotation(value);
             break;
         }
       }
@@ -218,15 +217,15 @@ function Annotation(options: AnnotationProps & WithRelativeMousePosProps) {
               key: annotation.data.id,
               annotation,
               renderContent: props.renderContent,
-              isInSelectionMode: !!activeAnnotation,
+              isInSelectionMode: !!tmpAnnotation,
             })
           )}
           {!props.disableSelector &&
-            activeAnnotation?.geometry &&
+            tmpAnnotation?.geometry &&
             renderSelector({
-              annotation: activeAnnotation,
+              annotation: tmpAnnotation,
               renderContent: props.renderContent,
-              isInSelectionMode: !!activeAnnotation,
+              isInSelectionMode: !!tmpAnnotation,
             })}
         </ItemsDiv>
         <ItemsDiv
@@ -242,9 +241,9 @@ function Annotation(options: AnnotationProps & WithRelativeMousePosProps) {
             selectorType: selectedSelectorType,
           })}
         {showEditor &&
-          activeAnnotation &&
+          tmpAnnotation &&
           renderEditor({
-            annotation: activeAnnotation,
+            annotation: tmpAnnotation,
             onSubmit: onAnnotationFinal,
           })}
         <div>{props.children}</div>
