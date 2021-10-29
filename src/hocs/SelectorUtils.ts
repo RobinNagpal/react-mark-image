@@ -101,3 +101,53 @@ export function pointerMove(
   }
   return annotation;
 }
+
+export const createSelectorMethods = (type: string) => ({
+  onMouseDown(
+    annotation: IAnnotation | undefined,
+    e: MouseEvent,
+    _editorMode: EditorMode
+  ): IAnnotation | undefined {
+    return pointerDown(annotation, e, type);
+  },
+
+  onMouseUp(
+    annotation: IAnnotation | undefined,
+    e: MouseEvent,
+    editorMode: EditorMode
+  ): IAnnotation | undefined {
+    return pointerUp(annotation, e, editorMode);
+  },
+
+  onMouseMove(
+    annotation: IAnnotation | undefined,
+    e: MouseEvent,
+    _editorMode: EditorMode
+  ): IAnnotation | undefined {
+    return pointerMove(annotation, e);
+  },
+
+  onTouchStart(
+    annotation: IAnnotation | undefined,
+    e: TouchEvent,
+    _editorMode: EditorMode
+  ): IAnnotation | undefined {
+    return pointerDown(annotation, e, type);
+  },
+
+  onTouchEnd(
+    annotation: IAnnotation | undefined,
+    e: TouchEvent,
+    editorMode: EditorMode
+  ): IAnnotation | undefined {
+    return pointerUp(annotation, e, editorMode);
+  },
+
+  onTouchMove(
+    annotation: IAnnotation | undefined,
+    e: TouchEvent,
+    _editorMode: EditorMode
+  ): IAnnotation | undefined {
+    return pointerMove(annotation, e);
+  },
+});
