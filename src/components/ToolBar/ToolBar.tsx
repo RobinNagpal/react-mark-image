@@ -42,24 +42,34 @@ const TrashIcon = styled(StyledIcon)`
 
 // https://www.w3schools.com/howto/howto_css_icon_bar.asp#
 export default function ToolBar({
+  deleteAnnotation,
+  selectedAnnotation,
   selectedSelectorType,
   setSelectedSelectorType,
 }: RenderToolbarProps): ReactElement {
   return (
     <OptionsBarDiv>
-      <SquareIcon
-        isSelected={selectedSelectorType === RectangleSelector.TYPE}
-        onClick={() => setSelectedSelectorType(RectangleSelector.TYPE)}
-      />
-      <CircleIcon
-        isSelected={selectedSelectorType === OvalSelector.TYPE}
-        onClick={() => setSelectedSelectorType(OvalSelector.TYPE)}
-      />
-      <PointIcon
-        isSelected={selectedSelectorType === PointSelector.TYPE}
-        onClick={() => setSelectedSelectorType(PointSelector.TYPE)}
-      />
-      <TrashIcon isSelected={false} />
+      {selectedAnnotation ? (
+        <TrashIcon
+          isSelected={false}
+          onClick={() => deleteAnnotation(selectedAnnotation)}
+        />
+      ) : (
+        <>
+          <SquareIcon
+            isSelected={selectedSelectorType === RectangleSelector.TYPE}
+            onClick={() => setSelectedSelectorType(RectangleSelector.TYPE)}
+          />
+          <CircleIcon
+            isSelected={selectedSelectorType === OvalSelector.TYPE}
+            onClick={() => setSelectedSelectorType(OvalSelector.TYPE)}
+          />
+          <PointIcon
+            isSelected={selectedSelectorType === PointSelector.TYPE}
+            onClick={() => setSelectedSelectorType(PointSelector.TYPE)}
+          />
+        </>
+      )}
     </OptionsBarDiv>
   );
 }

@@ -57,6 +57,11 @@ function Annotation(options: AnnotationProps & WithRelativeMousePosProps) {
   );
 
   // This annotation is set when adding a new annotation. The state is cleared after annotation is added
+  const [selectedAnnotation, setSelectedAnnotation] = useState<
+    IAnnotation | undefined
+  >();
+
+  // This annotation is set when adding a new annotation. The state is cleared after annotation is added
   const [tmpAnnotation, setTmpAnnotation] = useState<IAnnotation | undefined>();
 
   const [annotations, setAnnotations] = useState<IAnnotation[]>(
@@ -167,21 +172,30 @@ function Annotation(options: AnnotationProps & WithRelativeMousePosProps) {
         switch (value?.selection?.mode) {
           case SelectionMode.Final:
             onAnnotationFinal(value);
+            setShowEditor(true);
             break;
           case SelectionMode.Editing:
             setShowEditor(true);
             break;
           default:
             setTmpAnnotation(value);
+            setShowEditor(true);
             break;
         }
       }
     }
   };
 
+  const deleteAnnotation = (annotationToDelete: IAnnotation) => {
+    const filtered = annotations.filter(
+      (annotation) => annotation.data.id !== annotationToDelete.data.id
+    );
+    setAnnotations([...filtered]);
+    setSelectedAnnotation(undefined);
+  };
+
   const {
-    renderHighlight,
-    renderSelector,
+    RenderShape,
     renderEditor,
     renderOverlay,
     allowTouch,
@@ -194,8 +208,10 @@ function Annotation(options: AnnotationProps & WithRelativeMousePosProps) {
   return (
     <>
       <ToolBar
+        selectedAnnotation={selectedAnnotation}
         selectedSelectorType={selectedSelectorType}
         setSelectedSelectorType={setSelectedSelectorType}
+        deleteAnnotation={deleteAnnotation}
       />
       <Container
         style={props.style}
@@ -212,21 +228,24 @@ function Annotation(options: AnnotationProps & WithRelativeMousePosProps) {
           setInnerRef={setInnerRef}
         />
         <ItemsDiv>
-          {props.annotations.map((annotation) =>
-            renderHighlight({
-              key: annotation.data.id,
-              annotation,
-              renderContent: props.renderContent,
-              isInSelectionMode: !!tmpAnnotation,
-            })
+          {annotations.map((annotation) => (
+            <RenderShape
+              key={annotation.data.id}
+              annotation={annotation}
+              renderContent={props.renderContent}
+              isInSelectionMode={!!tmpAnnotation}
+              onClick={setSelectedAnnotation}
+              selectedAnnotation={selectedAnnotation}
+            />
+          ))}
+          {!props.disableSelector && tmpAnnotation?.geometry && (
+            <RenderShape
+              key={tmpAnnotation.data.id}
+              annotation={tmpAnnotation}
+              renderContent={props.renderContent}
+              isInSelectionMode={!!tmpAnnotation}
+            />
           )}
-          {!props.disableSelector &&
-            tmpAnnotation?.geometry &&
-            renderSelector({
-              annotation: tmpAnnotation,
-              renderContent: props.renderContent,
-              isInSelectionMode: !!tmpAnnotation,
-            })}
         </ItemsDiv>
         <ItemsDiv
           onClick={onClick}
@@ -242,6 +261,7 @@ function Annotation(options: AnnotationProps & WithRelativeMousePosProps) {
           })}
         {showEditor &&
           tmpAnnotation &&
+          tmpAnnotation.selection?.mode === SelectionMode.Editing &&
           renderEditor({
             annotation: tmpAnnotation,
             onSubmit: onAnnotationFinal,

@@ -25,6 +25,7 @@ const Container = styled.div`
 
   animation: ${fadeInScale} 0.31s cubic-bezier(0.175, 0.885, 0.32, 1.275);
   overflow: hidden;
+  z-index: 2;
 `;
 
 interface EditorProps {

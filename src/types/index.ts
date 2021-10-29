@@ -137,7 +137,9 @@ export type WrappedShapeProps = Omit<
   'isMouseOver' | 'onMouseEnter' | 'onMouseLeave'
 > & {
   isInSelectionMode: boolean;
+  onClick?: (annotation: IAnnotation) => void;
   renderContent?: (props: ContentProps) => ReactElement | null;
+  selectedAnnotation?: IAnnotation;
 };
 
 export interface RenderOverlayProps {
@@ -146,6 +148,8 @@ export interface RenderOverlayProps {
 }
 
 export interface RenderToolbarProps {
+  deleteAnnotation: (annotation: IAnnotation) => void;
+  selectedAnnotation: IAnnotation | undefined;
   selectedSelectorType: string;
   setSelectedSelectorType: (selector: string) => void;
 }
@@ -169,9 +173,8 @@ export interface AnnotationProps {
 
   renderContent: (props: ContentProps) => ReactElement | null;
   renderEditor: (props: RenderEditorProps) => ReactElement | null;
-  renderHighlight: (props: WrappedShapeProps) => ReactElement | null;
+  RenderShape: (props: WrappedShapeProps) => ReactElement | null;
   renderOverlay: (props: RenderOverlayProps) => ReactElement | null;
-  renderSelector: (props: WrappedShapeProps) => ReactElement | null;
 
   selectors: ISelector[];
 

@@ -8,11 +8,9 @@ import {
   RenderEditorProps,
   RenderHighlightProps,
   RenderOverlayProps,
-  RenderSelectorProps,
 } from '../types/index';
 import Content from './Content';
 import Editor from './Editor';
-import FancyRectangle from './FancyRectangle';
 import Overlay from './Overlay';
 import Oval from './Shapes/Oval';
 import Point from './Shapes/Point';
@@ -32,22 +30,10 @@ const defaultProps: AnnotationProps = {
 
   onAnnotationsUpdate: () => {},
 
-  renderSelector: (props: RenderSelectorProps) => {
-    switch (props.annotation.geometry.type) {
-      case RectangleSelector.TYPE:
-        return <FancyRectangle {...props} />;
-      case PointSelector.TYPE:
-        return <Point {...props} />;
-      case OvalSelector.TYPE:
-        return <Oval {...props} />;
-      default:
-        return null;
-    }
-  },
   renderEditor: ({ annotation, onSubmit }: RenderEditorProps) => (
     <Editor annotation={annotation} onSubmit={onSubmit} />
   ),
-  renderHighlight: (props: RenderHighlightProps): ReactElement | null => {
+  RenderShape: (props: RenderHighlightProps): ReactElement | null => {
     const { annotation } = props;
     switch (annotation.geometry.type) {
       case RectangleSelector.TYPE:
