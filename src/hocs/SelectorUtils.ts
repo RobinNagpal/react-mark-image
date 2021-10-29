@@ -1,40 +1,40 @@
 import { MouseEvent, TouchEvent } from 'react';
-import { EditorMode, IAnnotation, SelectionMode } from '../types';
+import {
+  EditorMode,
+  IAnnotation,
+  ISelectorMethods,
+  SelectionMode,
+  SelectorMethodsOptions,
+} from '../types';
 import { getCoordPercentage } from '../utils/offsetCoordinates';
-
-export function newAnnotation(
-  type: string,
-  e: TouchEvent | MouseEvent
-): IAnnotation {
-  const { x: anchorX, y: anchorY } = getCoordPercentage(e)!;
-
-  return {
-    geometry: {
-      x: 0,
-      y: 0,
-      type,
-      width: 0,
-      height: 0,
-    },
-    selection: {
-      mode: SelectionMode.New,
-      anchorX,
-      anchorY,
-    },
-    data: {
-      id: Math.random(),
-    },
-  };
-}
 
 export function pointerDown(
   annotation: IAnnotation | undefined,
   e: TouchEvent | MouseEvent,
+  options: SelectorMethodsOptions,
   type: string
 ): IAnnotation | undefined {
   const selection = annotation?.selection;
   if (!selection) {
-    return newAnnotation(type, e);
+    const { x: anchorX, y: anchorY } = getCoordPercentage(e)!;
+
+    return {
+      geometry: {
+        x: 0,
+        y: 0,
+        type,
+        width: 0,
+        height: 0,
+      },
+      selection: {
+        mode: SelectionMode.New,
+        anchorX,
+        anchorY,
+      },
+      data: {
+        id: options.idFunction(),
+      },
+    };
   }
   return;
 }
@@ -102,27 +102,26 @@ export function pointerMove(
   return annotation;
 }
 
-export const createSelectorMethods = (type: string) => ({
+export const createSelectorMethods = (type: string): ISelectorMethods => ({
   onMouseDown(
     annotation: IAnnotation | undefined,
     e: MouseEvent,
-    _editorMode: EditorMode
+    options: SelectorMethodsOptions
   ): IAnnotation | undefined {
-    return pointerDown(annotation, e, type);
+    return pointerDown(annotation, e, options, type);
   },
 
   onMouseUp(
     annotation: IAnnotation | undefined,
     e: MouseEvent,
-    editorMode: EditorMode
+    { editorMode }: SelectorMethodsOptions
   ): IAnnotation | undefined {
     return pointerUp(annotation, e, editorMode);
   },
 
   onMouseMove(
     annotation: IAnnotation | undefined,
-    e: MouseEvent,
-    _editorMode: EditorMode
+    e: MouseEvent
   ): IAnnotation | undefined {
     return pointerMove(annotation, e);
   },
@@ -130,23 +129,22 @@ export const createSelectorMethods = (type: string) => ({
   onTouchStart(
     annotation: IAnnotation | undefined,
     e: TouchEvent,
-    _editorMode: EditorMode
+    options: SelectorMethodsOptions
   ): IAnnotation | undefined {
-    return pointerDown(annotation, e, type);
+    return pointerDown(annotation, e, options, type);
   },
 
   onTouchEnd(
     annotation: IAnnotation | undefined,
     e: TouchEvent,
-    editorMode: EditorMode
+    { editorMode }: SelectorMethodsOptions
   ): IAnnotation | undefined {
     return pointerUp(annotation, e, editorMode);
   },
 
   onTouchMove(
     annotation: IAnnotation | undefined,
-    e: TouchEvent,
-    _editorMode: EditorMode
+    e: TouchEvent
   ): IAnnotation | undefined {
     return pointerMove(annotation, e);
   },

@@ -18,47 +18,51 @@ export interface IGeometry {
   width: number;
 }
 
+export interface SelectorMethodsOptions {
+  editorMode: EditorMode;
+  idFunction: () => string;
+}
 export interface ISelectorMethods {
   onMouseDown?: (
     annotation: IAnnotation | undefined,
     e: MouseEvent,
-    editorMode: EditorMode
+    options: SelectorMethodsOptions
   ) => IAnnotation | undefined;
 
   onMouseUp?: (
     annotation: IAnnotation | undefined,
     e: MouseEvent,
-    editorMode: EditorMode
+    options: SelectorMethodsOptions
   ) => IAnnotation | undefined;
 
   onMouseMove?: (
     annotation: IAnnotation | undefined,
     e: MouseEvent,
-    editorMode: EditorMode
+    options: SelectorMethodsOptions
   ) => IAnnotation | undefined;
 
   onTouchStart?: (
     annotation: IAnnotation | undefined,
     e: TouchEvent,
-    editorMode: EditorMode
+    options: SelectorMethodsOptions
   ) => IAnnotation | undefined;
 
   onTouchEnd?: (
     annotation: IAnnotation | undefined,
     e: TouchEvent,
-    editorMode: EditorMode
+    options: SelectorMethodsOptions
   ) => IAnnotation | undefined;
 
   onTouchMove?: (
     annotation: IAnnotation | undefined,
     e: TouchEvent,
-    editorMode: EditorMode
+    options: SelectorMethodsOptions
   ) => IAnnotation | undefined;
 
   onClick?: (
     annotation: IAnnotation | undefined,
     e: any,
-    editorMode: EditorMode
+    options: SelectorMethodsOptions
   ) => IAnnotation | undefined;
 }
 
@@ -86,7 +90,7 @@ export interface IAnnotation {
   isSelected?: boolean;
   data: {
     text?: string;
-    id?: number;
+    id: string;
   };
 }
 
@@ -96,7 +100,6 @@ export interface RenderEditorProps {
 }
 
 export interface ShapeProps {
-  key?: number;
   annotation: IAnnotation;
   isMouseOver: boolean;
   isSelected: boolean;
@@ -171,6 +174,8 @@ export interface AnnotationProps {
   disableSelector?: boolean;
 
   editorMode: EditorMode;
+
+  idFunction: () => string;
 
   innerRef: (el: HTMLImageElement) => object;
 

@@ -1,6 +1,5 @@
 import { MouseEvent, TouchEvent } from 'react';
 import {
-  EditorMode,
   IAnnotation,
   IContainer,
   IGeometry,
@@ -8,6 +7,7 @@ import {
   ISelector,
   ISelectorMethods,
   SelectionMode,
+  SelectorMethodsOptions,
 } from '../types/index';
 import { getCoordPercentage } from '../utils/offsetCoordinates';
 
@@ -45,7 +45,7 @@ export const methods: ISelectorMethods = {
   onClick(
     annotation: IAnnotation | undefined,
     e: TouchEvent | MouseEvent,
-    _editorMode: EditorMode
+    options: SelectorMethodsOptions
   ): IAnnotation | undefined {
     if (!annotation?.geometry) {
       return {
@@ -60,7 +60,7 @@ export const methods: ISelectorMethods = {
           type: TYPE,
         },
         data: {
-          id: Math.random(),
+          id: options.idFunction(),
         },
       };
     }

@@ -26,6 +26,7 @@ const defaultProps: AnnotationProps = {
 
   editorMode: EditorMode.Annotate,
 
+  idFunction: () => Math.random().toString(),
   innerRef: (_el: HTMLImageElement) => ({}),
 
   onAnnotationsUpdate: () => {},
@@ -34,6 +35,7 @@ const defaultProps: AnnotationProps = {
   renderEditor: ({ annotation, onSubmit }: RenderEditorProps) => (
     <Editor annotation={annotation} onSubmit={onSubmit} />
   ),
+
   RenderShape: (props: RenderHighlightProps): ReactElement | null => {
     const { annotation } = props;
     switch (annotation.geometry.type) {
@@ -47,9 +49,11 @@ const defaultProps: AnnotationProps = {
         return null;
     }
   },
+
   renderContent: ({ key, annotation }: ContentProps) => (
     <Content key={key} annotation={annotation} />
   ),
+
   renderOverlay: ({
     annotations,
     selectorType,

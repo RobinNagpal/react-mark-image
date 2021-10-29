@@ -52,6 +52,20 @@ function Annotation(options: AnnotationProps & WithRelativeMousePosProps) {
     ...options,
   };
 
+  const {
+    allowTouch,
+    alt,
+    className,
+    idFunction,
+
+    RenderShape,
+    renderEditor,
+    renderOverlay,
+
+    style,
+    src,
+  } = props;
+
   const [selectedSelectorType, setSelectedSelectorType] = useState<string>(
     props.shapes[0]
   );
@@ -165,7 +179,7 @@ function Annotation(options: AnnotationProps & WithRelativeMousePosProps) {
         const value: IAnnotation | undefined = selectorMethod(
           tmpAnnotation,
           e,
-          editorMode
+          { editorMode, idFunction }
         );
 
         setTmpAnnotation(value);
@@ -206,17 +220,6 @@ function Annotation(options: AnnotationProps & WithRelativeMousePosProps) {
     setSelectedAnnotation(annotationToSelect);
     props.onAnnotationsUpdate(newAnnotationsValue);
   };
-
-  const {
-    RenderShape,
-    renderEditor,
-    renderOverlay,
-    allowTouch,
-    className,
-    style,
-    alt,
-    src,
-  } = props;
 
   return (
     <>
