@@ -23,17 +23,20 @@ function Point(props: ShapeProps) {
   const {
     annotation: { geometry },
     isMouseOver,
+    isSelected,
     onMouseEnter,
     onMouseLeave,
   } = props;
   if (!geometry) return null;
+
+  const isActive = isMouseOver || isSelected;
 
   return (
     <Container
       style={{
         top: `${geometry.y}%`,
         left: `${geometry.x}%`,
-        border: isMouseOver ? 'solid 3px grey' : 'solid 3px white',
+        border: isActive ? 'solid 3px grey' : 'solid 3px white',
       }}
       onMouseEnter={onMouseEnter}
       onMouseLeave={onMouseLeave}

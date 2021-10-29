@@ -190,8 +190,21 @@ function Annotation(options: AnnotationProps & WithRelativeMousePosProps) {
     const filtered = annotations.filter(
       (annotation) => annotation.data.id !== annotationToDelete.data.id
     );
-    setAnnotations([...filtered]);
+    const newAnnotationsValue = [...filtered];
+    setAnnotations(newAnnotationsValue);
     setSelectedAnnotation(undefined);
+    props.onAnnotationsUpdate(newAnnotationsValue);
+  };
+
+  const selectAnnotation = (annotationToSelect: IAnnotation) => {
+    const mapped = annotations.map((annotation) => ({
+      ...annotation,
+      isSelected: annotation.data.id === annotationToSelect.data.id,
+    }));
+    const newAnnotationsValue = [...mapped];
+    setAnnotations(newAnnotationsValue);
+    setSelectedAnnotation(annotationToSelect);
+    props.onAnnotationsUpdate(newAnnotationsValue);
   };
 
   const {
@@ -235,8 +248,7 @@ function Annotation(options: AnnotationProps & WithRelativeMousePosProps) {
               annotation={annotation}
               renderContent={props.renderContent}
               isInSelectionMode={!!tmpAnnotation}
-              onClick={setSelectedAnnotation}
-              selectedAnnotation={selectedAnnotation}
+              onClick={selectAnnotation}
             />
           ))}
           {!props.disableSelector && tmpAnnotation?.geometry && (

@@ -15,7 +15,7 @@ import {
 } from './AnnotationStoryTemplate';
 
 const meta: Meta = {
-  title: 'StackedAnnotationsHighlightOnly',
+  title: 'AnnotationToolBarButtons',
   component: Annotation,
   argTypes,
   parameters: {

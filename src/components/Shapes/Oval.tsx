@@ -16,11 +16,13 @@ function Oval(props: ShapeProps) {
   const {
     annotation: { geometry },
     isMouseOver,
+    isSelected,
     onMouseEnter,
     onMouseLeave,
   } = props;
   if (!geometry) return null;
 
+  const isActive = isMouseOver || isSelected;
   return (
     <Container
       style={{
@@ -29,9 +31,9 @@ function Oval(props: ShapeProps) {
         top: `${geometry.y}%`,
         height: `${geometry.height}%`,
         width: `${geometry.width}%`,
-        border: isMouseOver ? 'solid 1px black' : 'dashed 2px black',
-        boxShadow: isMouseOver ? '0 0 1px 1px black inset' : '',
-        backgroundColor: isMouseOver
+        border: isActive ? 'solid 1px black' : 'dashed 2px black',
+        boxShadow: isActive ? '0 0 1px 1px black inset' : '',
+        backgroundColor: isActive
           ? 'rgba(128, 128, 128, 0.3)'
           : 'rgba(128, 128, 128, 0.05)',
       }}

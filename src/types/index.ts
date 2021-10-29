@@ -83,6 +83,7 @@ export interface IAnnotation {
     anchorY?: number | null;
   };
   geometry: IGeometry;
+  isSelected?: boolean;
   data: {
     text?: string;
     id?: number;
@@ -98,14 +99,16 @@ export interface ShapeProps {
   key?: number;
   annotation: IAnnotation;
   isMouseOver: boolean;
+  isSelected: boolean;
   onMouseEnter: MouseEventHandler<HTMLDivElement>;
   onMouseLeave: MouseEventHandler<HTMLDivElement>;
 }
 
 export interface RenderHighlightProps {
+  annotation: IAnnotation;
+  editMode: EditorMode;
   key?: number;
   isInSelectionMode: boolean;
-  annotation: IAnnotation;
   renderContent?: (props: ContentProps) => ReactElement | null;
 }
 
@@ -134,13 +137,12 @@ export enum SelectionMode {
 
 export type WrappedShapeProps = Omit<
   ShapeProps,
-  'isMouseOver' | 'onMouseEnter' | 'onMouseLeave'
+  'isMouseOver' | 'isSelected' | 'onMouseEnter' | 'onMouseLeave'
 > & {
   editMode: EditorMode;
   isInSelectionMode: boolean;
   onClick?: (annotation: IAnnotation) => void;
   renderContent?: (props: ContentProps) => ReactElement | null;
-  selectedAnnotation?: IAnnotation;
 };
 
 export interface RenderOverlayProps {
@@ -181,6 +183,7 @@ export interface AnnotationProps {
 
   shapes: string[];
   onAnnotationsUpdate: (annotations: IAnnotation[]) => void;
+  onAnnotationSelect: (annotation: IAnnotation) => void;
   src: string;
   style?: object;
 }
