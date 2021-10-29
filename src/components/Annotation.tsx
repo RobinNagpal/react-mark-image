@@ -231,6 +231,7 @@ function Annotation(options: AnnotationProps & WithRelativeMousePosProps) {
           {annotations.map((annotation) => (
             <RenderShape
               key={annotation.data.id}
+              editMode={props.editorMode}
               annotation={annotation}
               renderContent={props.renderContent}
               isInSelectionMode={!!tmpAnnotation}
@@ -241,6 +242,7 @@ function Annotation(options: AnnotationProps & WithRelativeMousePosProps) {
           {!props.disableSelector && tmpAnnotation?.geometry && (
             <RenderShape
               key={tmpAnnotation.data.id}
+              editMode={props.editorMode}
               annotation={tmpAnnotation}
               renderContent={props.renderContent}
               isInSelectionMode={!!tmpAnnotation}

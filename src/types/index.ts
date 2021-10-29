@@ -136,6 +136,7 @@ export type WrappedShapeProps = Omit<
   ShapeProps,
   'isMouseOver' | 'onMouseEnter' | 'onMouseLeave'
 > & {
+  editMode: EditorMode;
   isInSelectionMode: boolean;
   onClick?: (annotation: IAnnotation) => void;
   renderContent?: (props: ContentProps) => ReactElement | null;

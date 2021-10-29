@@ -6,9 +6,6 @@ import {
   DefaultAnnotationStoryTemplate,
 } from './AnnotationStoryTemplate';
 
-const defaultImageUrl =
-  'https://raw.githubusercontent.com/RobinNagpal/react-image-annotation-ts/HEAD/example/img.jpeg';
-
 const meta: Meta = {
   title: 'Annotation',
   component: Annotation,
@@ -23,6 +20,4 @@ export default meta;
 const StoryTemplate: Story<AnnotationPropsOptional> = DefaultAnnotationStoryTemplate;
 
 export const Default = StoryTemplate.bind({});
-Default.args = {
-  src: defaultImageUrl,
-};
+Default.args = {};

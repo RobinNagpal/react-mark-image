@@ -1,5 +1,5 @@
 import React, { ComponentType, useState } from 'react';
-import { ShapeProps, WrappedShapeProps } from '../../types';
+import { EditorMode, ShapeProps, WrappedShapeProps } from '../../types';
 
 export const withShapeWrapper = (
   DecoratedShape: ComponentType<ShapeProps>
@@ -7,10 +7,20 @@ export const withShapeWrapper = (
   Omit<WrappedShapeProps, 'isMouseOver' | 'onMouseEnter' | 'onMouseLeave'>
 > => {
   const WrappedComponent = (props: WrappedShapeProps) => {
-    const { annotation, onClick, renderContent, selectedAnnotation } = props;
+    const {
+      annotation,
+      editMode,
+      onClick,
+      renderContent,
+      selectedAnnotation,
+    } = props;
     const [mouseHovered, setMouseHovered] = useState<boolean>(false);
-    const reactElement =
-      mouseHovered && renderContent && props.annotation.data.text
+
+    const shouldShowContent =
+      editMode === EditorMode.Annotate && mouseHovered && renderContent;
+
+    const reactContentElement =
+      shouldShowContent && props.annotation.data.text
         ? renderContent(props)
         : null;
 
@@ -25,7 +35,7 @@ export const withShapeWrapper = (
           onMouseLeave={() => setMouseHovered(false)}
         />
 
-        {reactElement}
+        {reactContentElement}
       </div>
     );
   };
