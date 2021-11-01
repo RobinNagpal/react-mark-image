@@ -37,6 +37,7 @@
       "components/*" : ["src/components/*"],
       "hocs/*" : ["src/hocs/*"],
       "types/*" : ["src/types/*"],
+      "utils/*" : ["src/utils/*"],
     }
   }
 }

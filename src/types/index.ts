@@ -98,7 +98,6 @@ export interface IAnnotation {
     anchorY?: number | null;
   };
   geometry: IGeometry;
-  isSelected?: boolean;
   data: AnnotationData;
 }
 
@@ -116,12 +115,14 @@ export interface ShapeProps {
   style?: CSSProperties;
 }
 
-export interface RenderHighlightProps {
+export interface RenderShapeProps {
   annotation: IAnnotation;
   editMode: EditorMode;
   key: string;
   isInSelectionMode: boolean;
   renderContent?: (props: ContentProps) => ReactElement | null;
+  selectedAnnotation?: IAnnotation;
+  selectAnnotation: (annotation?: IAnnotation) => void;
 }
 
 export interface ContentProps {
@@ -152,7 +153,8 @@ export type WrappedShapeProps = {
   editMode: EditorMode;
   isInSelectionMode: boolean;
   key: string;
-  selectAnnotation?: (annotation: IAnnotation) => void;
+  selectedAnnotation?: IAnnotation;
+  selectAnnotation: (annotation?: IAnnotation) => void;
   renderContent?: (props: ContentProps) => ReactElement | null;
   style?: CSSProperties;
 };
@@ -207,7 +209,7 @@ export interface AnnotationProps {
 
   shapes: string[];
   onAnnotationsUpdate: (annotations: IAnnotation[]) => void;
-  onAnnotationSelect: (annotation: IAnnotation) => void;
+  onAnnotationSelect: (annotation?: IAnnotation) => void;
   src: string;
   style?: object;
 

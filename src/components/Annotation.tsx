@@ -12,7 +12,8 @@ import {
   IAnnotation,
   ISelector,
   SelectionMode,
-} from '../types/index';
+} from 'types/index';
+import useHandleEscapeEvent from 'utils/useHandleEscapeEvent';
 import compose from '../utils/compose';
 import withRelativeMousePos, {
   WithRelativeMousePosProps,
@@ -23,7 +24,7 @@ import ImageElement from './Image';
 import Overlay from './Overlay';
 import ToolBar from './ToolBar/ToolBar';
 
-const Container = styled.div<{ allowTouch?: boolean }>`
+const Container = styled.div`
   clear: both;
   position: relative;
   width: 100%;
@@ -31,8 +32,6 @@ const Container = styled.div<{ allowTouch?: boolean }>`
   &:hover ${Overlay} {
     opacity: 1;
   }
-
-  touch-action: ${({ allowTouch }) => (allowTouch ? 'pinch-zoom' : 'auto')};
 `;
 
 const ItemsDiv = styled.div`
@@ -217,19 +216,14 @@ function Annotation(options: AnnotationProps & WithRelativeMousePosProps) {
     props.onAnnotationsUpdate(newAnnotationsValue);
   };
 
-  const selectAnnotation = (annotationToSelect: IAnnotation) => {
-    const mapped = annotations.map((annotation) => ({
-      ...annotation,
-      isSelected: annotation.data.id === annotationToSelect.data.id,
-    }));
-    const newAnnotationsValue = [...mapped];
-    setAnnotations(newAnnotationsValue);
+  const selectAnnotation = (annotationToSelect?: IAnnotation) => {
     setSelectedAnnotation(annotationToSelect);
-    props.onAnnotationsUpdate(newAnnotationsValue);
+    props.onAnnotationSelect(annotationToSelect);
   };
 
   const memoisedSelectedAnnotation = useCallback(selectAnnotation, []);
 
+  useHandleEscapeEvent(selectAnnotation, selectedAnnotation);
   return (
     <>
       <ToolBar
@@ -240,10 +234,12 @@ function Annotation(options: AnnotationProps & WithRelativeMousePosProps) {
         setSelectedSelectorType={setSelectedSelectorType}
       />
       <Container
-        style={props.style}
+        style={{
+          ...props.style,
+          touchAction: allowTouch ? 'pinch-zoom' : 'auto',
+        }}
         onMouseLeave={onTargetMouseLeave}
         onTouchCancel={onTargetTouchLeave}
-        allowTouch={allowTouch}
       >
         <ImageElement
           className={className}
@@ -262,6 +258,7 @@ function Annotation(options: AnnotationProps & WithRelativeMousePosProps) {
               key: annotation.data.id,
               renderContent: props.renderContent,
               selectAnnotation: memoisedSelectedAnnotation,
+              selectedAnnotation: selectedAnnotation,
             })
           )}
           {!props.disableSelector &&
@@ -272,6 +269,7 @@ function Annotation(options: AnnotationProps & WithRelativeMousePosProps) {
               isInSelectionMode: !!tmpAnnotation,
               key: tmpAnnotation.data.id,
               renderContent: props.renderContent,
+              selectAnnotation: memoisedSelectedAnnotation,
             })}
         </ItemsDiv>
         <ItemsDiv

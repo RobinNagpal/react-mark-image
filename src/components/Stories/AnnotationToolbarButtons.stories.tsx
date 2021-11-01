@@ -5,7 +5,7 @@ import Point from './../Shapes/Point';
 import Rectangle from './../Shapes/Rectangle';
 import { IAnnotation, PointSelector, RectangleSelector } from './../../index';
 import styled from 'styled-components';
-import { EditorMode, OvalSelector, RenderHighlightProps } from './../../index';
+import { EditorMode, OvalSelector, RenderShapeProps } from './../../index';
 
 import Annotation, { AnnotationPropsOptional } from './../Annotation';
 import { argTypes, ovalAnnotations } from './AnnotationStoryTemplate';
@@ -42,7 +42,7 @@ const CloseIcon = styled(StyledIcon)`
   background-image: url(${CloseSvg});
 `;
 
-const renderShape = (props: RenderHighlightProps): ReactElement | null => {
+const renderShape = (props: RenderShapeProps): ReactElement | null => {
   const { annotation } = props;
   const styles: CSSProperties = {};
   if (annotation.data.isCorrectChoice) {

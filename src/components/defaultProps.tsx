@@ -1,3 +1,4 @@
+import Editor from 'components/Editor';
 import React, { ReactElement } from 'react';
 
 import { OvalSelector, PointSelector, RectangleSelector } from '../selectors';
@@ -6,11 +7,10 @@ import {
   ContentProps,
   EditorMode,
   RenderEditorProps,
-  RenderHighlightProps,
+  RenderShapeProps,
   RenderOverlayProps,
-} from '../types/index';
+} from 'types/index';
 import Content from './Content';
-import Editor from './Editor';
 import Overlay from './Overlay';
 import Oval from './Shapes/Oval';
 import Point from './Shapes/Point';
@@ -36,7 +36,7 @@ const defaultProps: AnnotationProps = {
     <Editor annotation={annotation} onSubmit={onSubmit} />
   ),
 
-  renderShape: (props: RenderHighlightProps): ReactElement | null => {
+  renderShape: (props: RenderShapeProps): ReactElement | null => {
     const { annotation } = props;
     switch (annotation.geometry.type) {
       case RectangleSelector.TYPE:
