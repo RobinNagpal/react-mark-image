@@ -168,6 +168,7 @@ export interface RenderToolbarProps {
   deleteAnnotation: (annotation: IAnnotation) => void;
   options: ToolBarOptions;
   selectedAnnotation: IAnnotation | undefined;
+  unSelectAnnotation: () => void;
   selectedSelectorType: string;
   setSelectedSelectorType: (selector: string) => void;
 }

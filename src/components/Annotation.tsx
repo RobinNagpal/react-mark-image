@@ -232,6 +232,7 @@ function Annotation(options: AnnotationProps & WithRelativeMousePosProps) {
         selectedAnnotation={selectedAnnotation}
         selectedSelectorType={selectedSelectorType}
         setSelectedSelectorType={setSelectedSelectorType}
+        unSelectAnnotation={memoisedSelectedAnnotation}
       />
       <Container
         style={{

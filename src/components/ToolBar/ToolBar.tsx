@@ -3,7 +3,8 @@ import RectangleSelector from './../../hocs/RectangleSelector';
 import PointSelector from './../../hocs/PointSelector';
 import OvalSelector from './../../hocs/OvalSelector';
 import styled from 'styled-components';
-import { RenderToolbarProps } from './../../types';
+import { RenderToolbarProps } from 'types/index';
+import BackSvg from './icons/arrowLeft.svg';
 import CircleSvg from './icons/circle.svg';
 import PointSvg from './icons/point.svg';
 import SquareSvg from './icons/square.svg';
@@ -36,6 +37,9 @@ const PointIcon = styled(StyledIcon)`
 const SquareIcon = styled(StyledIcon)`
   background-image: url(${SquareSvg});
 `;
+const BackIcon = styled(StyledIcon)`
+  background-image: url(${BackSvg});
+`;
 const TrashIcon = styled(StyledIcon)`
   background-image: url(${TrashSvg});
 `;
@@ -47,11 +51,13 @@ export default function ToolBar({
   selectedAnnotation,
   selectedSelectorType,
   setSelectedSelectorType,
+  unSelectAnnotation,
 }: RenderToolbarProps): ReactElement {
   return (
     <OptionsBarDiv>
       {selectedAnnotation ? (
         <>
+          <BackIcon isSelected={false} onClick={() => unSelectAnnotation()} />
           {options.renderSelectedAnnotationIcons?.(selectedAnnotation)}
           <TrashIcon
             isSelected={false}
