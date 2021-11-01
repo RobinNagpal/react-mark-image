@@ -37,6 +37,7 @@ function Point(props: ShapeProps) {
         top: `${geometry.y}%`,
         left: `${geometry.x}%`,
         border: isActive ? 'solid 3px grey' : 'solid 3px white',
+        ...(props.style || {}),
       }}
       onMouseEnter={onMouseEnter}
       onMouseLeave={onMouseLeave}

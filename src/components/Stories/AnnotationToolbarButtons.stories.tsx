@@ -1,7 +1,11 @@
 import { Meta, Story } from '@storybook/react';
-import React, { useState } from 'react';
+import React, { CSSProperties, ReactElement, useState } from 'react';
+import Oval from './../Shapes/Oval';
+import Point from './../Shapes/Point';
+import Rectangle from './../Shapes/Rectangle';
+import { IAnnotation, PointSelector, RectangleSelector } from './../../index';
 import styled from 'styled-components';
-import { EditorMode, OvalSelector } from './../../index';
+import { EditorMode, OvalSelector, RenderHighlightProps } from './../../index';
 
 import Annotation, { AnnotationPropsOptional } from './../Annotation';
 import { argTypes, ovalAnnotations } from './AnnotationStoryTemplate';
@@ -38,17 +42,63 @@ const CloseIcon = styled(StyledIcon)`
   background-image: url(${CloseSvg});
 `;
 
-const renderSelectedAnnotationIcons = () => {
-  return (
-    <>
-      <CheckIcon isSelected={false} />
-      <CloseIcon isSelected={false} />
-    </>
-  );
+const renderShape = (props: RenderHighlightProps): ReactElement | null => {
+  const { annotation } = props;
+  const styles: CSSProperties = {};
+  if (annotation.data.isCorrectChoice) {
+    styles.backgroundImage = `url(${CheckSvg})`;
+    styles.backgroundRepeat = 'no-repeat';
+    styles.backgroundPosition = 'center';
+    styles.backgroundColor = 'rgba(0, 120, 0, 0.2)';
+  }
+
+  switch (annotation.geometry.type) {
+    case RectangleSelector.TYPE:
+      return <Rectangle {...props} style={styles} />;
+    case PointSelector.TYPE:
+      return <Point {...props} />;
+    case OvalSelector.TYPE:
+      return <Oval {...props} style={styles} />;
+    default:
+      return null;
+  }
 };
 
-export const Oval: Story<AnnotationPropsOptional> = (args) => {
+export const OvalAnnotation: Story<AnnotationPropsOptional> = (args) => {
   const [annotations, setAnnotations] = useState<any[]>(ovalAnnotations);
+
+  const updateSelectedAnnotation = (
+    selectedAnnotation: IAnnotation,
+    isCorrectChoice: boolean
+  ) => {
+    const updated = annotations.map((annotation: IAnnotation) => ({
+      ...annotation,
+      data: {
+        ...annotation.data,
+        isCorrectChoice:
+          annotation.data.id === selectedAnnotation.data.id
+            ? isCorrectChoice
+            : !!annotation.data.isCorrectChoice,
+      },
+    }));
+
+    setAnnotations(updated);
+  };
+
+  const renderSelectedAnnotationIcons = (selectedAnnotation: IAnnotation) => {
+    const markAsCorrectChoice = () =>
+      updateSelectedAnnotation(selectedAnnotation, true);
+
+    const markAsWrongChoice = () =>
+      updateSelectedAnnotation(selectedAnnotation, false);
+
+    return (
+      <>
+        <CheckIcon isSelected={false} onClick={() => markAsCorrectChoice()} />
+        <CloseIcon isSelected={false} onClick={() => markAsWrongChoice()} />
+      </>
+    );
+  };
 
   return (
     <div style={{ width: '800px' }}>
@@ -64,7 +114,8 @@ export const Oval: Story<AnnotationPropsOptional> = (args) => {
   );
 };
 
-Oval.args = {
+OvalAnnotation.args = {
   editorMode: EditorMode.HighlightOnly,
   shapes: [OvalSelector.TYPE],
+  renderShape: renderShape,
 };

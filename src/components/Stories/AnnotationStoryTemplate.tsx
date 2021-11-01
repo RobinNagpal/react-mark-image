@@ -49,7 +49,7 @@ export const ovalAnnotations = [
       height: 25.74853577097816,
     },
     data: {
-      id: '0.06820618880497009',
+      id: 'circle_1',
       text: 'circle 1 is great',
     },
   },
@@ -62,7 +62,7 @@ export const ovalAnnotations = [
       height: 25.398215556407028,
     },
     data: {
-      id: '0.5377627760248218',
+      id: 'circle_2',
       text: 'circle 2 is awesome',
     },
   },
@@ -75,7 +75,7 @@ export const ovalAnnotations = [
       height: 24.872735234550326,
     },
     data: {
-      id: '0.2866107008889738',
+      id: 'circle_3',
       text: 'circle 3 is Woohooo',
     },
   },
@@ -99,7 +99,7 @@ export const RectangleTemplateWithExistingAnnotations: Story<AnnotationPropsOpti
           height: 22.070173517981278,
         },
         data: {
-          id: '0.6354036082020775',
+          id: 'rectangle_1',
           text: 'rectangle 1 is awesome',
         },
       },
@@ -112,7 +112,7 @@ export const RectangleTemplateWithExistingAnnotations: Story<AnnotationPropsOpti
           height: 23.29629426898024,
         },
         data: {
-          id: '0.2927749977194911',
+          id: 'rectangle_2',
           text: 'rectangle 2 is great',
         },
       },
@@ -125,7 +125,7 @@ export const RectangleTemplateWithExistingAnnotations: Story<AnnotationPropsOpti
           height: 18.917291586841095,
         },
         data: {
-          id: '0.6042324839873754',
+          id: 'rectangle_3',
           text: 'rectangle 3 is OMG',
         },
       },
@@ -138,7 +138,7 @@ export const RectangleTemplateWithExistingAnnotations: Story<AnnotationPropsOpti
           height: 31.1784990968307,
         },
         data: {
-          id: '0.09658012208210276',
+          id: 'rectangle_4',
           text: 'rectangle 4 is Woohooo',
         },
       },
@@ -158,7 +158,7 @@ export const PointTemplateWithExistingAnnotations: Story<AnnotationPropsOptional
           type: 'POINT',
         },
         data: {
-          id: '0.013204158033854219',
+          id: 'point_1',
           text: 'point 1 is awesome',
         },
       },
@@ -171,7 +171,7 @@ export const PointTemplateWithExistingAnnotations: Story<AnnotationPropsOptional
           type: 'POINT',
         },
         data: {
-          id: '0.47960881941169275',
+          id: 'point_2',
           text: 'point 2 is great',
         },
       },
@@ -184,7 +184,7 @@ export const PointTemplateWithExistingAnnotations: Story<AnnotationPropsOptional
           type: 'POINT',
         },
         data: {
-          id: '0.43760133237882637',
+          id: 'point_3',
           text: 'point 3 OMG',
         },
       },
@@ -197,7 +197,7 @@ export const PointTemplateWithExistingAnnotations: Story<AnnotationPropsOptional
           type: 'POINT',
         },
         data: {
-          id: '0.45050948559505843',
+          id: 'point_4',
           text: 'point 5 is mind blowing',
         },
       },
@@ -210,7 +210,7 @@ export const PointTemplateWithExistingAnnotations: Story<AnnotationPropsOptional
           type: 'POINT',
         },
         data: {
-          id: '0.32063690632538977',
+          id: 'point_5',
           text: 'prrrrrr',
         },
       },

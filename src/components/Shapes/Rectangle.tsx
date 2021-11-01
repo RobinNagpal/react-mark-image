@@ -34,6 +34,7 @@ function Rectangle(props: ShapeProps) {
         backgroundColor: isActive
           ? 'rgba(128, 128, 128, 0.3)'
           : 'rgba(128, 128, 128, 0.05)',
+        ...(props.style || {}),
       }}
       onMouseEnter={onMouseEnter}
       onMouseLeave={onMouseLeave}

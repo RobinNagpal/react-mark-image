@@ -84,6 +84,10 @@ function Annotation(options: AnnotationProps & WithRelativeMousePosProps) {
     options.annotations
   );
 
+  useEffect(() => {
+    setAnnotations(options.annotations);
+  }, [options.annotations]);
+
   const [showEditor, setShowEditor] = useState<boolean>(false);
 
   const targetRef = React.createRef<any>();

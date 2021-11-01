@@ -1,4 +1,10 @@
-import { ReactElement, MouseEvent, MouseEventHandler, TouchEvent } from 'react';
+import {
+  ReactElement,
+  MouseEvent,
+  MouseEventHandler,
+  TouchEvent,
+  CSSProperties,
+} from 'react';
 
 export interface IPoint {
   x: number;
@@ -80,6 +86,11 @@ export interface ISelector {
   methods: ISelectorMethods;
 }
 
+interface AnnotationData extends Record<string, any> {
+  text?: string;
+  id: string;
+}
+
 export interface IAnnotation {
   selection?: {
     mode: string;
@@ -88,10 +99,7 @@ export interface IAnnotation {
   };
   geometry: IGeometry;
   isSelected?: boolean;
-  data: {
-    text?: string;
-    id: string;
-  };
+  data: AnnotationData;
 }
 
 export interface RenderEditorProps {
@@ -105,6 +113,7 @@ export interface ShapeProps {
   isSelected: boolean;
   onMouseEnter: MouseEventHandler<HTMLDivElement>;
   onMouseLeave: MouseEventHandler<HTMLDivElement>;
+  style?: CSSProperties;
 }
 
 export interface RenderHighlightProps {
@@ -116,7 +125,7 @@ export interface RenderHighlightProps {
 }
 
 export interface ContentProps {
-  key?: number;
+  key?: string;
   annotation: IAnnotation;
 }
 
@@ -138,15 +147,14 @@ export enum SelectionMode {
   Final = 'FINAL',
 }
 
-export type WrappedShapeProps = Omit<
-  ShapeProps,
-  'isMouseOver' | 'isSelected' | 'onMouseEnter' | 'onMouseLeave'
-> & {
+export type WrappedShapeProps = {
+  annotation: IAnnotation;
   editMode: EditorMode;
   isInSelectionMode: boolean;
   key: string;
   onClick?: (annotation: IAnnotation) => void;
   renderContent?: (props: ContentProps) => ReactElement | null;
+  style?: CSSProperties;
 };
 
 export interface RenderOverlayProps {
@@ -166,7 +174,9 @@ interface ToolBarOptions {
   showToolBar?: boolean;
   showDeleteOption?: boolean;
   renderToolbarIcons?: () => ReactElement | null;
-  renderSelectedAnnotationIcons?: () => ReactElement | null;
+  renderSelectedAnnotationIcons?: (
+    annotation: IAnnotation
+  ) => ReactElement | null;
 }
 
 export interface AnnotationProps {

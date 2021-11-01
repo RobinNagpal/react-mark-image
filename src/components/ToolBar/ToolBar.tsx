@@ -52,7 +52,7 @@ export default function ToolBar({
     <OptionsBarDiv>
       {selectedAnnotation ? (
         <>
-          {options.renderSelectedAnnotationIcons?.()}
+          {options.renderSelectedAnnotationIcons?.(selectedAnnotation)}
           <TrashIcon
             isSelected={false}
             onClick={() => deleteAnnotation(selectedAnnotation)}
