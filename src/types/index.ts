@@ -152,7 +152,7 @@ export type WrappedShapeProps = {
   editMode: EditorMode;
   isInSelectionMode: boolean;
   key: string;
-  onClick?: (annotation: IAnnotation) => void;
+  selectAnnotation?: (annotation: IAnnotation) => void;
   renderContent?: (props: ContentProps) => ReactElement | null;
   style?: CSSProperties;
 };

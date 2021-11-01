@@ -45,4 +45,4 @@ function Point(props: ShapeProps) {
   );
 }
 
-export default withShapeWrapper(Point);
+export default React.memo(withShapeWrapper(Point));

@@ -23,6 +23,7 @@ function Oval(props: ShapeProps) {
   if (!geometry) return null;
 
   const isActive = isMouseOver || isSelected;
+
   return (
     <Container
       style={{
@@ -44,4 +45,4 @@ function Oval(props: ShapeProps) {
   );
 }
 
-export default withShapeWrapper(Oval);
+export default React.memo(withShapeWrapper(Oval));

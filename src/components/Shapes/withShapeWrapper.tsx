@@ -1,4 +1,4 @@
-import React, { ComponentType, useState } from 'react';
+import React, { ComponentType, useCallback, useState } from 'react';
 import { EditorMode, ShapeProps, WrappedShapeProps } from '../../types';
 
 export const withShapeWrapper = (
@@ -7,7 +7,7 @@ export const withShapeWrapper = (
   Omit<WrappedShapeProps, 'isMouseOver' | 'onMouseEnter' | 'onMouseLeave'>
 > => {
   const WrappedComponent = (props: WrappedShapeProps) => {
-    const { annotation, editMode, onClick, renderContent } = props;
+    const { annotation, editMode, renderContent } = props;
     const [mouseHovered, setMouseHovered] = useState<boolean>(false);
 
     const shouldShowContent =
@@ -18,14 +18,22 @@ export const withShapeWrapper = (
         ? renderContent(props)
         : null;
 
+    const onMouseEnter = useCallback(() => setMouseHovered(true), []);
+    const onMouseLeave = useCallback(() => setMouseHovered(false), []);
+    const onClick = useCallback(() => {
+      if (props.selectAnnotation) {
+        props.selectAnnotation(annotation);
+      }
+    }, []);
+
     return (
-      <div onClick={() => (onClick ? onClick(annotation) : false)}>
+      <div onClick={onClick}>
         <DecoratedShape
-          {...props}
+          annotation={props.annotation}
           isMouseOver={mouseHovered}
           isSelected={!!annotation.isSelected}
-          onMouseEnter={() => setMouseHovered(true)}
-          onMouseLeave={() => setMouseHovered(false)}
+          onMouseEnter={onMouseEnter}
+          onMouseLeave={onMouseLeave}
         />
 
         {reactContentElement}

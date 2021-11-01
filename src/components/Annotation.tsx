@@ -2,6 +2,7 @@ import React, {
   ComponentType,
   MouseEvent,
   TouchEvent,
+  useCallback,
   useEffect,
   useState,
 } from 'react';
@@ -227,6 +228,8 @@ function Annotation(options: AnnotationProps & WithRelativeMousePosProps) {
     props.onAnnotationsUpdate(newAnnotationsValue);
   };
 
+  const memoisedSelectedAnnotation = useCallback(selectAnnotation, []);
+
   return (
     <>
       <ToolBar
@@ -258,7 +261,7 @@ function Annotation(options: AnnotationProps & WithRelativeMousePosProps) {
               isInSelectionMode: !!tmpAnnotation,
               key: annotation.data.id,
               renderContent: props.renderContent,
-              onClick: selectAnnotation,
+              selectAnnotation: memoisedSelectedAnnotation,
             })
           )}
           {!props.disableSelector &&

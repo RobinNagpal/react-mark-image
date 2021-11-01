@@ -42,4 +42,4 @@ function Rectangle(props: ShapeProps) {
   );
 }
 
-export default withShapeWrapper(Rectangle);
+export default React.memo(withShapeWrapper(Rectangle));
