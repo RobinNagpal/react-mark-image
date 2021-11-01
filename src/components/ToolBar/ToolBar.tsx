@@ -43,6 +43,7 @@ const TrashIcon = styled(StyledIcon)`
 // https://www.w3schools.com/howto/howto_css_icon_bar.asp#
 export default function ToolBar({
   deleteAnnotation,
+  options,
   selectedAnnotation,
   selectedSelectorType,
   setSelectedSelectorType,
@@ -50,10 +51,13 @@ export default function ToolBar({
   return (
     <OptionsBarDiv>
       {selectedAnnotation ? (
-        <TrashIcon
-          isSelected={false}
-          onClick={() => deleteAnnotation(selectedAnnotation)}
-        />
+        <>
+          {options.renderSelectedAnnotationIcons?.()}
+          <TrashIcon
+            isSelected={false}
+            onClick={() => deleteAnnotation(selectedAnnotation)}
+          />
+        </>
       ) : (
         <>
           <SquareIcon

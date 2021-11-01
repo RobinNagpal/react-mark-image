@@ -110,7 +110,7 @@ export interface ShapeProps {
 export interface RenderHighlightProps {
   annotation: IAnnotation;
   editMode: EditorMode;
-  key?: number;
+  key: string;
   isInSelectionMode: boolean;
   renderContent?: (props: ContentProps) => ReactElement | null;
 }
@@ -144,6 +144,7 @@ export type WrappedShapeProps = Omit<
 > & {
   editMode: EditorMode;
   isInSelectionMode: boolean;
+  key: string;
   onClick?: (annotation: IAnnotation) => void;
   renderContent?: (props: ContentProps) => ReactElement | null;
 };
@@ -155,9 +156,17 @@ export interface RenderOverlayProps {
 
 export interface RenderToolbarProps {
   deleteAnnotation: (annotation: IAnnotation) => void;
+  options: ToolBarOptions;
   selectedAnnotation: IAnnotation | undefined;
   selectedSelectorType: string;
   setSelectedSelectorType: (selector: string) => void;
+}
+
+interface ToolBarOptions {
+  showToolBar?: boolean;
+  showDeleteOption?: boolean;
+  renderToolbarIcons?: () => ReactElement | null;
+  renderSelectedAnnotationIcons?: () => ReactElement | null;
 }
 
 export interface AnnotationProps {
@@ -181,7 +190,7 @@ export interface AnnotationProps {
 
   renderContent: (props: ContentProps) => ReactElement | null;
   renderEditor: (props: RenderEditorProps) => ReactElement | null;
-  RenderShape: (props: WrappedShapeProps) => ReactElement | null;
+  renderShape: (props: WrappedShapeProps) => ReactElement | null;
   renderOverlay: (props: RenderOverlayProps) => ReactElement | null;
 
   selectors: ISelector[];
@@ -191,6 +200,8 @@ export interface AnnotationProps {
   onAnnotationSelect: (annotation: IAnnotation) => void;
   src: string;
   style?: object;
+
+  toolBarOptions: ToolBarOptions;
 }
 
 export interface Theme {

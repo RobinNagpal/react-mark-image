@@ -36,7 +36,7 @@ const defaultProps: AnnotationProps = {
     <Editor annotation={annotation} onSubmit={onSubmit} />
   ),
 
-  RenderShape: (props: RenderHighlightProps): ReactElement | null => {
+  renderShape: (props: RenderHighlightProps): ReactElement | null => {
     const { annotation } = props;
     switch (annotation.geometry.type) {
       case RectangleSelector.TYPE:
@@ -75,5 +75,12 @@ const defaultProps: AnnotationProps = {
   shapes: [RectangleSelector.TYPE, OvalSelector.TYPE, PointSelector.TYPE],
 
   src: '',
+
+  toolBarOptions: {
+    showDeleteOption: true,
+    showToolBar: true,
+    renderSelectedAnnotationIcons: () => null,
+    renderToolbarIcons: () => null,
+  },
 };
 export default defaultProps;

@@ -58,12 +58,14 @@ function Annotation(options: AnnotationProps & WithRelativeMousePosProps) {
     className,
     idFunction,
 
-    RenderShape,
+    renderShape,
     renderEditor,
     renderOverlay,
 
     style,
     src,
+
+    toolBarOptions,
   } = props;
 
   const [selectedSelectorType, setSelectedSelectorType] = useState<string>(
@@ -224,10 +226,11 @@ function Annotation(options: AnnotationProps & WithRelativeMousePosProps) {
   return (
     <>
       <ToolBar
+        deleteAnnotation={deleteAnnotation}
+        options={toolBarOptions}
         selectedAnnotation={selectedAnnotation}
         selectedSelectorType={selectedSelectorType}
         setSelectedSelectorType={setSelectedSelectorType}
-        deleteAnnotation={deleteAnnotation}
       />
       <Container
         style={props.style}
@@ -244,25 +247,25 @@ function Annotation(options: AnnotationProps & WithRelativeMousePosProps) {
           setInnerRef={setInnerRef}
         />
         <ItemsDiv>
-          {annotations.map((annotation) => (
-            <RenderShape
-              key={annotation.data.id}
-              editMode={props.editorMode}
-              annotation={annotation}
-              renderContent={props.renderContent}
-              isInSelectionMode={!!tmpAnnotation}
-              onClick={selectAnnotation}
-            />
-          ))}
-          {!props.disableSelector && tmpAnnotation?.geometry && (
-            <RenderShape
-              key={tmpAnnotation.data.id}
-              editMode={props.editorMode}
-              annotation={tmpAnnotation}
-              renderContent={props.renderContent}
-              isInSelectionMode={!!tmpAnnotation}
-            />
+          {annotations.map((annotation) =>
+            renderShape({
+              annotation: annotation,
+              editMode: props.editorMode,
+              isInSelectionMode: !!tmpAnnotation,
+              key: annotation.data.id,
+              renderContent: props.renderContent,
+              onClick: selectAnnotation,
+            })
           )}
+          {!props.disableSelector &&
+            tmpAnnotation?.geometry &&
+            renderShape({
+              annotation: tmpAnnotation,
+              editMode: props.editorMode,
+              isInSelectionMode: !!tmpAnnotation,
+              key: tmpAnnotation.data.id,
+              renderContent: props.renderContent,
+            })}
         </ItemsDiv>
         <ItemsDiv
           onClick={onClick}
