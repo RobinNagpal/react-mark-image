@@ -14,6 +14,7 @@ const Container = styled.div`
 function Rectangle(props: ShapeProps) {
   const {
     annotation: { geometry },
+    children,
     isMouseOver,
     isSelected,
     onMouseEnter,
@@ -38,7 +39,9 @@ function Rectangle(props: ShapeProps) {
       }}
       onMouseEnter={onMouseEnter}
       onMouseLeave={onMouseLeave}
-    />
+    >
+      {children || null}
+    </Container>
   );
 }
 

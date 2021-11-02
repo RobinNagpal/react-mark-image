@@ -22,6 +22,7 @@ const Container = styled.div`
 function Point(props: ShapeProps) {
   const {
     annotation: { geometry },
+    children,
     isMouseOver,
     isSelected,
     onMouseEnter,
@@ -41,7 +42,9 @@ function Point(props: ShapeProps) {
       }}
       onMouseEnter={onMouseEnter}
       onMouseLeave={onMouseLeave}
-    />
+    >
+      {children || null}
+    </Container>
   );
 }
 

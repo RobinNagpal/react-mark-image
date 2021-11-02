@@ -7,7 +7,14 @@ export const withShapeWrapper = (
   Omit<WrappedShapeProps, 'isMouseOver' | 'onMouseEnter' | 'onMouseLeave'>
 > => {
   const WrappedComponent = (props: WrappedShapeProps) => {
-    const { annotation, editMode, renderContent, selectedAnnotation } = props;
+    const {
+      annotation,
+      children,
+      editMode,
+      renderContent,
+      selectedAnnotation,
+      style,
+    } = props;
     const [mouseHovered, setMouseHovered] = useState<boolean>(false);
 
     const shouldShowContent =
@@ -29,7 +36,8 @@ export const withShapeWrapper = (
     return (
       <div onClick={onClick}>
         <DecoratedShape
-          annotation={props.annotation}
+          annotation={annotation}
+          children={children}
           isMouseOver={mouseHovered}
           isSelected={
             !!selectedAnnotation &&
@@ -37,6 +45,7 @@ export const withShapeWrapper = (
           }
           onMouseEnter={onMouseEnter}
           onMouseLeave={onMouseLeave}
+          style={style}
         />
 
         {reactContentElement}

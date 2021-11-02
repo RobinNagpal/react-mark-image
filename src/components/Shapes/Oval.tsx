@@ -15,6 +15,7 @@ const Container = styled.div`
 function Oval(props: ShapeProps) {
   const {
     annotation: { geometry },
+    children,
     isMouseOver,
     isSelected,
     onMouseEnter,
@@ -41,7 +42,9 @@ function Oval(props: ShapeProps) {
       }}
       onMouseEnter={onMouseEnter}
       onMouseLeave={onMouseLeave}
-    />
+    >
+      {children || null}
+    </Container>
   );
 }
 

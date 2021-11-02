@@ -87,133 +87,137 @@ export const OvalTemplateWithExistingAnnotations: Story<AnnotationPropsOptional>
   }
 );
 
+export const rectangularAnnotations = [
+  {
+    geometry: {
+      type: 'RECTANGLE',
+      x: 13.375,
+      y: 28.20077727297608,
+      width: 15.5,
+      height: 22.070173517981278,
+    },
+    data: {
+      id: 'rectangle_1',
+      text: 'rectangle 1 is awesome',
+    },
+  },
+  {
+    geometry: {
+      type: 'RECTANGLE',
+      x: 35.5,
+      y: 40.286824675680116,
+      width: 25.124999999999993,
+      height: 23.29629426898024,
+    },
+    data: {
+      id: 'rectangle_2',
+      text: 'rectangle 2 is great',
+    },
+  },
+  {
+    geometry: {
+      type: 'RECTANGLE',
+      x: 23.125,
+      y: 58.67863594066451,
+      width: 18.25,
+      height: 18.917291586841095,
+    },
+    data: {
+      id: 'rectangle_3',
+      text: 'rectangle 3 is OMG',
+    },
+  },
+  {
+    geometry: {
+      type: 'RECTANGLE',
+      x: 24.25,
+      y: 31.353659204116262,
+      width: 18.25,
+      height: 31.1784990968307,
+    },
+    data: {
+      id: 'rectangle_4',
+      text: 'rectangle 4 is Woohooo',
+    },
+  },
+];
+
 export const RectangleTemplateWithExistingAnnotations: Story<AnnotationPropsOptional> = BaseStoryTemplate(
   {
-    annotations: [
-      {
-        geometry: {
-          type: 'RECTANGLE',
-          x: 13.375,
-          y: 28.20077727297608,
-          width: 15.5,
-          height: 22.070173517981278,
-        },
-        data: {
-          id: 'rectangle_1',
-          text: 'rectangle 1 is awesome',
-        },
-      },
-      {
-        geometry: {
-          type: 'RECTANGLE',
-          x: 35.5,
-          y: 40.286824675680116,
-          width: 25.124999999999993,
-          height: 23.29629426898024,
-        },
-        data: {
-          id: 'rectangle_2',
-          text: 'rectangle 2 is great',
-        },
-      },
-      {
-        geometry: {
-          type: 'RECTANGLE',
-          x: 23.125,
-          y: 58.67863594066451,
-          width: 18.25,
-          height: 18.917291586841095,
-        },
-        data: {
-          id: 'rectangle_3',
-          text: 'rectangle 3 is OMG',
-        },
-      },
-      {
-        geometry: {
-          type: 'RECTANGLE',
-          x: 24.25,
-          y: 31.353659204116262,
-          width: 18.25,
-          height: 31.1784990968307,
-        },
-        data: {
-          id: 'rectangle_4',
-          text: 'rectangle 4 is Woohooo',
-        },
-      },
-    ],
+    annotations: rectangularAnnotations,
   }
 );
 
+export const pointAnnotations = [
+  {
+    geometry: {
+      x: 27.375,
+      y: 34.50654113525645,
+      width: 0,
+      height: 0,
+      type: 'POINT',
+    },
+    data: {
+      id: 'point_1',
+      text: 'point 1 is awesome',
+    },
+  },
+  {
+    geometry: {
+      x: 31.125000000000004,
+      y: 32.75494006240079,
+      width: 0,
+      height: 0,
+      type: 'POINT',
+    },
+    data: {
+      id: 'point_2',
+      text: 'point 2 is great',
+    },
+  },
+  {
+    geometry: {
+      x: 27.625,
+      y: 35.73266188625541,
+      width: 0,
+      height: 0,
+      type: 'POINT',
+    },
+    data: {
+      id: 'point_3',
+      text: 'point 3 OMG',
+    },
+  },
+  {
+    geometry: {
+      x: 35.5,
+      y: 43.61486671410586,
+      width: 0,
+      height: 0,
+      type: 'POINT',
+    },
+    data: {
+      id: 'point_4',
+      text: 'point 5 is mind blowing',
+    },
+  },
+  {
+    geometry: {
+      x: 50.74999999999999,
+      y: 62.00667797909026,
+      width: 0,
+      height: 0,
+      type: 'POINT',
+    },
+    data: {
+      id: 'point_5',
+      text: 'prrrrrr',
+    },
+  },
+];
+
 export const PointTemplateWithExistingAnnotations: Story<AnnotationPropsOptional> = BaseStoryTemplate(
   {
-    annotations: [
-      {
-        geometry: {
-          x: 27.375,
-          y: 34.50654113525645,
-          width: 0,
-          height: 0,
-          type: 'POINT',
-        },
-        data: {
-          id: 'point_1',
-          text: 'point 1 is awesome',
-        },
-      },
-      {
-        geometry: {
-          x: 31.125000000000004,
-          y: 32.75494006240079,
-          width: 0,
-          height: 0,
-          type: 'POINT',
-        },
-        data: {
-          id: 'point_2',
-          text: 'point 2 is great',
-        },
-      },
-      {
-        geometry: {
-          x: 27.625,
-          y: 35.73266188625541,
-          width: 0,
-          height: 0,
-          type: 'POINT',
-        },
-        data: {
-          id: 'point_3',
-          text: 'point 3 OMG',
-        },
-      },
-      {
-        geometry: {
-          x: 35.5,
-          y: 43.61486671410586,
-          width: 0,
-          height: 0,
-          type: 'POINT',
-        },
-        data: {
-          id: 'point_4',
-          text: 'point 5 is mind blowing',
-        },
-      },
-      {
-        geometry: {
-          x: 50.74999999999999,
-          y: 62.00667797909026,
-          width: 0,
-          height: 0,
-          type: 'POINT',
-        },
-        data: {
-          id: 'point_5',
-          text: 'prrrrrr',
-        },
-      },
-    ],
+    annotations: pointAnnotations,
   }
 );
