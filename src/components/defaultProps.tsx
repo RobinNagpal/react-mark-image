@@ -1,4 +1,4 @@
-import Editor from 'components/Editor';
+import Editor from './Editor';
 import React, { ReactElement } from 'react';
 
 import { OvalSelector, PointSelector, RectangleSelector } from '../selectors';
@@ -9,7 +9,7 @@ import {
   RenderEditorProps,
   RenderShapeProps,
   RenderOverlayProps,
-} from 'types/index';
+} from './../types/index';
 import Content from './Content';
 import Overlay from './Overlay';
 import Oval from './Shapes/Oval';
