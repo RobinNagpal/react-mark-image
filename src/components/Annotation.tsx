@@ -12,7 +12,7 @@ import {
   IAnnotation,
   ISelector,
   SelectionMode,
-} from 'types/index';
+} from '../types/index';
 import useHandleEscapeEvent from '../utils/useHandleEscapeEvent';
 import compose from '../utils/compose';
 import withRelativeMousePos, {

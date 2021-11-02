@@ -3,7 +3,7 @@ import RectangleSelector from './../../hocs/RectangleSelector';
 import PointSelector from './../../hocs/PointSelector';
 import OvalSelector from './../../hocs/OvalSelector';
 import styled from 'styled-components';
-import { RenderToolbarProps } from 'types/index';
+import { RenderToolbarProps } from '../../types/index';
 import BackSvg from './icons/arrowLeft.svg';
 import CircleSvg from './icons/circle.svg';
 import PointSvg from './icons/point.svg';

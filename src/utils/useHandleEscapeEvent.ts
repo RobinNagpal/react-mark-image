@@ -1,5 +1,5 @@
 import { useEffect } from 'react';
-import { IAnnotation } from 'types/index';
+import { IAnnotation } from '../types/index';
 
 export default function useHandleEscapeEvent(
   setSelectedItem: (annotation?: IAnnotation) => void,
