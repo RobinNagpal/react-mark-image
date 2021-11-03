@@ -7,6 +7,7 @@ import {
   OvalSelector,
   PointSelector,
   RectangleSelector,
+  RenderSelectedAnnotationIconsProps,
   WrappedShapeProps,
 } from './../../index';
 
@@ -154,7 +155,9 @@ function extracted(initData: IAnnotation[]) {
       setAnnotations(updated);
     };
 
-    const renderSelectedAnnotationIcons = (selectedAnnotation: IAnnotation) => {
+    const renderSelectedAnnotationIcons = ({
+      annotation: selectedAnnotation,
+    }: RenderSelectedAnnotationIconsProps) => {
       const markAsCorrectChoice = () =>
         updateSelectedAnnotation(selectedAnnotation, true);
 

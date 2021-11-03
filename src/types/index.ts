@@ -175,12 +175,17 @@ export interface RenderToolbarProps {
   setSelectedSelectorType: (selector: string) => void;
 }
 
-interface ToolBarOptions {
+export interface RenderSelectedAnnotationIconsProps {
+  annotation: IAnnotation;
+  unSelectAnnotation: () => void;
+}
+
+export interface ToolBarOptions {
   showToolBar?: boolean;
   showDeleteOption?: boolean;
   renderToolbarIcons?: () => ReactElement | null;
   renderSelectedAnnotationIcons?: (
-    annotation: IAnnotation
+    props: RenderSelectedAnnotationIconsProps
   ) => ReactElement | null;
 }
 

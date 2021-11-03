@@ -58,7 +58,10 @@ export default function ToolBar({
       {selectedAnnotation ? (
         <>
           <BackIcon isSelected={false} onClick={() => unSelectAnnotation()} />
-          {options.renderSelectedAnnotationIcons?.(selectedAnnotation)}
+          {options.renderSelectedAnnotationIcons?.({
+            annotation: selectedAnnotation,
+            unSelectAnnotation: unSelectAnnotation,
+          })}
           <TrashIcon
             isSelected={false}
             onClick={() => deleteAnnotation(selectedAnnotation)}

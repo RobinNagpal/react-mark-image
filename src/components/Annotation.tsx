@@ -151,7 +151,10 @@ function Annotation(options: AnnotationProps & WithRelativeMousePosProps) {
   const onTouchStart = (e: TouchEvent) => callSelectorMethod('onTouchStart', e);
   const onTouchEnd = (e: TouchEvent) => callSelectorMethod('onTouchEnd', e);
   const onTouchMove = (e: TouchEvent) => callSelectorMethod('onTouchMove', e);
-  const onClick = (e: MouseEvent) => callSelectorMethod('onClick', e);
+  const onClick = (e: MouseEvent) => {
+    setSelectedAnnotation(undefined);
+    callSelectorMethod('onClick', e);
+  };
 
   const onAnnotationFinal = (annotation: IAnnotation) => {
     const newAnnotationArray = [...annotations, annotation];
