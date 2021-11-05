@@ -18,7 +18,7 @@ export const withShapeWrapper = (
     const [mouseHovered, setMouseHovered] = useState<boolean>(false);
 
     const shouldShowContent =
-      editMode === EditorMode.Annotate && mouseHovered && renderContent;
+      editMode === EditorMode.AnnotateWithText && mouseHovered && renderContent;
 
     const reactContentElement =
       shouldShowContent && props.annotation.data.text && renderContent

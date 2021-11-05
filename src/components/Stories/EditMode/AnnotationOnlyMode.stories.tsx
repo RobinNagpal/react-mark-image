@@ -4,16 +4,16 @@ import {
   OvalSelector,
   PointSelector,
   RectangleSelector,
-} from './../../index';
+} from './../../../index';
 
-import Annotation, { AnnotationPropsOptional } from './../Annotation';
+import Annotation, { AnnotationPropsOptional } from './../../Annotation';
 import {
   argTypes,
   DefaultAnnotationStoryTemplate,
-} from './AnnotationStoryTemplate';
+} from './../Common/AnnotationStoryTemplate';
 
 const meta: Meta = {
-  title: 'HighlightAnnotation',
+  title: 'EditMode/AnnotationOnly',
   component: Annotation,
   argTypes,
   parameters: {
@@ -28,18 +28,18 @@ const StoryTemplate: Story<AnnotationPropsOptional> = DefaultAnnotationStoryTemp
 export const Oval = StoryTemplate.bind({});
 
 Oval.args = {
-  editorMode: EditorMode.HighlightOnly,
+  editorMode: EditorMode.AnnotateOnly,
   shapes: [OvalSelector.TYPE],
 };
 
 export const Rectangle = StoryTemplate.bind({});
 Rectangle.args = {
-  editorMode: EditorMode.HighlightOnly,
+  editorMode: EditorMode.AnnotateOnly,
   shapes: [RectangleSelector.TYPE],
 };
 
 export const Point = StoryTemplate.bind({});
 Point.args = {
-  editorMode: EditorMode.HighlightOnly,
+  editorMode: EditorMode.AnnotateOnly,
   shapes: [PointSelector.TYPE],
 };

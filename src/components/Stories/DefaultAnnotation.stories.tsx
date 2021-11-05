@@ -4,7 +4,7 @@ import Annotation, { AnnotationPropsOptional } from './../Annotation';
 import {
   argTypes,
   DefaultAnnotationStoryTemplate,
-} from './AnnotationStoryTemplate';
+} from './Common/AnnotationStoryTemplate';
 
 const meta: Meta = {
   title: 'Annotation',

@@ -24,7 +24,7 @@ const defaultProps: AnnotationProps = {
   disableEditor: false,
   disableOverlay: false,
 
-  editorMode: EditorMode.Annotate,
+  editorMode: EditorMode.AnnotateWithText,
 
   idFunction: () => Math.random().toString(),
   innerRef: (_el: HTMLImageElement) => ({}),

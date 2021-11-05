@@ -56,7 +56,7 @@ export function pointerUp(
           selection: {
             ...annotation.selection,
             mode:
-              editorMode === EditorMode.HighlightOnly
+              editorMode === EditorMode.AnnotateOnly
                 ? SelectionMode.Final
                 : SelectionMode.Editing,
           },

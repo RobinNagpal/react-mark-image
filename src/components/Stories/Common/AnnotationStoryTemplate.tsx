@@ -1,7 +1,7 @@
 import { ArgTypes } from '@storybook/addons/dist/ts3.9/types';
 import { Story } from '@storybook/react';
 import React, { useState } from 'react';
-import Annotation, { AnnotationPropsOptional } from './../Annotation';
+import Annotation, { AnnotationPropsOptional } from './../../Annotation';
 
 const defaultImageUrl =
   'https://raw.githubusercontent.com/RobinNagpal/react-image-annotation-ts/HEAD/example/img.jpeg';

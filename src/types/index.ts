@@ -138,8 +138,9 @@ export interface RenderSelectorProps {
 }
 
 export enum EditorMode {
-  Annotate = 'Annotate',
-  HighlightOnly = 'HighlightOnly',
+  AnnotateWithText = 'AnnotateWithText',
+  AnnotateOnly = 'AnnotateOnly',
+  ReadOnly = 'ReadOnly',
 }
 
 export enum SelectionMode {

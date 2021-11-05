@@ -4,18 +4,18 @@ import {
   OvalSelector,
   PointSelector,
   RectangleSelector,
-} from './../../index';
+} from './../../../index';
 
-import Annotation from './../Annotation';
+import Annotation from './../../Annotation';
 import {
   argTypes,
   OvalTemplateWithExistingAnnotations,
   PointTemplateWithExistingAnnotations,
   RectangleTemplateWithExistingAnnotations,
-} from './AnnotationStoryTemplate';
+} from './../Common/AnnotationStoryTemplate';
 
 const meta: Meta = {
-  title: 'StackedAnnotationsHighlightOnly',
+  title: 'Stacked/AnnotateWithText',
   component: Annotation,
   argTypes,
   parameters: {
@@ -27,18 +27,18 @@ export default meta;
 
 export const Oval = OvalTemplateWithExistingAnnotations.bind({});
 Oval.args = {
-  editorMode: EditorMode.HighlightOnly,
+  editorMode: EditorMode.AnnotateWithText,
   shapes: [OvalSelector.TYPE],
 };
 
 export const Rectangle = RectangleTemplateWithExistingAnnotations.bind({});
 Rectangle.args = {
-  editorMode: EditorMode.HighlightOnly,
+  editorMode: EditorMode.AnnotateWithText,
   shapes: [RectangleSelector.TYPE],
 };
 
 export const Point = PointTemplateWithExistingAnnotations.bind({});
 Point.args = {
-  editorMode: EditorMode.HighlightOnly,
+  editorMode: EditorMode.AnnotateWithText,
   shapes: [PointSelector.TYPE],
 };

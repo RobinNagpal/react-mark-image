@@ -9,24 +9,24 @@ import {
   RectangleSelector,
   RenderSelectedAnnotationIconsProps,
   WrappedShapeProps,
-} from './../../index';
+} from './../../../index';
 
-import Annotation, { AnnotationPropsOptional } from './../Annotation';
-import Oval from './../Shapes/Oval';
-import Point from './../Shapes/Point';
-import Rectangle from './../Shapes/Rectangle';
+import Annotation, { AnnotationPropsOptional } from './../../Annotation';
+import Oval from './../../Shapes/Oval';
+import Point from './../../Shapes/Point';
+import Rectangle from './../../Shapes/Rectangle';
 import {
   argTypes,
   ovalAnnotations,
   pointAnnotations,
   rectangularAnnotations,
-} from './AnnotationStoryTemplate';
+} from './../Common/AnnotationStoryTemplate';
 import CheckSvg from './icons/check.svg';
 import CheckWhite from './icons/check_white.svg';
 import CloseSvg from './icons/close.svg';
 
 const meta: Meta = {
-  title: 'AnnotationToolBarButtons',
+  title: 'Toolbar/AnnotationToolBarButtons',
   component: Annotation,
   argTypes,
   parameters: {
@@ -191,20 +191,20 @@ function extracted(initData: IAnnotation[]) {
 export const OvalAnnotation = extracted(ovalAnnotations);
 
 OvalAnnotation.args = {
-  editorMode: EditorMode.HighlightOnly,
+  editorMode: EditorMode.AnnotateOnly,
   renderShape: renderShape,
 };
 
 export const RectangleAnnotation = extracted(rectangularAnnotations);
 
 RectangleAnnotation.args = {
-  editorMode: EditorMode.HighlightOnly,
+  editorMode: EditorMode.AnnotateOnly,
   renderShape: renderShape,
 };
 
 export const PointAnnotation = extracted(pointAnnotations);
 
 PointAnnotation.args = {
-  editorMode: EditorMode.HighlightOnly,
+  editorMode: EditorMode.AnnotateOnly,
   renderShape: renderShape,
 };
