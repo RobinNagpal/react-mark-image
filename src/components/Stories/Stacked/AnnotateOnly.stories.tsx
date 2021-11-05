@@ -28,17 +28,17 @@ export default meta;
 export const Oval = OvalTemplateWithExistingAnnotations.bind({});
 Oval.args = {
   editorMode: EditorMode.AnnotateOnly,
-  shapes: [OvalSelector.TYPE],
+  allowedShapes: [OvalSelector.TYPE],
 };
 
 export const Rectangle = RectangleTemplateWithExistingAnnotations.bind({});
 Rectangle.args = {
   editorMode: EditorMode.AnnotateOnly,
-  shapes: [RectangleSelector.TYPE],
+  allowedShapes: [RectangleSelector.TYPE],
 };
 
 export const Point = PointTemplateWithExistingAnnotations.bind({});
 Point.args = {
   editorMode: EditorMode.AnnotateOnly,
-  shapes: [PointSelector.TYPE],
+  allowedShapes: [PointSelector.TYPE],
 };

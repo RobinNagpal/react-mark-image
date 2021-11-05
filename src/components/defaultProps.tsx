@@ -72,7 +72,11 @@ const defaultProps: AnnotationProps = {
 
   selectors: [RectangleSelector, PointSelector, OvalSelector],
 
-  shapes: [RectangleSelector.TYPE, OvalSelector.TYPE, PointSelector.TYPE],
+  allowedShapes: [
+    RectangleSelector.TYPE,
+    OvalSelector.TYPE,
+    PointSelector.TYPE,
+  ],
 
   src: '',
 

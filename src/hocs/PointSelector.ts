@@ -1,5 +1,6 @@
 import { MouseEvent, TouchEvent } from 'react';
 import {
+  AllowedShape,
   IAnnotation,
   IContainer,
   IGeometry,
@@ -18,7 +19,7 @@ const marginToPercentage = (container: IContainer) => ({
   marginY: (MARGIN / container.height) * 100,
 });
 
-export const TYPE = 'POINT';
+export const TYPE = AllowedShape.Point;
 
 export function intersects(
   { x, y }: IPoint,

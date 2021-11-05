@@ -73,7 +73,7 @@ export interface ISelectorMethods {
 }
 
 export interface ISelector {
-  TYPE: string;
+  TYPE: AllowedShape;
   intersects: (
     { x, y }: { x: number; y: number },
     geometry: IGeometry,
@@ -167,13 +167,20 @@ export interface RenderOverlayProps {
   selectorType: string;
 }
 
+export enum AllowedShape {
+  Oval = 'Oval',
+  Point = 'Point',
+  Rectangle = 'Rectangle',
+}
+
 export interface RenderToolbarProps {
+  allowedShapes: AllowedShape[];
   deleteAnnotation: (annotation: IAnnotation) => void;
   options: ToolBarOptions;
   selectedAnnotation: IAnnotation | undefined;
-  unSelectAnnotation: () => void;
   selectedSelectorType: string;
-  setSelectedSelectorType: (selector: string) => void;
+  setSelectedSelectorType: (selector: AllowedShape) => void;
+  unSelectAnnotation: () => void;
 }
 
 export interface RenderSelectedAnnotationIconsProps {
@@ -216,7 +223,7 @@ export interface AnnotationProps {
 
   selectors: ISelector[];
 
-  shapes: string[];
+  allowedShapes: AllowedShape[];
   onAnnotationsUpdate: (annotations: IAnnotation[]) => void;
   onAnnotationSelect: (annotation?: IAnnotation) => void;
   src: string;

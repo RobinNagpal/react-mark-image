@@ -13,7 +13,7 @@ import {
 } from './../Common/AnnotationStoryTemplate';
 
 const meta: Meta = {
-  title: 'EditMode/AnnotationOnly',
+  title: 'EditMode/AnnotateOnly',
   component: Annotation,
   argTypes,
   parameters: {
@@ -29,17 +29,17 @@ export const Oval = StoryTemplate.bind({});
 
 Oval.args = {
   editorMode: EditorMode.AnnotateOnly,
-  shapes: [OvalSelector.TYPE],
+  allowedShapes: [OvalSelector.TYPE],
 };
 
 export const Rectangle = StoryTemplate.bind({});
 Rectangle.args = {
   editorMode: EditorMode.AnnotateOnly,
-  shapes: [RectangleSelector.TYPE],
+  allowedShapes: [RectangleSelector.TYPE],
 };
 
 export const Point = StoryTemplate.bind({});
 Point.args = {
   editorMode: EditorMode.AnnotateOnly,
-  shapes: [PointSelector.TYPE],
+  allowedShapes: [PointSelector.TYPE],
 };

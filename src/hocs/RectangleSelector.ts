@@ -1,7 +1,13 @@
-import { IGeometry, IPoint, ISelector, ISelectorMethods } from '../types/index';
+import {
+  AllowedShape,
+  IGeometry,
+  IPoint,
+  ISelector,
+  ISelectorMethods,
+} from '../types/index';
 import { createSelectorMethods } from './SelectorUtils';
 
-export const TYPE = 'RECTANGLE';
+export const TYPE = AllowedShape.Rectangle;
 
 export function intersects({ x, y }: IPoint, geometry: IGeometry) {
   if (x < geometry.x) return false;

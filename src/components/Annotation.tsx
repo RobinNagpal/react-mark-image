@@ -53,6 +53,7 @@ function Annotation(options: AnnotationProps & WithRelativeMousePosProps) {
   };
 
   const {
+    allowedShapes,
     allowTouch,
     alt,
     className,
@@ -69,7 +70,7 @@ function Annotation(options: AnnotationProps & WithRelativeMousePosProps) {
   } = props;
 
   const [selectedSelectorType, setSelectedSelectorType] = useState<string>(
-    props.shapes[0]
+    props.allowedShapes[0]
   );
 
   // This annotation is set when adding a new annotation. The state is cleared after annotation is added
@@ -230,6 +231,7 @@ function Annotation(options: AnnotationProps & WithRelativeMousePosProps) {
   return (
     <>
       <ToolBar
+        allowedShapes={allowedShapes}
         deleteAnnotation={deleteAnnotation}
         options={toolBarOptions}
         selectedAnnotation={selectedAnnotation}

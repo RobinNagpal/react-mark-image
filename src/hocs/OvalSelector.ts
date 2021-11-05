@@ -1,9 +1,15 @@
-import { IGeometry, IPoint, ISelector, ISelectorMethods } from '../types/index';
+import {
+  AllowedShape,
+  IGeometry,
+  IPoint,
+  ISelector,
+  ISelectorMethods,
+} from '../types/index';
 import { createSelectorMethods } from './SelectorUtils';
 
 const square = (n: number) => Math.pow(n, 2);
 
-export const TYPE = 'OVAL';
+export const TYPE = AllowedShape.Oval;
 
 export function intersects({ x, y }: IPoint, geometry: IGeometry) {
   const rx = geometry.width / 2;

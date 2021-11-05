@@ -1,9 +1,6 @@
 import React, { ReactElement } from 'react';
-import RectangleSelector from './../../hocs/RectangleSelector';
-import PointSelector from './../../hocs/PointSelector';
-import OvalSelector from './../../hocs/OvalSelector';
 import styled from 'styled-components';
-import { RenderToolbarProps } from '../../types/index';
+import { AllowedShape, RenderToolbarProps } from '../../types/index';
 import BackSvg from './icons/arrowLeft.svg';
 import CircleSvg from './icons/circle.svg';
 import PointSvg from './icons/point.svg';
@@ -44,8 +41,8 @@ const TrashIcon = styled(StyledIcon)`
   background-image: url(${TrashSvg});
 `;
 
-// https://www.w3schools.com/howto/howto_css_icon_bar.asp#
 export default function ToolBar({
+  allowedShapes,
   deleteAnnotation,
   options,
   selectedAnnotation,
@@ -69,18 +66,24 @@ export default function ToolBar({
         </>
       ) : (
         <>
-          <SquareIcon
-            isSelected={selectedSelectorType === RectangleSelector.TYPE}
-            onClick={() => setSelectedSelectorType(RectangleSelector.TYPE)}
-          />
-          <CircleIcon
-            isSelected={selectedSelectorType === OvalSelector.TYPE}
-            onClick={() => setSelectedSelectorType(OvalSelector.TYPE)}
-          />
-          <PointIcon
-            isSelected={selectedSelectorType === PointSelector.TYPE}
-            onClick={() => setSelectedSelectorType(PointSelector.TYPE)}
-          />
+          {allowedShapes.includes(AllowedShape.Rectangle) ? (
+            <SquareIcon
+              isSelected={selectedSelectorType === AllowedShape.Rectangle}
+              onClick={() => setSelectedSelectorType(AllowedShape.Rectangle)}
+            />
+          ) : null}
+          {allowedShapes.includes(AllowedShape.Oval) ? (
+            <CircleIcon
+              isSelected={selectedSelectorType === AllowedShape.Oval}
+              onClick={() => setSelectedSelectorType(AllowedShape.Oval)}
+            />
+          ) : null}
+          {allowedShapes.includes(AllowedShape.Point) ? (
+            <PointIcon
+              isSelected={selectedSelectorType === AllowedShape.Point}
+              onClick={() => setSelectedSelectorType(AllowedShape.Point)}
+            />
+          ) : null}
         </>
       )}
     </OptionsBarDiv>
