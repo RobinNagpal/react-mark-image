@@ -1,6 +1,7 @@
 import { ArgTypes } from '@storybook/addons/dist/ts3.9/types';
 import { Story } from '@storybook/react';
 import React, { useState } from 'react';
+import { AllowedShape } from '../../../types/index';
 import Annotation, { AnnotationPropsOptional } from './../../Annotation';
 
 const defaultImageUrl =
@@ -42,7 +43,7 @@ export const DefaultAnnotationStoryTemplate: Story<AnnotationPropsOptional> = Ba
 export const ovalAnnotations = [
   {
     geometry: {
-      type: 'OVAL',
+      type: AllowedShape.Oval,
       x: 33.25,
       y: 23.121134161694673,
       width: 20.875,
@@ -55,7 +56,7 @@ export const ovalAnnotations = [
   },
   {
     geometry: {
-      type: 'OVAL',
+      type: AllowedShape.Oval,
       x: 45.875,
       y: 20.668892659696755,
       width: 20,
@@ -68,7 +69,7 @@ export const ovalAnnotations = [
   },
   {
     geometry: {
-      type: 'OVAL',
+      type: AllowedShape.Oval,
       x: 43.75,
       y: 38.88554381739559,
       width: 20.5,
@@ -90,7 +91,7 @@ export const OvalTemplateWithExistingAnnotations: Story<AnnotationPropsOptional>
 export const rectangularAnnotations = [
   {
     geometry: {
-      type: 'RECTANGLE',
+      type: AllowedShape.Rectangle,
       x: 13.375,
       y: 28.20077727297608,
       width: 15.5,
@@ -103,7 +104,7 @@ export const rectangularAnnotations = [
   },
   {
     geometry: {
-      type: 'RECTANGLE',
+      type: AllowedShape.Rectangle,
       x: 35.5,
       y: 40.286824675680116,
       width: 25.124999999999993,
@@ -116,7 +117,7 @@ export const rectangularAnnotations = [
   },
   {
     geometry: {
-      type: 'RECTANGLE',
+      type: AllowedShape.Rectangle,
       x: 23.125,
       y: 58.67863594066451,
       width: 18.25,
@@ -129,7 +130,7 @@ export const rectangularAnnotations = [
   },
   {
     geometry: {
-      type: 'RECTANGLE',
+      type: AllowedShape.Rectangle,
       x: 24.25,
       y: 31.353659204116262,
       width: 18.25,
@@ -155,7 +156,7 @@ export const pointAnnotations = [
       y: 34.50654113525645,
       width: 0,
       height: 0,
-      type: 'POINT',
+      type: AllowedShape.Point,
     },
     data: {
       id: 'point_1',
@@ -168,7 +169,7 @@ export const pointAnnotations = [
       y: 32.75494006240079,
       width: 0,
       height: 0,
-      type: 'POINT',
+      type: AllowedShape.Point,
     },
     data: {
       id: 'point_2',
@@ -181,7 +182,7 @@ export const pointAnnotations = [
       y: 35.73266188625541,
       width: 0,
       height: 0,
-      type: 'POINT',
+      type: AllowedShape.Point,
     },
     data: {
       id: 'point_3',
@@ -194,7 +195,7 @@ export const pointAnnotations = [
       y: 43.61486671410586,
       width: 0,
       height: 0,
-      type: 'POINT',
+      type: AllowedShape.Point,
     },
     data: {
       id: 'point_4',
@@ -207,7 +208,7 @@ export const pointAnnotations = [
       y: 62.00667797909026,
       width: 0,
       height: 0,
-      type: 'POINT',
+      type: AllowedShape.Point,
     },
     data: {
       id: 'point_5',

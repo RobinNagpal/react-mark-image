@@ -7,7 +7,7 @@ import PointSvg from './icons/point.svg';
 import SquareSvg from './icons/square.svg';
 import TrashSvg from './icons/trash.svg';
 
-const OptionsBarDiv = styled.div`
+const ToolbarDiv = styled.div`
   border: 1px solid #ccc;
   background-color: #efefef;
   width: 100%;
@@ -49,9 +49,9 @@ export default function ToolBar({
   selectedSelectorType,
   setSelectedSelectorType,
   unSelectAnnotation,
-}: RenderToolbarProps): ReactElement {
-  return (
-    <OptionsBarDiv>
+}: RenderToolbarProps): ReactElement | null {
+  return options.showToolBar ? (
+    <ToolbarDiv>
       {selectedAnnotation ? (
         <>
           <BackIcon isSelected={false} onClick={() => unSelectAnnotation()} />
@@ -86,6 +86,6 @@ export default function ToolBar({
           ) : null}
         </>
       )}
-    </OptionsBarDiv>
-  );
+    </ToolbarDiv>
+  ) : null;
 }
