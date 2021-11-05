@@ -9,12 +9,13 @@ import React, {
 import styled from 'styled-components';
 import {
   AnnotationProps,
+  EditorMode,
   IAnnotation,
   ISelector,
   SelectionMode,
 } from '../types/index';
-import useHandleEscapeEvent from '../utils/useHandleEscapeEvent';
 import compose from '../utils/compose';
+import useHandleEscapeEvent from '../utils/useHandleEscapeEvent';
 import withRelativeMousePos, {
   WithRelativeMousePosProps,
 } from '../utils/withRelativeMousePos';
@@ -42,6 +43,14 @@ const ItemsDiv = styled.div`
   right: 0;
 `;
 
+const ReadOnlyDiv = styled.div`
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+`;
+
 export type AnnotationPropsOptional = {
   [K in keyof AnnotationProps]?: AnnotationProps[K]; // so that it retains the types
 };
@@ -57,7 +66,11 @@ function Annotation(options: AnnotationProps & WithRelativeMousePosProps) {
     allowTouch,
     alt,
     className,
+    editorMode,
+
     idFunction,
+
+    onAnnotationSelect,
 
     renderShape,
     renderEditor,
@@ -112,10 +125,12 @@ function Annotation(options: AnnotationProps & WithRelativeMousePosProps) {
   };
 
   useEffect(() => {
-    if (props.allowTouch) {
-      addTargetTouchEventListeners();
-    } else {
-      removeTargetTouchEventListeners();
+    if (editorMode !== EditorMode.ReadOnly) {
+      if (props.allowTouch) {
+        addTargetTouchEventListeners();
+      } else {
+        removeTargetTouchEventListeners();
+      }
     }
   }, [options.allowTouch]);
 
@@ -146,14 +161,22 @@ function Annotation(options: AnnotationProps & WithRelativeMousePosProps) {
     options.relativeMousePos.onTouchLeave(e);
   };
 
+  const unselectSelectedAnnotation = () => {
+    if (selectedAnnotation) {
+      setSelectedAnnotation(undefined);
+      onAnnotationSelect(undefined);
+    }
+  };
   const onMouseUp = (e: MouseEvent) => callSelectorMethod('onMouseUp', e);
   const onMouseDown = (e: MouseEvent) => callSelectorMethod('onMouseDown', e);
   const onMouseMove = (e: MouseEvent) => callSelectorMethod('onMouseMove', e);
   const onTouchStart = (e: TouchEvent) => callSelectorMethod('onTouchStart', e);
   const onTouchEnd = (e: TouchEvent) => callSelectorMethod('onTouchEnd', e);
   const onTouchMove = (e: TouchEvent) => callSelectorMethod('onTouchMove', e);
+
   const onClick = (e: MouseEvent) => {
-    setSelectedAnnotation(undefined);
+    unselectSelectedAnnotation();
+
     callSelectorMethod('onClick', e);
   };
 
@@ -278,13 +301,17 @@ function Annotation(options: AnnotationProps & WithRelativeMousePosProps) {
               selectAnnotation: memoisedSelectedAnnotation,
             })}
         </ItemsDiv>
-        <ItemsDiv
-          onClick={onClick}
-          onMouseUp={onMouseUp}
-          onMouseDown={onMouseDown}
-          onMouseMove={onTargetMouseMove}
-          ref={targetRef}
-        />
+        {editorMode !== EditorMode.ReadOnly ? (
+          <ItemsDiv
+            onClick={onClick}
+            onMouseUp={onMouseUp}
+            onMouseDown={onMouseDown}
+            onMouseMove={onTargetMouseMove}
+            ref={targetRef}
+          />
+        ) : (
+          <ReadOnlyDiv onClick={unselectSelectedAnnotation} />
+        )}
         {!props.disableOverlay &&
           renderOverlay({
             annotations: props.annotations,

@@ -231,22 +231,3 @@ export interface AnnotationProps {
 
   toolBarOptions: ToolBarOptions;
 }
-
-export interface Theme {
-  annotation: {
-    backgroundColor: string;
-    active: {
-      border: string;
-      boxShadow: string;
-      backgroundColor: string;
-    };
-  };
-}
-
-export interface OptionBar {
-  categories: string[];
-}
-export interface OptionBarButton {
-  category: string;
-  renderButton: (props: AnnotationProps) => ReactElement;
-}
