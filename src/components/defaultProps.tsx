@@ -30,7 +30,7 @@ const defaultProps: AnnotationProps = {
   innerRef: (_el: HTMLImageElement) => ({}),
 
   onAnnotationsUpdate: () => {},
-  onAnnotationsClick: () => {},
+  onAnnotationClick: () => {},
   onSelectedAnnotationUpdate: () => {},
 
   renderEditor: ({ annotation, onSubmit }: RenderEditorProps) => (

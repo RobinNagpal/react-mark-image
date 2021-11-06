@@ -24,7 +24,7 @@ Oval.args = {
   editorMode: EditorMode.ReadOnly,
   onSelectedAnnotationUpdate: (annotation, selected) =>
     console.log('Annotation Selected : ', annotation, selected),
-  onAnnotationsClick: (annotation) =>
+  onAnnotationClick: (annotation) =>
     console.log('Annotation Clicked : ', annotation),
   toolBarOptions: {
     showToolBar: false,
@@ -36,7 +36,7 @@ Rectangle.args = {
   editorMode: EditorMode.ReadOnly,
   onSelectedAnnotationUpdate: (annotation, selected) =>
     console.log('Annotation Selected : ', annotation, selected),
-  onAnnotationsClick: (annotation) =>
+  onAnnotationClick: (annotation) =>
     console.log('Annotation Clicked : ', annotation),
   toolBarOptions: {
     showToolBar: false,
@@ -48,7 +48,7 @@ Point.args = {
   editorMode: EditorMode.ReadOnly,
   onSelectedAnnotationUpdate: (annotation, selected) =>
     console.log('Annotation Selected : ', annotation, selected),
-  onAnnotationsClick: (annotation) =>
+  onAnnotationClick: (annotation) =>
     console.log('Annotation Clicked : ', annotation),
   toolBarOptions: {
     showToolBar: false,

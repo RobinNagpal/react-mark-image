@@ -225,7 +225,7 @@ export interface AnnotationProps {
 
   allowedShapes: AllowedShape[];
   onAnnotationsUpdate: (annotations: IAnnotation[]) => void;
-  onAnnotationsClick: (annotations: IAnnotation) => void;
+  onAnnotationClick: (annotation: IAnnotation) => void;
   onSelectedAnnotationUpdate: (
     annotation: IAnnotation,
     selected: boolean

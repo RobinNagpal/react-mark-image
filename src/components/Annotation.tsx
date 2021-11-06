@@ -246,7 +246,7 @@ function Annotation(options: AnnotationProps & WithRelativeMousePosProps) {
   const onAnnotationClick = (annotation: IAnnotation) => {
     setSelectedAnnotation(annotation);
     props.onSelectedAnnotationUpdate(annotation, true);
-    props.onAnnotationsClick(annotation);
+    props.onAnnotationClick(annotation);
   };
 
   useHandleEscapeEvent(unselectSelectedAnnotation, selectedAnnotation);
