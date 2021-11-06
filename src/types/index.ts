@@ -123,7 +123,7 @@ export interface RenderShapeProps {
   isInSelectionMode: boolean;
   renderContent?: (props: ContentProps) => ReactElement | null;
   selectedAnnotation?: IAnnotation;
-  selectAnnotation: (annotation?: IAnnotation) => void;
+  selectAnnotation: (annotation: IAnnotation) => void;
 }
 
 export interface ContentProps {
@@ -157,7 +157,7 @@ export type WrappedShapeProps = {
   isInSelectionMode: boolean;
   key: string;
   selectedAnnotation?: IAnnotation;
-  selectAnnotation: (annotation?: IAnnotation) => void;
+  onAnnotationClick: (annotation: IAnnotation) => void;
   renderContent?: (props: ContentProps) => ReactElement | null;
   style?: CSSProperties;
 };
@@ -180,7 +180,7 @@ export interface RenderToolbarProps {
   selectedAnnotation: IAnnotation | undefined;
   selectedSelectorType: string;
   setSelectedSelectorType: (selector: AllowedShape) => void;
-  unSelectAnnotation: () => void;
+  unSelectSelectedAnnotation: (annotation: IAnnotation) => void;
 }
 
 export interface RenderSelectedAnnotationIconsProps {
@@ -225,7 +225,11 @@ export interface AnnotationProps {
 
   allowedShapes: AllowedShape[];
   onAnnotationsUpdate: (annotations: IAnnotation[]) => void;
-  onAnnotationSelect: (annotation?: IAnnotation) => void;
+  onAnnotationsClick: (annotations: IAnnotation) => void;
+  onSelectedAnnotationUpdate: (
+    annotation: IAnnotation,
+    selected: boolean
+  ) => void;
   src: string;
   style?: object;
 

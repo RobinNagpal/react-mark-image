@@ -48,16 +48,20 @@ export default function ToolBar({
   selectedAnnotation,
   selectedSelectorType,
   setSelectedSelectorType,
-  unSelectAnnotation,
+  unSelectSelectedAnnotation,
 }: RenderToolbarProps): ReactElement | null {
   return options.showToolBar ? (
     <ToolbarDiv>
       {selectedAnnotation ? (
         <>
-          <BackIcon isSelected={false} onClick={() => unSelectAnnotation()} />
+          <BackIcon
+            isSelected={false}
+            onClick={() => unSelectSelectedAnnotation(selectedAnnotation)}
+          />
           {options.renderSelectedAnnotationIcons?.({
             annotation: selectedAnnotation,
-            unSelectAnnotation: unSelectAnnotation,
+            unSelectAnnotation: () =>
+              unSelectSelectedAnnotation(selectedAnnotation),
           })}
           <TrashIcon
             isSelected={false}

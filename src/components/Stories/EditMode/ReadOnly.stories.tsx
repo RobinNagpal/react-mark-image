@@ -22,8 +22,10 @@ export default meta;
 export const Oval = OvalTemplateWithExistingAnnotations.bind({});
 Oval.args = {
   editorMode: EditorMode.ReadOnly,
-  onAnnotationSelect: (annotation) =>
-    console.log('Annotation Selected : ', annotation),
+  onSelectedAnnotationUpdate: (annotation, selected) =>
+    console.log('Annotation Selected : ', annotation, selected),
+  onAnnotationsClick: (annotation) =>
+    console.log('Annotation Clicked : ', annotation),
   toolBarOptions: {
     showToolBar: false,
   },
@@ -32,8 +34,10 @@ Oval.args = {
 export const Rectangle = RectangleTemplateWithExistingAnnotations.bind({});
 Rectangle.args = {
   editorMode: EditorMode.ReadOnly,
-  onAnnotationSelect: (annotation) =>
-    console.log('Annotation Selected : ', annotation),
+  onSelectedAnnotationUpdate: (annotation, selected) =>
+    console.log('Annotation Selected : ', annotation, selected),
+  onAnnotationsClick: (annotation) =>
+    console.log('Annotation Clicked : ', annotation),
   toolBarOptions: {
     showToolBar: false,
   },
@@ -42,8 +46,10 @@ Rectangle.args = {
 export const Point = PointTemplateWithExistingAnnotations.bind({});
 Point.args = {
   editorMode: EditorMode.ReadOnly,
-  onAnnotationSelect: (annotation) =>
-    console.log('Annotation Selected : ', annotation),
+  onSelectedAnnotationUpdate: (annotation, selected) =>
+    console.log('Annotation Selected : ', annotation, selected),
+  onAnnotationsClick: (annotation) =>
+    console.log('Annotation Clicked : ', annotation),
   toolBarOptions: {
     showToolBar: false,
   },

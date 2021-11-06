@@ -2,7 +2,6 @@ import React, {
   ComponentType,
   MouseEvent,
   TouchEvent,
-  useCallback,
   useEffect,
   useState,
 } from 'react';
@@ -70,7 +69,7 @@ function Annotation(options: AnnotationProps & WithRelativeMousePosProps) {
 
     idFunction,
 
-    onAnnotationSelect,
+    onSelectedAnnotationUpdate,
 
     renderShape,
     renderEditor,
@@ -161,12 +160,6 @@ function Annotation(options: AnnotationProps & WithRelativeMousePosProps) {
     options.relativeMousePos.onTouchLeave(e);
   };
 
-  const unselectSelectedAnnotation = () => {
-    if (selectedAnnotation) {
-      setSelectedAnnotation(undefined);
-      onAnnotationSelect(undefined);
-    }
-  };
   const onMouseUp = (e: MouseEvent) => callSelectorMethod('onMouseUp', e);
   const onMouseDown = (e: MouseEvent) => callSelectorMethod('onMouseDown', e);
   const onMouseMove = (e: MouseEvent) => callSelectorMethod('onMouseMove', e);
@@ -243,14 +236,20 @@ function Annotation(options: AnnotationProps & WithRelativeMousePosProps) {
     props.onAnnotationsUpdate(newAnnotationsValue);
   };
 
-  const selectAnnotation = (annotationToSelect?: IAnnotation) => {
-    setSelectedAnnotation(annotationToSelect);
-    props.onAnnotationSelect(annotationToSelect);
+  const unselectSelectedAnnotation = () => {
+    if (selectedAnnotation) {
+      setSelectedAnnotation(undefined);
+      onSelectedAnnotationUpdate(selectedAnnotation, false);
+    }
   };
 
-  const memoisedSelectedAnnotation = useCallback(selectAnnotation, []);
+  const onAnnotationClick = (annotation: IAnnotation) => {
+    setSelectedAnnotation(annotation);
+    props.onSelectedAnnotationUpdate(annotation, true);
+    props.onAnnotationsClick(annotation);
+  };
 
-  useHandleEscapeEvent(selectAnnotation, selectedAnnotation);
+  useHandleEscapeEvent(unselectSelectedAnnotation, selectedAnnotation);
   return (
     <>
       <ToolBar
@@ -260,7 +259,7 @@ function Annotation(options: AnnotationProps & WithRelativeMousePosProps) {
         selectedAnnotation={selectedAnnotation}
         selectedSelectorType={selectedSelectorType}
         setSelectedSelectorType={setSelectedSelectorType}
-        unSelectAnnotation={memoisedSelectedAnnotation}
+        unSelectSelectedAnnotation={unselectSelectedAnnotation}
       />
       <Container
         style={{
@@ -286,7 +285,7 @@ function Annotation(options: AnnotationProps & WithRelativeMousePosProps) {
               isInSelectionMode: !!tmpAnnotation,
               key: annotation.data.id,
               renderContent: props.renderContent,
-              selectAnnotation: memoisedSelectedAnnotation,
+              onAnnotationClick: onAnnotationClick,
               selectedAnnotation: selectedAnnotation,
             })
           )}
@@ -298,7 +297,7 @@ function Annotation(options: AnnotationProps & WithRelativeMousePosProps) {
               isInSelectionMode: !!tmpAnnotation,
               key: tmpAnnotation.data.id,
               renderContent: props.renderContent,
-              selectAnnotation: memoisedSelectedAnnotation,
+              onAnnotationClick: onAnnotationClick,
             })}
         </ItemsDiv>
         {editorMode !== EditorMode.ReadOnly ? (

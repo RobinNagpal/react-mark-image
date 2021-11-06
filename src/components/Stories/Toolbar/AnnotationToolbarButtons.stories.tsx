@@ -179,6 +179,7 @@ function extracted(initData: IAnnotation[]) {
           onAnnotationsUpdate={setAnnotations}
           toolBarOptions={{
             renderSelectedAnnotationIcons,
+            showToolBar: true,
           }}
           {...args}
         />

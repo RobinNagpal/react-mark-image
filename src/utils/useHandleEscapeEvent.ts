@@ -2,13 +2,13 @@ import { useEffect } from 'react';
 import { IAnnotation } from '../types/index';
 
 export default function useHandleEscapeEvent(
-  setSelectedItem: (annotation?: IAnnotation) => void,
+  unselectSelectedAnnotation: () => void,
   selectedItem?: IAnnotation
 ) {
   useEffect(() => {
     function handleKeyDown(event: KeyboardEvent) {
       if (event.key === 'Escape') {
-        setSelectedItem(undefined);
+        unselectSelectedAnnotation();
       }
     }
 
