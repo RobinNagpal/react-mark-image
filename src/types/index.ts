@@ -121,9 +121,9 @@ export interface RenderShapeProps {
   editMode: EditorMode;
   key: string;
   isInSelectionMode: boolean;
+  onAnnotationClick: (annotation: IAnnotation) => void;
   renderContent?: (props: ContentProps) => ReactElement | null;
   selectedAnnotation?: IAnnotation;
-  onAnnotationClick: (annotation: IAnnotation) => void;
 }
 
 export interface ContentProps {
@@ -156,9 +156,9 @@ export type WrappedShapeProps = {
   editMode: EditorMode;
   isInSelectionMode: boolean;
   key: string;
-  selectedAnnotation?: IAnnotation;
   onAnnotationClick: (annotation: IAnnotation) => void;
   renderContent?: (props: ContentProps) => ReactElement | null;
+  selectedAnnotation?: IAnnotation;
   style?: CSSProperties;
 };
 
