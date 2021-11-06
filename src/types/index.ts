@@ -123,7 +123,7 @@ export interface RenderShapeProps {
   isInSelectionMode: boolean;
   renderContent?: (props: ContentProps) => ReactElement | null;
   selectedAnnotation?: IAnnotation;
-  selectAnnotation: (annotation: IAnnotation) => void;
+  onAnnotationClick: (annotation: IAnnotation) => void;
 }
 
 export interface ContentProps {
