@@ -27,11 +27,11 @@ export const withShapeWrapper = (
 
     const onMouseEnter = useCallback(() => setMouseHovered(true), []);
     const onMouseLeave = useCallback(() => setMouseHovered(false), []);
-    const onClick = useCallback(() => {
+    const onClick = () => {
       if (props.onAnnotationClick) {
         props.onAnnotationClick(annotation);
       }
-    }, []);
+    };
 
     return (
       <div onClick={onClick}>

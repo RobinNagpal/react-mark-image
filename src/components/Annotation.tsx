@@ -2,6 +2,7 @@ import React, {
   ComponentType,
   MouseEvent,
   TouchEvent,
+  useCallback,
   useEffect,
   useState,
 } from 'react';
@@ -243,11 +244,14 @@ function Annotation(options: AnnotationProps & WithRelativeMousePosProps) {
     }
   };
 
-  const onAnnotationClick = (annotation: IAnnotation) => {
-    setSelectedAnnotation(annotation);
-    props.onSelectedAnnotationUpdate(annotation, true);
-    props.onAnnotationClick(annotation);
-  };
+  const onAnnotationClick = useCallback(
+    (annotation: IAnnotation) => {
+      setSelectedAnnotation(annotation);
+      props.onSelectedAnnotationUpdate(annotation, true);
+      props.onAnnotationClick(annotation);
+    },
+    [props.onAnnotationClick, props.onSelectedAnnotationUpdate]
+  );
 
   useHandleEscapeEvent(unselectSelectedAnnotation, selectedAnnotation);
   return (
