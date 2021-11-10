@@ -1,5 +1,4 @@
-import React from 'react';
-import { useEffect, useRef } from 'react';
+import React, { useRef } from 'react';
 import styled from 'styled-components';
 
 const Img = styled.img`
@@ -18,9 +17,6 @@ interface ImageProps {
 
 export default function Image(props: ImageProps) {
   const imageRef = useRef<HTMLImageElement>(null);
-  useEffect(() => {
-    props.setInnerRef(imageRef.current);
-  }, [imageRef.current]);
 
   const { alt, className, draggable, src, style } = props;
   return (

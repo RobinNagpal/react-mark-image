@@ -18,5 +18,5 @@ export default function useHandleEscapeEvent(
       // Unbind the event listener on clean up
       document.removeEventListener('keydown', handleKeyDown);
     };
-  }, [selectedItem]);
+  }, [selectedItem, unselectSelectedAnnotation]);
 }

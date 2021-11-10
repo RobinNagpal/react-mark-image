@@ -71,6 +71,7 @@ function Annotation(options: AnnotationProps & WithRelativeMousePosProps) {
     idFunction,
 
     onSelectedAnnotationUpdate,
+    onAnnotationClick: onAnnotationClickProp,
 
     renderShape,
     renderEditor,
@@ -132,7 +133,7 @@ function Annotation(options: AnnotationProps & WithRelativeMousePosProps) {
         removeTargetTouchEventListeners();
       }
     }
-  }, [options.allowTouch]);
+  });
 
   const setInnerRef = (el: HTMLImageElement | null) => {
     if (el) {
@@ -247,10 +248,10 @@ function Annotation(options: AnnotationProps & WithRelativeMousePosProps) {
   const onAnnotationClick = useCallback(
     (annotation: IAnnotation) => {
       setSelectedAnnotation(annotation);
-      props.onSelectedAnnotationUpdate(annotation, true);
-      props.onAnnotationClick(annotation);
+      onSelectedAnnotationUpdate(annotation, true);
+      onAnnotationClickProp(annotation);
     },
-    [props.onAnnotationClick, props.onSelectedAnnotationUpdate]
+    [onAnnotationClickProp, onSelectedAnnotationUpdate]
   );
 
   useHandleEscapeEvent(unselectSelectedAnnotation, selectedAnnotation);

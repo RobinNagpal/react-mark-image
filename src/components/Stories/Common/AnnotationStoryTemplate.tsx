@@ -16,29 +16,31 @@ export const argTypes: ArgTypes = {
   },
 };
 
-export const BaseStoryTemplate: (
+const StoryComponent: (args: AnnotationPropsOptional) => React.ReactElement = (
+  args: AnnotationPropsOptional
+) => {
+  const [annotations, setAnnotations] = useState<any[]>(args.annotations || []);
+
+  return (
+    <div style={{ width: '800px' }}>
+      <Annotation
+        annotations={annotations}
+        onAnnotationsUpdate={setAnnotations}
+        {...args}
+      />
+    </div>
+  );
+};
+
+export const BaseStoryTemplateWithAnnotations: (
   config: AnnotationPropsOptional
 ) => Story<AnnotationPropsOptional> = (config: AnnotationPropsOptional) => {
-  let element = (args: AnnotationPropsOptional) => {
-    const [annotations, setAnnotations] = useState<any[]>(
-      config.annotations || []
-    );
-
-    return (
-      <div style={{ width: '800px' }}>
-        <Annotation
-          annotations={annotations}
-          onAnnotationsUpdate={setAnnotations}
-          {...args}
-        />
-      </div>
-    );
-  };
-  return element;
+  return (args: AnnotationPropsOptional) =>
+    StoryComponent({ ...args, annotations: config.annotations });
 };
 
 export const DefaultAnnotationStoryTemplate: Story<AnnotationPropsOptional> =
-  BaseStoryTemplate({});
+  BaseStoryTemplateWithAnnotations({ annotations: [] });
 
 export const ovalAnnotations = [
   {
@@ -83,7 +85,7 @@ export const ovalAnnotations = [
 ];
 
 export const OvalTemplateWithExistingAnnotations: Story<AnnotationPropsOptional> =
-  BaseStoryTemplate({
+  BaseStoryTemplateWithAnnotations({
     annotations: ovalAnnotations,
   });
 
@@ -143,7 +145,7 @@ export const rectangularAnnotations = [
 ];
 
 export const RectangleTemplateWithExistingAnnotations: Story<AnnotationPropsOptional> =
-  BaseStoryTemplate({
+  BaseStoryTemplateWithAnnotations({
     annotations: rectangularAnnotations,
   });
 
@@ -216,6 +218,6 @@ export const pointAnnotations = [
 ];
 
 export const PointTemplateWithExistingAnnotations: Story<AnnotationPropsOptional> =
-  BaseStoryTemplate({
+  BaseStoryTemplateWithAnnotations({
     annotations: pointAnnotations,
   });
