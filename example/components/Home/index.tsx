@@ -4,7 +4,7 @@ import Simple from '../Samples/Simple';
 import Highlight from '../Highlight';
 import GithubStarLink from '../GithubStarLink';
 import { ButtonLink } from '../Button';
-import simple from './simple';
+import simple from 'bundle-text:./simple.txt';
 
 const Hero = styled.div`
   text-align: center;
