@@ -3,7 +3,7 @@ import { Annotation, RectangleSelector, TextEditor } from 'react-mark-image';
 
 import styled, { keyframes } from 'styled-components';
 import Root from '../../Root';
-import img from '../../../img.jpeg';
+import img from '../../../cats.jpg';
 
 /*
  * You would normally have the different components here

@@ -9,7 +9,7 @@ import {
 import Button from '../../Button';
 
 import mocks from '../../../mocks';
-import img from '../../../img.jpeg';
+import img from '../../../cats.jpg';
 
 const Box = ({ children, geometry, style }) => (
   <div

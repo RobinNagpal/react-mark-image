@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import { Annotation } from 'react-mark-image';
 
 import Root from '../../Root';
-import img from '../../../img.jpeg';
+import img from '../../../cats.jpg';
 
 const Comments = styled.div`
   border: 1px solid black;
