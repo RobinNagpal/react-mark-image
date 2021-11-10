@@ -16,14 +16,6 @@ export interface IContainer {
   width: number;
 }
 
-export interface IGeometry {
-  type: string;
-  x: number;
-  y: number;
-  height: number;
-  width: number;
-}
-
 export interface SelectorMethodsOptions {
   editorMode: EditorMode;
   idFunction: () => string;
@@ -89,6 +81,14 @@ export interface ISelector {
 interface AnnotationData extends Record<string, any> {
   text?: string;
   id: string;
+}
+
+export interface IGeometry {
+  type: string;
+  x: number;
+  y: number;
+  height: number;
+  width: number;
 }
 
 export interface IAnnotation {

@@ -60,16 +60,30 @@ Prop | Description | Default
 
 An Annotation object is an object that conforms to the object shape
 
-```js
-({
-  selection: T.object, // temporary object for selector logic
-  geometry: T.shape({ // geometry data for annotation
-    type: T.string.isRequired // type is used to resolve Highlighter/Selector renderer
-  }),
-  // auxiliary data object for application.
-  // Content data can be stored here (text, image, primary key, etc.)
-  data: T.object
-})
+```ts
+
+interface AnnotationData extends Record<string, any> {
+  text?: string;
+  id: string;
+}
+
+export interface IGeometry {
+  type: string;
+  x: number;
+  y: number;
+  height: number;
+  width: number;
+}
+
+export interface IAnnotation {
+  selection?: {
+    mode: string;
+    anchorX?: number | null;
+    anchorY?: number | null;
+  };
+  geometry: IGeometry;
+  data: AnnotationData;
+}
 ```
 
 ## Using custom components
