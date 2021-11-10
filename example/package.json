@@ -9,7 +9,7 @@
   },
   "dependencies": {
     "react-app-polyfill": "^1.0.0",
-    "react-image-annotation-ts": "0.1.6-9",
+    "react-mark-image": "0.1.6-9",
     "react-router-dom": "^5.3.0",
     "react-syntax-highlighter": "^15.4.4",
     "styled-components": "^5.3.3"

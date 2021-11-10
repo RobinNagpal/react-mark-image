@@ -4,7 +4,7 @@ import {
   PointSelector,
   RectangleSelector,
   OvalSelector,
-} from 'react-image-annotation-ts';
+} from 'react-mark-image';
 
 import Button from '../../Button';
 

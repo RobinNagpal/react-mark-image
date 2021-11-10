@@ -5098,9 +5098,9 @@ react-app-polyfill@^1.0.0:
     regenerator-runtime "^0.13.3"
     whatwg-fetch "^3.0.0"
 
-react-image-annotation-ts@0.1.6-9:
+react-mark-image@0.1.6-9:
   version "0.1.6-9"
-  resolved "https://registry.npmjs.org/react-image-annotation-ts/-/react-image-annotation-ts-0.1.6-9.tgz"
+  resolved "https://registry.npmjs.org/react-mark-image/-/react-mark-image-0.1.6-9.tgz"
   integrity sha512-w7OFQnEGSwJ8k81+LQHEhbo3/UV7HN1Hwpe2PLt64A1U3lffsQhxUaT82YkqaXjW874CSdYN7qmSsxBPI9Xhxw==
   dependencies:
     "@rollup/plugin-url" "^6.1.0"

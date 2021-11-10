@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
-import { Annotation } from 'react-image-annotation-ts';
+import { Annotation } from 'react-mark-image';
 
 import Root from '../../Root';
 import img from '../../../img.jpeg';

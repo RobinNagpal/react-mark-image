@@ -1,10 +1,10 @@
 import React, { Component } from 'react'
-import Annotation from 'react-image-annotation'
+import Annotation from 'react-mark-image'
 import {
   PointSelector,
   RectangleSelector,
   OvalSelector
-} from 'react-image-annotation/lib/selectors'
+} from 'react-mark-image/lib/selectors'
 
 export default class Multiple extends Component {
   state = {

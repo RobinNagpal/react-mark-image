@@ -1,9 +1,5 @@
 import React, { Component } from 'react';
-import {
-  Annotation,
-  RectangleSelector,
-  TextEditor,
-} from 'react-image-annotation-ts';
+import { Annotation, RectangleSelector, TextEditor } from 'react-mark-image';
 
 import styled, { keyframes } from 'styled-components';
 import Root from '../../Root';

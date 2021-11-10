@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import Annotation from 'react-image-annotation'
+import Annotation from 'react-mark-image'
 
 export default class Simple extends Component {
   state = {

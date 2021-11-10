@@ -1,4 +1,4 @@
-import { RectangleSelector, OvalSelector } from 'react-image-annotation-ts';
+import { RectangleSelector, OvalSelector } from 'react-mark-image';
 
 export default {
   annotations: [

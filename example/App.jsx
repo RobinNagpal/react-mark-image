@@ -16,9 +16,9 @@ const Main = styled.main`
 
 const App = () => {
   return (
-    <Router basename="/react-image-annotation">
+    <Router basename="/react-mark-image">
       <Root>
-        <NavBar title="react-image-annotation" />
+        <NavBar title="react-mark-image" />
         <Main>
           <Route exact path="/" component={Home} />
           <Route path="/docs" component={Docs} />

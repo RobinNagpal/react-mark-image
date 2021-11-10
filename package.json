@@ -35,16 +35,16 @@
     "singleQuote": true,
     "trailingComma": "es5"
   },
-  "name": "react-image-annotation-ts",
+  "name": "react-mark-image",
   "author": "robin",
-  "module": "dist/react-image-annotation-ts.esm.js",
+  "module": "dist/react-mark-image.esm.js",
   "size-limit": [
     {
-      "path": "dist/react-image-annotation-ts.cjs.production.min.js",
+      "path": "dist/react-mark-image.cjs.production.min.js",
       "limit": "10 KB"
     },
     {
-      "path": "dist/react-image-annotation-ts.esm.js",
+      "path": "dist/react-mark-image.esm.js",
       "limit": "10 KB"
     }
   ],
@@ -77,6 +77,6 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/RobinNagpal/react-image-annotation-ts"
+    "url": "https://github.com/RobinNagpal/react-mark-image"
   }
 }

@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Annotation, IAnnotation } from 'react-image-annotation-ts';
+import { Annotation, IAnnotation } from 'react-mark-image';
 
 import Root from '../../Root';
 import img from './../../../cats.jpg';

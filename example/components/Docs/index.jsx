@@ -43,7 +43,7 @@ export default class Docs extends Component {
         <Custom />
         <SourceLink
           target="_blank"
-          href="https://github.com/RobinNagpal/react-image-annotation-ts/blob/master/example/components/Samples/Custom/index.jsx"
+          href="https://github.com/RobinNagpal/react-mark-image/blob/master/example/components/Samples/Custom/index.jsx"
         >
           View source
         </SourceLink>
@@ -51,7 +51,7 @@ export default class Docs extends Component {
         <Threaded />
         <SourceLink
           target="_blank"
-          href="https://github.com/RobinNagpal/react-image-annotation-ts/blob/master/example/components/Samples/Threaded/index.jsx"
+          href="https://github.com/RobinNagpal/react-mark-image/blob/master/example/components/Samples/Threaded/index.jsx"
         >
           View source
         </SourceLink>

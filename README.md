@@ -1,14 +1,14 @@
 React Image Annotation(TypeScript)
 =========================
 
-![Annotation demo](https://raw.githubusercontent.com/RobinNagpal/react-image-annotation-ts/HEAD/demo.gif)
+![Annotation demo](https://raw.githubusercontent.com/RobinNagpal/react-mark-image/HEAD/demo.gif)
 
 ## Installation
 
 ```
 npm install --save react-image-mark
 # or
-yarn add react-image-annotation-ts
+yarn add react-mark-image
 ```
 
 ## Usage
@@ -132,7 +132,7 @@ import {
   PointSelector,
   RectangleSelector,
   OvalSelector
-} from 'react-image-annotation/lib/selectors'
+} from 'react-mark-image/lib/selectors'
 
 <Annotation
   type={PointSelector.TYPE}

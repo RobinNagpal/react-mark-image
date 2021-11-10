@@ -45,7 +45,7 @@ export default class App extends Component {
           <ButtonLink to="/docs">More Examples</ButtonLink>
         </Hero>
         <h2>Install</h2>
-        <Highlight>npm install --save react-image-annotation</Highlight>
+        <Highlight>npm install --save react-mark-image</Highlight>
         <h2>Demo</h2>
         <Simple />
         <Highlight>{simple}</Highlight>

@@ -55,10 +55,7 @@ export default (props) => (
         <Link to="/docs">Docs</Link>
       </Item>
       <Item>
-        <a
-          href="//github.com/RobinNagpal/react-image-annotation-ts"
-          target="__blank"
-        >
+        <a href="//github.com/RobinNagpal/react-mark-image" target="__blank">
           Github
         </a>
       </Item>

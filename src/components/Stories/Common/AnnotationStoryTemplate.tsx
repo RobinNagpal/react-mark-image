@@ -5,7 +5,7 @@ import { AllowedShape } from '../../../types/index';
 import Annotation, { AnnotationPropsOptional } from './../../Annotation';
 
 const defaultImageUrl =
-  'https://raw.githubusercontent.com/RobinNagpal/react-image-annotation-ts/HEAD/example/img.jpeg';
+  'https://raw.githubusercontent.com/RobinNagpal/react-mark-image/HEAD/example/img.jpeg';
 
 export const argTypes: ArgTypes = {
   src: {
