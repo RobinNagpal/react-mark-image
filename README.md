@@ -1,7 +1,7 @@
 React Mark Image
 =========================
 
-![Annotation demo](https://raw.githubusercontent.com/RobinNagpal/react-mark-image/HEAD/demo.gif)
+<img src="https://raw.githubusercontent.com/RobinNagpal/react-mark-image/HEAD/demo.gif" alt="Demo" width="600"/>
 
 ## Installation
 
