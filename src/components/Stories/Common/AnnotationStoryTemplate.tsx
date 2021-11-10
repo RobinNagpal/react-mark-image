@@ -18,8 +18,8 @@ export const argTypes: ArgTypes = {
 
 export const BaseStoryTemplate: (
   config: AnnotationPropsOptional
-) => Story<AnnotationPropsOptional> =
-  (config: AnnotationPropsOptional) => (args) => {
+) => Story<AnnotationPropsOptional> = (config: AnnotationPropsOptional) => {
+  let element = (args: AnnotationPropsOptional) => {
     const [annotations, setAnnotations] = useState<any[]>(
       config.annotations || []
     );
@@ -34,6 +34,8 @@ export const BaseStoryTemplate: (
       </div>
     );
   };
+  return element;
+};
 
 export const DefaultAnnotationStoryTemplate: Story<AnnotationPropsOptional> =
   BaseStoryTemplate({});

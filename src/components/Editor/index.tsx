@@ -37,8 +37,10 @@ interface EditorProps {
 
 function Editor(props: EditorProps) {
   const { geometry } = props.annotation;
-  if (!geometry) return null;
   const [text, setText] = useState('');
+
+  if (!geometry) return null;
+
   return (
     <Container
       className={props.className}
