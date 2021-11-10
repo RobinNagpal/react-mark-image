@@ -18,27 +18,25 @@ export const argTypes: ArgTypes = {
 
 export const BaseStoryTemplate: (
   config: AnnotationPropsOptional
-) => Story<AnnotationPropsOptional> = (config: AnnotationPropsOptional) => (
-  args
-) => {
-  const [annotations, setAnnotations] = useState<any[]>(
-    config.annotations || []
-  );
+) => Story<AnnotationPropsOptional> =
+  (config: AnnotationPropsOptional) => (args) => {
+    const [annotations, setAnnotations] = useState<any[]>(
+      config.annotations || []
+    );
 
-  return (
-    <div style={{ width: '800px' }}>
-      <Annotation
-        annotations={annotations}
-        onAnnotationsUpdate={setAnnotations}
-        {...args}
-      />
-    </div>
-  );
-};
+    return (
+      <div style={{ width: '800px' }}>
+        <Annotation
+          annotations={annotations}
+          onAnnotationsUpdate={setAnnotations}
+          {...args}
+        />
+      </div>
+    );
+  };
 
-export const DefaultAnnotationStoryTemplate: Story<AnnotationPropsOptional> = BaseStoryTemplate(
-  {}
-);
+export const DefaultAnnotationStoryTemplate: Story<AnnotationPropsOptional> =
+  BaseStoryTemplate({});
 
 export const ovalAnnotations = [
   {
@@ -82,11 +80,10 @@ export const ovalAnnotations = [
   },
 ];
 
-export const OvalTemplateWithExistingAnnotations: Story<AnnotationPropsOptional> = BaseStoryTemplate(
-  {
+export const OvalTemplateWithExistingAnnotations: Story<AnnotationPropsOptional> =
+  BaseStoryTemplate({
     annotations: ovalAnnotations,
-  }
-);
+  });
 
 export const rectangularAnnotations = [
   {
@@ -143,11 +140,10 @@ export const rectangularAnnotations = [
   },
 ];
 
-export const RectangleTemplateWithExistingAnnotations: Story<AnnotationPropsOptional> = BaseStoryTemplate(
-  {
+export const RectangleTemplateWithExistingAnnotations: Story<AnnotationPropsOptional> =
+  BaseStoryTemplate({
     annotations: rectangularAnnotations,
-  }
-);
+  });
 
 export const pointAnnotations = [
   {
@@ -217,8 +213,7 @@ export const pointAnnotations = [
   },
 ];
 
-export const PointTemplateWithExistingAnnotations: Story<AnnotationPropsOptional> = BaseStoryTemplate(
-  {
+export const PointTemplateWithExistingAnnotations: Story<AnnotationPropsOptional> =
+  BaseStoryTemplate({
     annotations: pointAnnotations,
-  }
-);
+  });

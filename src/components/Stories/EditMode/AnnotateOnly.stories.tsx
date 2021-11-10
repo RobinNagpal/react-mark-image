@@ -23,7 +23,8 @@ const meta: Meta = {
 
 export default meta;
 
-const StoryTemplate: Story<AnnotationPropsOptional> = DefaultAnnotationStoryTemplate;
+const StoryTemplate: Story<AnnotationPropsOptional> =
+  DefaultAnnotationStoryTemplate;
 
 export const Oval = StoryTemplate.bind({});
 
