@@ -50,13 +50,11 @@ Prop | Description | Default
 `renderOverlay` | Function that renders `Overlay` | See [custom components](#using-custom-components)
 `selectors`| Array of selectors that should be available |
 `allowedShapes`| Array of allowedShapes.  |
-
 `onAnnotationsUpdate` | callback handler whenever annotations are updated |
 `onAnnotationClick` | `onClick` handler for annotation |
 `onSelectedAnnotationUpdate` | `onSelectedAnnotationUpdate` handler for annotation when it's selected. This callback takes two arguments i.e. annotation and the selected indicator |
 `style` |  styles that need to the applied to the parent container|
-
-`toolBarOptions` | Selector type. See [Toolbar options](#tool-bar-options) |
+`toolBarOptions` | Options for toolbar.| See [Toolbar options](#tool-bar-options) |
 
 #### Annotation object
 
