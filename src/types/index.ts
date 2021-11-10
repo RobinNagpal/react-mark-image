@@ -198,23 +198,16 @@ export interface ToolBarOptions {
 }
 
 export interface AnnotationProps {
+  src: string;
   alt?: string;
-  allowTouch?: boolean;
   annotations: IAnnotation[];
 
   children?: any;
   className?: string;
 
-  disableAnnotation?: boolean;
-  disableEditor?: boolean;
-  disableOverlay?: boolean;
-  disableSelector?: boolean;
-
   editorMode: EditorMode;
 
   idFunction: () => string;
-
-  innerRef: (el: HTMLImageElement) => object;
 
   renderContent: (props: ContentProps) => ReactElement | null;
   renderEditor: (props: RenderEditorProps) => ReactElement | null;
@@ -230,7 +223,7 @@ export interface AnnotationProps {
     annotation: IAnnotation,
     selected: boolean
   ) => void;
-  src: string;
+
   style?: object;
 
   toolBarOptions: ToolBarOptions;

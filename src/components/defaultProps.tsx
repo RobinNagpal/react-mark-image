@@ -17,17 +17,12 @@ import Point from './Shapes/Point';
 import Rectangle from './Shapes/Rectangle';
 
 const defaultProps: AnnotationProps = {
+  src: '',
+
   annotations: [],
-
-  disableAnnotation: false,
-  disableSelector: false,
-  disableEditor: false,
-  disableOverlay: false,
-
   editorMode: EditorMode.AnnotateWithText,
 
   idFunction: () => Math.random().toString(),
-  innerRef: (_el: HTMLImageElement) => ({}),
 
   onAnnotationsUpdate: () => {},
   onAnnotationClick: () => {},
@@ -78,8 +73,6 @@ const defaultProps: AnnotationProps = {
     OvalSelector.TYPE,
     PointSelector.TYPE,
   ],
-
-  src: '',
 
   toolBarOptions: {
     showDeleteOption: true,

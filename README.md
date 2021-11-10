@@ -13,49 +13,22 @@ yarn add react-mark-image
 
 ## Usage
 
-```js
-export default class Simple extends Component {
-  state = {
-    annotations: [],
-    annotation: {}
-  }
+```tsx
+import React, { useState } from 'react';
+import { Annotation, IAnnotation } from 'react-mark-image';
 
-  onChange = (annotation) => {
-    this.setState({ annotation })
-  }
+export default function Simple() {
+  const [annotations, setAnnotations] = useState<IAnnotation[]>([]);
 
-  onSubmit = (annotation) => {
-    const { geometry, data } = annotation
-
-    this.setState({
-      annotation: {},
-      annotations: this.state.annotations.concat({
-        geometry,
-        data: {
-          ...data,
-          id: Math.random()
-        }
-      })
-    })
-  }
-
-  render () {
-    return (
-      <Root>
-        <Annotation
-          src={img}
-          alt='Two pebbles anthropomorphized holding hands'
-
-          annotations={this.state.annotations}
-
-          type={this.state.type}
-          value={this.state.annotation}
-          onChange={this.onChange}
-          onSubmit={this.onSubmit}
-        />
-      </Root>
-    )
-  }
+  return (
+    <Annotation
+      src={IMAGE_URL}
+      alt="Cats"
+      annotations={annotations}
+      onAnnotationsUpdate={setAnnotations}
+      allowTouch
+    />
+  );
 }
 ```
 
@@ -67,27 +40,23 @@ Prop | Description | Default
 `src` | Image src attribute |
 `alt` | Image alt attribute |
 `annotations` | Array of annotations |
-`value` | Annotation object currently being created. See [annotation object](#annotation-object)  |
-`onChange` | `onChange` handler for annotation object |
-`onSubmit` | `onSubmit` handler for annotation object |
-`type` | Selector type. See [custom shapes](#using-custom-shapes) | `RECTANGLE`
-`allowTouch` | Set to `true` to allow the target to handle touch events. This disables one-finger scrolling | `false`
-`selectors` | An array of selectors. See [adding custom selector logic](#adding-custom-selector-logic) | `[RectangleSelector, PointSelector, OvalSelector]`
-`activeAnnotations` | Array of annotations that will be passed as 'active' (active highlight and shows content) |
-`activeAnnotationComparator` | Method to compare annotation and `activeAnnotation` item (from `props.activeAnnotations`). Return `true` if it's the annotations are equal | `(a, b) => a === b`
-`disableAnnotation` | Set to `true` to disable creating of annotations (note that no callback methods will be called if this is `true`) | `false`
-`disableSelector` | Set to `true` to not render `Selector` | `false`
-`disableEditor` | Set to `true` to not render `Editor` | `false`
-`disableOverlay` | Set to `true` to not render `Overlay` | `false`
-`renderSelector` | Function that renders `Selector` Component | See [custom components](#using-custom-components)
-`renderEditor` | Function that renders `Editor` Component | See [custom components](#using-custom-components)
-`renderHighlight` | Function that renders `Highlight` Component | See [custom components](#using-custom-components)
+`children` | Any react elements that needs to be added next to marked image|
+`className` | class name that needs to be applied to the parent div|
+`editorMode` | Can be one of AnnotateWithText, AnnotateOnly, or ReadOnly. When AnnotateWithText is used, annotation will need text which is rendered when the annotation is hovered. In ReadOnly new annotations cannot be added|
+`idFunction` | Function to be used for creating ids of annotation objects|
 `renderContent` | Function that renders `Content` | See [custom components](#using-custom-components)
+`renderEditor` | Function that renders `Editor` Component | See [custom components](#using-custom-components)
+`renderShape` | Function that renders `Shape` Component | See [custom components](#using-custom-components)
 `renderOverlay` | Function that renders `Overlay` | See [custom components](#using-custom-components)
-`onMouseUp` | `onMouseUp` handler on annotation target |
-`onMouseDown` | `onMouseDown` handler on annotation target |
-`onMouseMove` | `onMouseMove` handler on annotation target |
-`onClick` | `onClick` handler on annotation target |
+`selectors`| Array of selectors that should be available |
+`allowedShapes`| Array of allowedShapes.  |
+
+`onAnnotationsUpdate` | callback handler whenever annotations are updated |
+`onAnnotationClick` | `onClick` handler for annotation |
+`onSelectedAnnotationUpdate` | `onSelectedAnnotationUpdate` handler for annotation when it's selected. This callback takes two arguments i.e. annotation and the selected indicator |
+`style` |  styles that need to the applied to the parent container|
+
+`toolBarOptions` | Selector type. See [Toolbar options](#tool-bar-options) |
 
 #### Annotation object
 
@@ -111,9 +80,8 @@ An Annotation object is an object that conforms to the object shape
 
 This allows you to customize everything about the the look of the annotation interface, and you can even use canvas elements for performance or more complex interaction models.
 
-- `renderSelector` - used for selecting annotation area (during annotation creation)
+- `renderShape` - used for selecting annotation area (during annotation creation)
 - `renderEditor` - appears after annotation area has been selected (during annotation creation)
-- `renderHighlight` - used to render current annotations in the annotation interface. It is passed an object that contains the property `active`, which is true if the mouse is hovering over the higlight
 - `renderComponent` - auxiliary component that appears when mouse is hovering over the highlight. It is passed an object that contains the annotation being hovered over. `{ annotation }`
 - `renderOverlay` - Component overlay for Annotation (i.e. 'Click and Drag to Annotate')
 
@@ -121,25 +89,25 @@ You can view the default renderProps [here](src/components/defaultProps.js)
 
 **Note**: You cannot use `:hover` selectors in css for components returned by `renderSelector` and `renderHighlight`. This is due to the fact that `Annotation` places DOM layers on top of these components, preventing triggering of `:hover`
 
-## Using custom shapes
+## Toolbar Options
+Toolbar options are of the format
+```typescript
+export interface RenderSelectedAnnotationIconsProps {
+  annotation: IAnnotation;
+  unSelectAnnotation: () => void;
+}
 
-`Annotation` supports three shapes by default, `RECTANGLE`, `POINT` and `OVAL`.
+export interface ToolBarOptions {
+  showToolBar?: boolean;
+  showDeleteOption?: boolean;
+  renderToolbarIcons?: () => ReactElement | null;
+  renderSelectedAnnotationIcons?: (
+    props: RenderSelectedAnnotationIconsProps
+  ) => ReactElement | null;
+}
 
-You can switch the shape selector by passing the appropriate `type` as a property. Default shape `TYPE`s are accessible on their appropriate selectors:
-
-```js
-import {
-  PointSelector,
-  RectangleSelector,
-  OvalSelector
-} from 'react-mark-image/lib/selectors'
-
-<Annotation
-  type={PointSelector.TYPE}
-/>
 ```
 
-### Adding custom selector logic
 
 #### This is an Advanced Topic
 
@@ -154,22 +122,13 @@ Selectors are objects that must have the following properties:
 
 You can view a defined `RectangleSelector` [here](src/hocs/RectangleSelector.js)
 
-### Connecting selector logic to Redux/MobX
-
-First see [Selectors](#adding-custom-selector-logic)
-
-You can use `Selector` methods to connect these method logic to your stores. This is due to the fact that selector methods function as reducers, returning new state depending on the event.
-
-***Note that it is not necessary to connect the selector logic with redux/mobx. Connecting the annotation and annotations state is more than enough for most use cases.***
 
 ## License
 
 MIT
 
-
 # Contributing
 We use TSDX to build this project.
-
 
 ## Commands
 Build the project

@@ -61,9 +61,10 @@ function Annotation(options: AnnotationProps & WithRelativeMousePosProps) {
     ...options,
   };
 
+  const allowTouch = false;
   const {
     allowedShapes,
-    allowTouch,
+
     alt,
     className,
     editorMode,
@@ -127,20 +128,13 @@ function Annotation(options: AnnotationProps & WithRelativeMousePosProps) {
 
   useEffect(() => {
     if (editorMode !== EditorMode.ReadOnly) {
-      if (props.allowTouch) {
+      if (allowTouch) {
         addTargetTouchEventListeners();
       } else {
         removeTargetTouchEventListeners();
       }
     }
   });
-
-  const setInnerRef = (el: HTMLImageElement | null) => {
-    if (el) {
-      options.relativeMousePos.innerRef(el);
-      props.innerRef(el);
-    }
-  };
 
   const getSelectorByType = (type: string): ISelector => {
     return props.selectors.find((s) => s.TYPE === type)!;
@@ -193,10 +187,7 @@ function Annotation(options: AnnotationProps & WithRelativeMousePosProps) {
       | 'onClick',
     e: MouseEvent | TouchEvent
   ) => {
-    const { disableAnnotation, editorMode } = props;
-    if (disableAnnotation) {
-      return;
-    }
+    const { editorMode } = props;
 
     if (!!options[methodName]) {
       (options[methodName] as any)(e);
@@ -256,16 +247,18 @@ function Annotation(options: AnnotationProps & WithRelativeMousePosProps) {
 
   useHandleEscapeEvent(unselectSelectedAnnotation, selectedAnnotation);
   return (
-    <>
-      <ToolBar
-        allowedShapes={allowedShapes}
-        deleteAnnotation={deleteAnnotation}
-        options={toolBarOptions}
-        selectedAnnotation={selectedAnnotation}
-        selectedSelectorType={selectedSelectorType}
-        setSelectedSelectorType={setSelectedSelectorType}
-        unSelectSelectedAnnotation={unselectSelectedAnnotation}
-      />
+    <div className={className}>
+      {editorMode !== EditorMode.ReadOnly && (
+        <ToolBar
+          allowedShapes={allowedShapes}
+          deleteAnnotation={deleteAnnotation}
+          options={toolBarOptions}
+          selectedAnnotation={selectedAnnotation}
+          selectedSelectorType={selectedSelectorType}
+          setSelectedSelectorType={setSelectedSelectorType}
+          unSelectSelectedAnnotation={unselectSelectedAnnotation}
+        />
+      )}
       <Container
         style={{
           ...props.style,
@@ -274,14 +267,7 @@ function Annotation(options: AnnotationProps & WithRelativeMousePosProps) {
         onMouseLeave={onTargetMouseLeave}
         onTouchCancel={onTargetTouchLeave}
       >
-        <ImageElement
-          className={className}
-          style={style}
-          alt={alt}
-          src={src}
-          draggable={false}
-          setInnerRef={setInnerRef}
-        />
+        <ImageElement style={style} alt={alt} src={src} draggable={false} />
         <ItemsDiv>
           {annotations.map((annotation) =>
             renderShape({
@@ -294,8 +280,7 @@ function Annotation(options: AnnotationProps & WithRelativeMousePosProps) {
               selectedAnnotation: selectedAnnotation,
             })
           )}
-          {!props.disableSelector &&
-            tmpAnnotation?.geometry &&
+          {tmpAnnotation?.geometry &&
             renderShape({
               annotation: tmpAnnotation,
               editMode: props.editorMode,
@@ -316,11 +301,10 @@ function Annotation(options: AnnotationProps & WithRelativeMousePosProps) {
         ) : (
           <ReadOnlyDiv onClick={unselectSelectedAnnotation} />
         )}
-        {!props.disableOverlay &&
-          renderOverlay({
-            annotations: props.annotations,
-            selectorType: selectedSelectorType,
-          })}
+        {renderOverlay({
+          annotations: props.annotations,
+          selectorType: selectedSelectorType,
+        })}
         {showEditor &&
           tmpAnnotation &&
           tmpAnnotation.selection?.mode === SelectionMode.Editing &&
@@ -330,7 +314,7 @@ function Annotation(options: AnnotationProps & WithRelativeMousePosProps) {
           })}
         <div>{props.children}</div>
       </Container>
-    </>
+    </div>
   );
 }
 

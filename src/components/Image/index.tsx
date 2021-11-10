@@ -8,9 +8,7 @@ const Img = styled.img`
 
 interface ImageProps {
   alt?: string;
-  className?: string;
   draggable?: boolean;
-  setInnerRef: (el: HTMLImageElement | null) => void;
   src: string;
   style?: object;
 }
@@ -18,11 +16,10 @@ interface ImageProps {
 export default function Image(props: ImageProps) {
   const imageRef = useRef<HTMLImageElement>(null);
 
-  const { alt, className, draggable, src, style } = props;
+  const { alt, draggable, src, style } = props;
   return (
     <Img
       alt={alt}
-      className={className}
       draggable={draggable}
       ref={imageRef}
       src={src}
