@@ -1,10 +1,9 @@
+import simple from 'bundle-text:./simple.txt';
 import React, { Component } from 'react';
 import styled from 'styled-components';
-import Simple from '../Samples/Simple';
-import Highlight from '../Highlight';
 import GithubStarLink from '../GithubStarLink';
-import { ButtonLink } from '../Button';
-import simple from 'bundle-text:./simple.txt';
+import Highlight from '../Highlight';
+import Simple from '../Samples/Simple';
 
 const Hero = styled.div`
   text-align: center;
@@ -42,7 +41,6 @@ export default class App extends Component {
           <GithubButton>
             <GithubStarLink />
           </GithubButton>
-          <ButtonLink to="/docs">More Examples</ButtonLink>
         </Hero>
         <h2>Install</h2>
         <Highlight>npm install --save react-mark-image</Highlight>

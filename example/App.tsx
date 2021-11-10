@@ -6,12 +6,9 @@ import styled from 'styled-components';
 import NavBar from './components/NavBar';
 import Root from './components/Root';
 import Home from './components/Home';
-import Docs from './components/Docs';
-import Footer from './components/Footer';
 
 const Main = styled.main`
-  margin: 0 16px;
-  margin-top: 51px;
+  margin: 51px 16px 0;
 `;
 
 const App = () => {
@@ -21,9 +18,7 @@ const App = () => {
         <NavBar title="react-mark-image" />
         <Main>
           <Route exact path="/" component={Home} />
-          <Route path="/docs" component={Docs} />
         </Main>
-        <Footer />
       </Root>
     </Router>
   );

@@ -24,7 +24,7 @@ const Items = styled.div`
 const Item = styled.div`
   display: table-cell;
   padding: 16px 0;
-  ${(props) =>
+  ${(props: { grow?: boolean }) =>
     props.grow &&
     `
     width: 100%;
@@ -52,7 +52,6 @@ export default (props) => (
     <Items>
       <Item grow>
         <Title to="/">{props.title}</Title>
-        <Link to="/docs">Docs</Link>
       </Item>
       <Item>
         <a href="//github.com/RobinNagpal/react-mark-image" target="__blank">

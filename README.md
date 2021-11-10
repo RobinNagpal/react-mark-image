@@ -1,4 +1,4 @@
-React Image Annotation(TypeScript)
+React Mark Image
 =========================
 
 ![Annotation demo](https://raw.githubusercontent.com/RobinNagpal/react-mark-image/HEAD/demo.gif)
@@ -6,7 +6,7 @@ React Image Annotation(TypeScript)
 ## Installation
 
 ```
-npm install --save react-image-mark
+npm install --save react-mark-image
 # or
 yarn add react-mark-image
 ```
