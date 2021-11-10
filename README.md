@@ -6,7 +6,7 @@ React Image Annotation(TypeScript)
 ## Installation
 
 ```
-npm install --save react-image-annotation-ts
+npm install --save react-image-mark
 # or
 yarn add react-image-annotation-ts
 ```
