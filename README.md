@@ -42,7 +42,7 @@ Prop | Description | Default
 `annotations` | Array of annotations |
 `children` | Any react elements that needs to be added next to marked image|
 `className` | class name that needs to be applied to the parent div|
-`editorMode` | Can be one of AnnotateWithText, AnnotateOnly, or ReadOnly. When AnnotateWithText is used, annotation will need text which is rendered when the annotation is hovered. In ReadOnly new annotations cannot be added|
+`editorMode` | Can be one of AnnotateWithText, AnnotateOnly, ReadOnlyWithSelection or ReadOnly. When AnnotateWithText is used, annotation will need text which is rendered when the annotation is hovered. In ReadOnly new annotations cannot be added|
 `idFunction` | Function to be used for creating ids of annotation objects|
 `renderContent` | Function that renders `Content` | See [custom components](#using-custom-components)
 `renderEditor` | Function that renders `Editor` Component | See [custom components](#using-custom-components)

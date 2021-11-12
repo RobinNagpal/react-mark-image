@@ -10,7 +10,7 @@ export const withShapeWrapper = (
     const {
       annotation,
       children,
-      editMode,
+      editorMode,
       renderContent,
       selectedAnnotation,
       style,
@@ -18,7 +18,9 @@ export const withShapeWrapper = (
     const [mouseHovered, setMouseHovered] = useState<boolean>(false);
 
     const shouldShowContent =
-      editMode === EditorMode.AnnotateWithText && mouseHovered && renderContent;
+      editorMode === EditorMode.AnnotateWithText &&
+      mouseHovered &&
+      renderContent;
 
     const reactContentElement =
       shouldShowContent && props.annotation.data.text && renderContent
@@ -38,6 +40,7 @@ export const withShapeWrapper = (
         <DecoratedShape
           annotation={annotation}
           children={children}
+          editorMode={editorMode}
           isMouseOver={mouseHovered}
           isSelected={
             !!selectedAnnotation &&

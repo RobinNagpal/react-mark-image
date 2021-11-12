@@ -126,8 +126,12 @@ function Annotation(options: AnnotationProps & WithRelativeMousePosProps) {
     targetRef.current.ontouchcancel = undefined;
   };
 
+  const isInEditMode =
+    editorMode !== EditorMode.ReadOnly &&
+    editorMode !== EditorMode.ReadOnlyWithSelection;
+
   useEffect(() => {
-    if (editorMode !== EditorMode.ReadOnly) {
+    if (isInEditMode) {
       if (allowTouch) {
         addTargetTouchEventListeners();
       } else {
@@ -248,7 +252,7 @@ function Annotation(options: AnnotationProps & WithRelativeMousePosProps) {
   useHandleEscapeEvent(unselectSelectedAnnotation, selectedAnnotation);
   return (
     <div className={className}>
-      {editorMode !== EditorMode.ReadOnly && (
+      {isInEditMode && (
         <ToolBar
           allowedShapes={allowedShapes}
           deleteAnnotation={deleteAnnotation}
@@ -272,7 +276,7 @@ function Annotation(options: AnnotationProps & WithRelativeMousePosProps) {
           {annotations.map((annotation) =>
             renderShape({
               annotation: annotation,
-              editMode: props.editorMode,
+              editorMode: props.editorMode,
               isInSelectionMode: !!tmpAnnotation,
               key: annotation.data.id,
               renderContent: props.renderContent,
@@ -283,14 +287,14 @@ function Annotation(options: AnnotationProps & WithRelativeMousePosProps) {
           {tmpAnnotation?.geometry &&
             renderShape({
               annotation: tmpAnnotation,
-              editMode: props.editorMode,
+              editorMode: props.editorMode,
               isInSelectionMode: !!tmpAnnotation,
               key: tmpAnnotation.data.id,
               renderContent: props.renderContent,
               onAnnotationClick: onAnnotationClick,
             })}
         </ItemsDiv>
-        {editorMode !== EditorMode.ReadOnly ? (
+        {isInEditMode ? (
           <ItemsDiv
             onClick={onClick}
             onMouseUp={onMouseUp}
@@ -301,7 +305,7 @@ function Annotation(options: AnnotationProps & WithRelativeMousePosProps) {
         ) : (
           <ReadOnlyDiv onClick={unselectSelectedAnnotation} />
         )}
-        {editorMode !== EditorMode.ReadOnly &&
+        {isInEditMode &&
           renderOverlay({
             annotations: props.annotations,
             selectorType: selectedSelectorType,

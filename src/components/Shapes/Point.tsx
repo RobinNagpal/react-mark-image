@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import { ShapeProps } from '../../types/index';
+import { EditorMode, ShapeProps } from '../../types/index';
 import { withShapeWrapper } from './withShapeWrapper';
 
 const Container = styled.div`
@@ -16,32 +16,37 @@ const Container = styled.div`
   transform: translate3d(-50%, -50%, 0);
   width: 16px;
   z-index: 1;
-  cursor: pointer;
+  cursor: ${({ isReadOnly }: { isReadOnly: boolean }) =>
+    isReadOnly ? 'auto;' : 'pointer;'};
 `;
 
 function Point(props: ShapeProps) {
   const {
     annotation: { geometry },
     children,
+    editorMode,
     isMouseOver,
     isSelected,
     onMouseEnter,
     onMouseLeave,
   } = props;
+  const isReadOnly = editorMode === EditorMode.ReadOnly;
+
   if (!geometry) return null;
 
-  const isActive = isMouseOver || isSelected;
+  const isActive = !isReadOnly && (isMouseOver || isSelected);
 
   return (
     <Container
+      isReadOnly={isReadOnly}
+      onMouseEnter={onMouseEnter}
+      onMouseLeave={onMouseLeave}
       style={{
         top: `${geometry.y}%`,
         left: `${geometry.x}%`,
         border: isActive ? 'solid 3px grey' : 'solid 3px white',
         ...(props.style || {}),
       }}
-      onMouseEnter={onMouseEnter}
-      onMouseLeave={onMouseLeave}
     >
       {children || null}
     </Container>

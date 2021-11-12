@@ -109,6 +109,7 @@ export interface RenderEditorProps {
 export interface ShapeProps {
   annotation: IAnnotation;
   children?: ReactElement | null;
+  editorMode: EditorMode;
   isMouseOver: boolean;
   isSelected: boolean;
   onMouseEnter: MouseEventHandler<HTMLDivElement>;
@@ -118,7 +119,7 @@ export interface ShapeProps {
 
 export interface RenderShapeProps {
   annotation: IAnnotation;
-  editMode: EditorMode;
+  editorMode: EditorMode;
   key: string;
   isInSelectionMode: boolean;
   onAnnotationClick: (annotation: IAnnotation) => void;
@@ -140,6 +141,7 @@ export interface RenderSelectorProps {
 export enum EditorMode {
   AnnotateWithText = 'AnnotateWithText',
   AnnotateOnly = 'AnnotateOnly',
+  ReadOnlyWithSelection = 'ReadOnlyWithSelection',
   ReadOnly = 'ReadOnly',
 }
 
@@ -153,7 +155,7 @@ export enum SelectionMode {
 export type WrappedShapeProps = {
   annotation: IAnnotation;
   children?: ReactElement | null;
-  editMode: EditorMode;
+  editorMode: EditorMode;
   isInSelectionMode: boolean;
   key: string;
   onAnnotationClick: (annotation: IAnnotation) => void;

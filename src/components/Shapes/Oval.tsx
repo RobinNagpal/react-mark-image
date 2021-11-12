@@ -1,7 +1,7 @@
 import React from 'react';
 import { withShapeWrapper } from './withShapeWrapper';
 import styled from 'styled-components';
-import { ShapeProps } from '../../types/index';
+import { EditorMode, ShapeProps } from '../../types/index';
 
 const Container = styled.div`
   border-radius: 100%;
@@ -9,24 +9,31 @@ const Container = styled.div`
   box-sizing: border-box;
   transition: box-shadow 0.21s ease-in-out;
   z-index: 1;
-  cursor: pointer;
+  cursor: ${({ isReadOnly }: { isReadOnly: boolean }) =>
+    isReadOnly ? 'auto;' : 'pointer;'};
 `;
 
 function Oval(props: ShapeProps) {
   const {
     annotation: { geometry },
     children,
+    editorMode,
     isMouseOver,
     isSelected,
     onMouseEnter,
     onMouseLeave,
   } = props;
+  const isReadOnly = editorMode === EditorMode.ReadOnly;
+
   if (!geometry) return null;
 
-  const isActive = isMouseOver || isSelected;
+  const isActive = !isReadOnly && (isMouseOver || isSelected);
 
   return (
     <Container
+      isReadOnly={isReadOnly}
+      onMouseEnter={onMouseEnter}
+      onMouseLeave={onMouseLeave}
       style={{
         position: 'absolute',
         left: `${geometry.x}%`,
@@ -40,8 +47,6 @@ function Oval(props: ShapeProps) {
           : 'rgba(128, 128, 128, 0.05)',
         ...(props.style || {}),
       }}
-      onMouseEnter={onMouseEnter}
-      onMouseLeave={onMouseLeave}
     >
       {children || null}
     </Container>
