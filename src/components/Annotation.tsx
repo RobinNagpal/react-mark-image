@@ -301,10 +301,11 @@ function Annotation(options: AnnotationProps & WithRelativeMousePosProps) {
         ) : (
           <ReadOnlyDiv onClick={unselectSelectedAnnotation} />
         )}
-        {renderOverlay({
-          annotations: props.annotations,
-          selectorType: selectedSelectorType,
-        })}
+        {editorMode !== EditorMode.ReadOnly &&
+          renderOverlay({
+            annotations: props.annotations,
+            selectorType: selectedSelectorType,
+          })}
         {showEditor &&
           tmpAnnotation &&
           tmpAnnotation.selection?.mode === SelectionMode.Editing &&
