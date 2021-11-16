@@ -11,6 +11,7 @@ export const withShapeWrapper = (
       annotation,
       children,
       editorMode,
+      isInSelectionMode,
       renderContent,
       selectedAnnotation,
       style,
@@ -35,6 +36,8 @@ export const withShapeWrapper = (
       }
     };
 
+    const shapeStyle = isInSelectionMode ? { zIndex: 0, ...(style || {}) } : {};
+
     return (
       <div onClick={onClick}>
         <DecoratedShape
@@ -48,7 +51,7 @@ export const withShapeWrapper = (
           }
           onMouseEnter={onMouseEnter}
           onMouseLeave={onMouseLeave}
-          style={style}
+          style={shapeStyle}
         />
 
         {reactContentElement}
