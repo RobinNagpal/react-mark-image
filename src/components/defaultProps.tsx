@@ -28,6 +28,10 @@ const defaultProps: AnnotationProps = {
   onAnnotationClick: () => {},
   onSelectedAnnotationUpdate: () => {},
 
+  overlayOptions: {
+    displayOverlay: true,
+  },
+
   renderEditor: ({ annotation, onSubmit }: RenderEditorProps) => (
     <Editor annotation={annotation} onSubmit={onSubmit} />
   ),
@@ -53,7 +57,11 @@ const defaultProps: AnnotationProps = {
   renderOverlay: ({
     annotations,
     selectorType,
+    overlayText,
   }: RenderOverlayProps): ReactElement => {
+    if (overlayText) {
+      return <Overlay>{overlayText}</Overlay>;
+    }
     if (annotations.length === 0) {
       switch (selectorType) {
         case PointSelector.TYPE:
@@ -62,7 +70,7 @@ const defaultProps: AnnotationProps = {
           return <Overlay>Click and Drag to Annotate</Overlay>;
       }
     } else {
-      return <Overlay>Click on the element to select</Overlay>;
+      return <Overlay>Select the annotation for additional options</Overlay>;
     }
   },
 

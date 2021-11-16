@@ -67,12 +67,15 @@ function Annotation(options: AnnotationProps & WithRelativeMousePosProps) {
 
     alt,
     className,
+
     editorMode,
 
     idFunction,
 
     onSelectedAnnotationUpdate,
     onAnnotationClick: onAnnotationClickProp,
+
+    overlayOptions,
 
     renderShape,
     renderEditor,
@@ -306,8 +309,10 @@ function Annotation(options: AnnotationProps & WithRelativeMousePosProps) {
           <ReadOnlyDiv onClick={unselectSelectedAnnotation} />
         )}
         {isInEditMode &&
+          overlayOptions?.displayOverlay &&
           renderOverlay({
-            annotations: props.annotations,
+            annotations,
+            overlayText: overlayOptions?.overlayText,
             selectorType: selectedSelectorType,
           })}
         {showEditor &&

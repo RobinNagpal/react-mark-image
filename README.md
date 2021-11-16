@@ -53,6 +53,7 @@ Prop | Description | Default
 `onAnnotationsUpdate` | callback handler whenever annotations are updated |
 `onAnnotationClick` | `onClick` handler for annotation |
 `onSelectedAnnotationUpdate` | `onSelectedAnnotationUpdate` handler for annotation when it's selected. This callback takes two arguments i.e. annotation and the selected indicator |
+`overlayOptions` | Options for overlay.| See [Overlay options](#overlay-options) |
 `style` |  styles that need to the applied to the parent container|
 `toolBarOptions` | Options for toolbar.| See [Toolbar options](#tool-bar-options) |
 
@@ -100,6 +101,15 @@ This allows you to customize everything about the the look of the annotation int
 You can view the default renderProps [here](src/components/defaultProps.js)
 
 **Note**: You cannot use `:hover` selectors in css for components returned by `renderSelector` and `renderHighlight`. This is due to the fact that `Annotation` places DOM layers on top of these components, preventing triggering of `:hover`
+
+## Overlay Options
+Overlay options are of the format
+```typescript
+export interface OverlayOptions {
+  displayOverlay?: boolean;
+  overlayText?: string;
+}
+```
 
 ## Toolbar Options
 Toolbar options are of the format

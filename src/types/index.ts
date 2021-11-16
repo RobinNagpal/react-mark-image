@@ -166,6 +166,7 @@ export type WrappedShapeProps = {
 
 export interface RenderOverlayProps {
   annotations: IAnnotation[];
+  overlayText?: string;
   selectorType: string;
 }
 
@@ -199,9 +200,16 @@ export interface ToolBarOptions {
   ) => ReactElement | null;
 }
 
+export interface OverlayOptions {
+  displayOverlay?: boolean;
+  overlayText?: string;
+}
+
 export interface AnnotationProps {
   src: string;
   alt?: string;
+  allowedShapes: AllowedShape[];
+
   annotations: IAnnotation[];
 
   children?: any;
@@ -211,14 +219,6 @@ export interface AnnotationProps {
 
   idFunction: () => string;
 
-  renderContent: (props: ContentProps) => ReactElement | null;
-  renderEditor: (props: RenderEditorProps) => ReactElement | null;
-  renderShape: (props: WrappedShapeProps) => ReactElement | null;
-  renderOverlay: (props: RenderOverlayProps) => ReactElement | null;
-
-  selectors: ISelector[];
-
-  allowedShapes: AllowedShape[];
   onAnnotationsUpdate: (annotations: IAnnotation[]) => void;
   onAnnotationClick: (annotation: IAnnotation) => void;
   onSelectedAnnotationUpdate: (
@@ -226,6 +226,14 @@ export interface AnnotationProps {
     selected: boolean
   ) => void;
 
+  overlayOptions?: OverlayOptions;
+
+  renderContent: (props: ContentProps) => ReactElement | null;
+  renderEditor: (props: RenderEditorProps) => ReactElement | null;
+  renderShape: (props: WrappedShapeProps) => ReactElement | null;
+  renderOverlay: (props: RenderOverlayProps) => ReactElement | null;
+
+  selectors: ISelector[];
   style?: object;
 
   toolBarOptions: ToolBarOptions;
