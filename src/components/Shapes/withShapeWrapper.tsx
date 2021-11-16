@@ -36,7 +36,9 @@ export const withShapeWrapper = (
       }
     };
 
-    const shapeStyle = isInSelectionMode ? { zIndex: 0, ...(style || {}) } : {};
+    const shapeStyle = isInSelectionMode
+      ? { zIndex: 0, ...(style || {}) }
+      : style;
 
     return (
       <div onClick={onClick}>
