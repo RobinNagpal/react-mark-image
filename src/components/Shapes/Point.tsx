@@ -15,7 +15,8 @@ const Container = styled.div`
   position: absolute;
   transform: translate3d(-50%, -50%, 0);
   width: 16px;
-  z-index: 1;
+  z-index: ${({ isReadOnly }: { isReadOnly: boolean }) =>
+    `${isReadOnly ? 0 : 1};`};
   cursor: ${({ isReadOnly }: { isReadOnly: boolean }) =>
     isReadOnly ? 'auto;' : 'pointer;'};
 `;

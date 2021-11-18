@@ -5,10 +5,11 @@ import { EditorMode, ShapeProps } from '../../types/index';
 
 const Container = styled.div`
   border-radius: 100%;
-  box-shadow: 0 0 1px 1px white inset;
+  box-shadow: 0 0 2px 2px white inset;
   box-sizing: border-box;
   transition: box-shadow 0.21s ease-in-out;
-  z-index: 1;
+  z-index: ${({ isReadOnly }: { isReadOnly: boolean }) =>
+    `${isReadOnly ? 0 : 1};`};
   cursor: ${({ isReadOnly }: { isReadOnly: boolean }) =>
     isReadOnly ? 'auto;' : 'pointer;'};
 `;
