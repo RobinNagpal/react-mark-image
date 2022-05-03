@@ -22,7 +22,8 @@
     "build-storybook": "build-storybook"
   },
   "peerDependencies": {
-    "react": ">=16"
+    "react": ">=16",
+    "styled-components": ">=5.3.3"
   },
   "husky": {
     "hooks": {
@@ -87,8 +88,7 @@
   },
   "dependencies": {
     "@rollup/plugin-url": "^6.1.0",
-    "@svgr/rollup": "^5.5.0",
-    "styled-components": "^5.3.3"
+    "@svgr/rollup": "^5.5.0"
   },
   "repository": {
     "type": "git",
